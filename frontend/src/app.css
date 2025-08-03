@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.chat-container {
+  height: calc(100vh - 4rem);
+}
+
+.messages-container {
+  height: calc(100% - 4rem);
+  overflow-y: auto;
+}
+
+.message-bubble {
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.message-bubble.own {
+  margin-left: auto;
+  background-color: #3b82f6;
+  color: white;
+}
+
+.message-bubble.other {
+  margin-right: auto;
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+/* Scrollbar styling */
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
