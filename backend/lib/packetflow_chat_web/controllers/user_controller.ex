@@ -6,23 +6,46 @@ defmodule PacketflowChatWeb.UserController do
   action_fallback PacketflowChatWeb.FallbackController
 
   def me(conn, _params) do
-    user_id = conn.assigns.current_user_id
-
-    case Accounts.get_user_by_clerk_id(user_id) do
+    case conn.assigns[:current_user] do
       nil ->
-        conn
-        |> put_status(:not_found)
-        |> json(%{error: "User not found"})
+        # Fallback to clerk-based lookup for backward compatibility
+        user_id = conn.assigns[:current_user_id]
+        case Accounts.get_user_by_clerk_id(user_id) do
+          nil ->
+            conn
+            |> put_status(:not_found)
+            |> json(%{error: "User not found"})
+
+          user ->
+            json(conn, %{
+              user: %{
+                id: user.id,
+                clerk_user_id: user.clerk_user_id,
+                username: user.username,
+                email: user.email,
+                avatar_url: user.avatar_url
+              }
+            })
+        end
 
       user ->
         json(conn, %{
-          id: user.id,
-          clerk_user_id: user.clerk_user_id,
-          username: user.username,
-          email: user.email,
-          avatar_url: user.avatar_url
+          user: %{
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            avatar_url: user.avatar_url
+          }
         })
     end
+  end
+
+  def session_token(conn, _params) do
+    # This endpoint should not be used with the new token-based auth
+    # The token is returned directly from login/registration endpoints
+    conn
+    |> put_status(:gone)
+    |> json(%{error: "This endpoint is deprecated. Use login or registration endpoints to get tokens."})
   end
 
   def create_or_update(conn, user_params) do

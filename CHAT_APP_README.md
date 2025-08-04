@@ -140,33 +140,47 @@ The application uses the following tables:
 - `user_left` - User left room
 - `typing_indicator` - Typing status update
 
-## 🔐 Authentication (Placeholder)
+## 🔐 Authentication
 
-Currently uses mock authentication for development. The application is structured to integrate with Clerk.com for production authentication:
+The application now supports **Phoenix built-in authentication** with session-based security:
 
-- JWT token verification in Phoenix
-- User session management
-- Protected API routes
-- WebSocket authentication
+- ✅ **User Registration**: Create accounts with email, username, and password
+- ✅ **Secure Login**: Argon2 password hashing for maximum security
+- ✅ **Session Management**: Secure session tokens for API and WebSocket auth
+- ✅ **Password Requirements**: Strong password validation
+- ✅ **Backward Compatibility**: Still supports Clerk JWT tokens for existing integrations
+
+### Authentication Endpoints
+
+- `POST /api/users/register` - Register new user
+- `POST /api/users/log_in` - Login with email/password
+- `DELETE /api/users/log_out` - Logout and clear session
+- `GET /api/users/me` - Get current user profile
+- `GET /api/users/session_token` - Get session token for WebSocket
+
+### Frontend Pages
+
+- `/login` - Login form
+- `/register` - Registration form
+- Main chat (requires authentication)
 
 ## 🚧 Development Notes
 
 ### Current Limitations (MVP)
 
-1. **Mock Authentication**: Uses placeholder tokens instead of real Clerk integration
-2. **Basic UI**: Minimal styling, no advanced chat features
-3. **No File Upload**: Text messages only
-4. **No User Registration**: Users are created automatically
-5. **Local Development Only**: Not production-ready
+1. **Basic UI**: Minimal styling, no advanced chat features
+2. **No File Upload**: Text messages only
+3. **Local Development Only**: Not production-ready
+4. **Email Confirmation**: Tokens generated but email sending not implemented
 
 ### Next Steps for Full Implementation
 
-1. **Clerk Integration**: Add real authentication
+1. **Email Integration**: Add real email sending for confirmations
 2. **File Upload**: Add support for images and files
-3. **User Management**: Registration, profiles, settings
-4. **Advanced Chat Features**: Reactions, threads, search
-5. **Mobile Responsive**: Optimize for mobile devices
-6. **Production Deployment**: Docker, CI/CD, monitoring
+3. **Advanced Chat Features**: Reactions, threads, search
+4. **Mobile Responsive**: Optimize for mobile devices
+5. **Production Deployment**: Docker, CI/CD, monitoring
+6. **Password Reset**: Complete password reset flow
 
 ## 🐛 Troubleshooting
 

@@ -94,8 +94,10 @@ defmodule PacketflowChatWeb.RoomChannel do
   @impl true
   def terminate(_reason, socket) do
     user_id = socket.assigns[:user_id]
+    room_id = socket.assigns[:room_id]
 
-    if user_id do
+    # Only broadcast if the socket successfully joined (has room_id assigned)
+    if user_id && room_id do
       broadcast!(socket, "user_left", %{
         user_id: user_id,
         timestamp: DateTime.utc_now()

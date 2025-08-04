@@ -1,29 +1,52 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Socket } from 'phoenix';
+	import { authStore } from '$lib/stores/auth';
+	import { goto } from '$app/navigation';
 	
 	let socket: Socket | null = null;
 	let channel: any = null;
 	let messages: any[] = [];
 	let newMessage = '';
-	let username = 'Guest';
 	let currentRoom = 'General';
 	let isConnected = false;
 	let rooms: any[] = [];
 	
-	// Mock authentication - in production, this would come from Clerk
-	const mockToken = 'mock-jwt-token';
-	const mockUserId = 'user_123';
+	$: user = $authStore.user;
+	$: token = $authStore.token;
+	$: isLoading = $authStore.isLoading;
 	
-	onMount(() => {
-		initializeSocket();
-		loadRooms();
+	onMount(async () => {
+		await authStore.initialize();
+		
+		// Redirect to login if not authenticated
+		if (!$authStore.user && !$authStore.isLoading) {
+			goto('/login');
+			return;
+		}
+		
+		if ($authStore.user && $authStore.token) {
+			initializeSocket();
+			loadRooms();
+		}
 	});
 	
+	// Reactive statement to handle auth state changes
+	$: if (!isLoading && !user) {
+		goto('/login');
+	}
+	
+	$: if (user && token && !socket) {
+		initializeSocket();
+		loadRooms();
+	}
+	
 	function initializeSocket() {
+		if (!token || !user) return;
+		
 		// Initialize Phoenix Socket
 		socket = new Socket('ws://localhost:4000/socket', {
-			params: { token: mockToken }
+			params: { token: token }
 		});
 		
 		socket.connect();
@@ -137,12 +160,36 @@
 	}
 </script>
 
+{#if isLoading}
+	<div class="flex h-screen items-center justify-center bg-gray-50">
+		<div class="text-center">
+			<svg class="animate-spin h-12 w-12 text-indigo-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+				<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+				<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+			</svg>
+			<p class="text-gray-600">Loading...</p>
+		</div>
+	</div>
+{:else if !user}
+	<div class="flex h-screen items-center justify-center bg-gray-50">
+		<div class="text-center">
+			<p class="text-gray-600 mb-4">Please sign in to continue</p>
+			<a href="/login" class="text-indigo-600 hover:text-indigo-500">Go to Login</a>
+		</div>
+	</div>
+{:else}
 <div class="flex h-screen bg-white">
 	<!-- Sidebar -->
 	<div class="w-64 bg-gray-800 text-white">
 		<div class="p-4 border-b border-gray-700">
 			<h1 class="text-xl font-bold">PacketFlow Chat</h1>
-			<p class="text-sm text-gray-300">Welcome, {username}</p>
+			<p class="text-sm text-gray-300">Welcome, {user?.username || 'Guest'}</p>
+			<button
+				on:click={() => authStore.logout()}
+				class="mt-2 text-xs text-gray-400 hover:text-white transition-colors"
+			>
+				Sign out
+			</button>
 		</div>
 		
 		<div class="p-4">
@@ -228,3 +275,4 @@
 		</div>
 	</div>
 </div>
+{/if}

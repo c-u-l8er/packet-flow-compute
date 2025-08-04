@@ -49,7 +49,9 @@ defmodule PacketflowChat.MixProject do
       {:joken, "~> 2.6"},
       {:cors_plug, "~> 3.0"},
       {:httpoison, "~> 2.0"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      # Authentication dependencies
+      {:bcrypt_elixir, "~> 3.0"}
     ]
   end
 
