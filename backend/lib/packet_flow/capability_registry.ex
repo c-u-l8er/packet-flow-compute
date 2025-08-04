@@ -49,6 +49,43 @@ defmodule PacketFlow.CapabilityRegistry do
     GenServer.call(__MODULE__, {:get_capability, capability_id})
   end
 
+  # Actor Management API
+
+  @doc """
+  Get or create an actor for the given capability and actor ID.
+  """
+  def get_or_create_actor(capability_id, actor_id, options \\ %{}) do
+    GenServer.call(__MODULE__, {:get_or_create_actor, capability_id, actor_id, options})
+  end
+
+  @doc """
+  Send a message to an actor.
+  """
+  def send_to_actor(capability_id, actor_id, message, context \\ %{}) do
+    GenServer.call(__MODULE__, {:send_to_actor, capability_id, actor_id, message, context}, 30_000)
+  end
+
+  @doc """
+  Get the current state of an actor.
+  """
+  def get_actor_state(capability_id, actor_id) do
+    GenServer.call(__MODULE__, {:get_actor_state, capability_id, actor_id})
+  end
+
+  @doc """
+  Terminate an actor.
+  """
+  def terminate_actor(capability_id, actor_id, reason \\ :normal) do
+    GenServer.call(__MODULE__, {:terminate_actor, capability_id, actor_id, reason})
+  end
+
+  @doc """
+  List all active actors.
+  """
+  def list_actors do
+    GenServer.call(__MODULE__, :list_actors)
+  end
+
   # GenServer implementation
 
   @impl true
@@ -115,6 +152,74 @@ defmodule PacketFlow.CapabilityRegistry do
       [{^capability_id, capability}] -> {:reply, {:ok, capability}, state}
       [] -> {:reply, {:error, :not_found}, state}
     end
+  end
+
+  # Actor Management Handlers
+
+  def handle_call({:get_or_create_actor, capability_id, actor_id, options}, _from, state) do
+    # First verify the capability exists (read directly from ETS to avoid deadlock)
+    case :ets.lookup(@table_name, capability_id) do
+      [{^capability_id, _capability}] ->
+        # Check if actor already exists
+        case PacketFlow.ActorProcess.whereis(actor_id) do
+          nil ->
+            # Create new actor
+            case PacketFlow.ActorSupervisor.start_actor(capability_id, actor_id, options) do
+              {:ok, pid} -> {:reply, {:ok, pid}, state}
+              {:error, reason} -> {:reply, {:error, reason}, state}
+            end
+
+          pid when is_pid(pid) ->
+            # Actor already exists
+            {:reply, {:ok, pid}, state}
+        end
+
+      [] ->
+        {:reply, {:error, :capability_not_found}, state}
+    end
+  end
+
+  def handle_call({:send_to_actor, _capability_id, actor_id, message, context}, _from, state) do
+    case PacketFlow.ActorProcess.whereis(actor_id) do
+      nil ->
+        {:reply, {:error, :actor_not_found}, state}
+
+      pid when is_pid(pid) ->
+        case PacketFlow.ActorProcess.send_message(pid, message, context) do
+          {:ok, result} -> {:reply, {:ok, result}, state}
+          {:error, reason} -> {:reply, {:error, reason}, state}
+        end
+    end
+  end
+
+  def handle_call({:get_actor_state, _capability_id, actor_id}, _from, state) do
+    case PacketFlow.ActorProcess.whereis(actor_id) do
+      nil ->
+        {:reply, {:error, :actor_not_found}, state}
+
+      pid when is_pid(pid) ->
+        case PacketFlow.ActorProcess.get_state(pid) do
+          state_data -> {:reply, {:ok, state_data}, state}
+        end
+    end
+  end
+
+  def handle_call({:terminate_actor, _capability_id, actor_id, reason}, _from, state) do
+    case PacketFlow.ActorProcess.whereis(actor_id) do
+      nil ->
+        {:reply, {:error, :actor_not_found}, state}
+
+      pid when is_pid(pid) ->
+        case PacketFlow.ActorSupervisor.terminate_actor(pid, reason) do
+          :ok -> {:reply, :ok, state}
+          {:error, reason} -> {:reply, {:error, reason}, state}
+        end
+    end
+  end
+
+  def handle_call(:list_actors, _from, state) do
+    actors = PacketFlow.ActorSupervisor.list_actors()
+    {:reply, {:ok, actors}, state}
   end
 
   # Private functions

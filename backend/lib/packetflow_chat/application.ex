@@ -15,6 +15,8 @@ defmodule PacketflowChat.Application do
       # Start the Finch HTTP client for sending emails
       {Finch, name: PacketflowChat.Finch},
       # Start PacketFlow core systems
+      {Registry, keys: :unique, name: PacketFlow.ActorRegistry},
+      PacketFlow.ActorSupervisor,
       PacketFlow.CapabilityRegistry,
       PacketFlow.ExecutionEngine,
       PacketFlow.AIPlanner,
