@@ -1,4 +1,4 @@
-export const config = {
-	API_BASE_URL: 'http://localhost:4000/api',
-	WS_URL: 'ws://localhost:4000/socket'
-};
+import { env } from '$env/dynamic/public';
+
+// Get app name from environment variable, fallback to "TickTickClock"
+export const APP_NAME = env.PUBLIC_APP_NAME || 'TickTickClock';

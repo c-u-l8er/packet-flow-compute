@@ -35,11 +35,17 @@ defmodule PacketflowChatWeb.Router do
     options "/users/confirm", CorsController, :options
     options "/users/session_token", CorsController, :options
     options "/users/me", CorsController, :options
+    options "/users/search", CorsController, :options
     options "/rooms", CorsController, :options
     options "/rooms/public", CorsController, :options
+    options "/rooms/private", CorsController, :options
     options "/rooms/:id", CorsController, :options
     options "/rooms/:id/join", CorsController, :options
     options "/rooms/:id/leave", CorsController, :options
+    options "/rooms/:id/members", CorsController, :options
+    options "/rooms/:id/invite", CorsController, :options
+    options "/rooms/:id/remove", CorsController, :options
+    options "/rooms/:id/role", CorsController, :options
 
     # Public routes
     post "/users", UserController, :create_or_update
@@ -59,14 +65,23 @@ defmodule PacketflowChatWeb.Router do
     # User routes
     get "/users/me", UserController, :me
     put "/users/me", UserController, :update
+    get "/users/search", UserController, :search
 
     # Room routes
     get "/rooms", RoomController, :index
     get "/rooms/public", RoomController, :public_rooms
     get "/rooms/:id", RoomController, :show
     post "/rooms", RoomController, :create
+    post "/rooms/private", RoomController, :create_private_with_users
+    delete "/rooms/:id", RoomController, :delete
     post "/rooms/:id/join", RoomController, :join
     post "/rooms/:id/leave", RoomController, :leave
+
+    # Room member management routes
+    get "/rooms/:id/members", RoomController, :members
+    post "/rooms/:id/invite", RoomController, :invite_user
+    delete "/rooms/:id/remove", RoomController, :remove_user
+    put "/rooms/:id/role", RoomController, :update_user_role
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

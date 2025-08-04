@@ -64,6 +64,25 @@ defmodule PacketflowChatWeb.UserController do
     end
   end
 
+  def search(conn, %{"q" => query}) do
+    case conn.assigns[:current_user] do
+      nil ->
+        conn
+        |> put_status(:unauthorized)
+        |> json(%{error: "User not authenticated"})
+
+      _user ->
+        users = Accounts.search_users(query, 10)
+        json(conn, %{users: users})
+    end
+  end
+
+  def search(conn, _params) do
+    conn
+    |> put_status(:bad_request)
+    |> json(%{error: "Query parameter 'q' is required"})
+  end
+
   defp format_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
       Enum.reduce(opts, msg, fn {key, value}, acc ->

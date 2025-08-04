@@ -48,7 +48,8 @@ config :cors_plug,
 # Configure Clerk authentication
 config :packetflow_chat,
   clerk_secret_key: System.get_env("CLERK_SECRET_KEY", "dev-secret-key"),
-  clerk_issuer_url: System.get_env("CLERK_ISSUER_URL", "https://your-app.clerk.accounts.dev")
+  clerk_issuer_url: System.get_env("CLERK_ISSUER_URL", "https://your-app.clerk.accounts.dev"),
+  app_name: System.get_env("APP_NAME", "TickTickClock")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

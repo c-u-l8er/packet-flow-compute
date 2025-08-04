@@ -111,6 +111,17 @@ defmodule PacketflowChat.Chat do
       role: role
     })
     |> Repo.insert()
+    |> case do
+      {:error, changeset} ->
+        # If it's a unique constraint violation, the user is already in the room
+        case changeset.errors do
+          [room_id: {_, [constraint: :unique, constraint_name: _]}] ->
+            {:ok, :already_member}
+          _ ->
+            {:error, changeset}
+        end
+      result -> result
+    end
   end
 
   @doc """
@@ -141,7 +152,7 @@ defmodule PacketflowChat.Chat do
       {:ok, uuid} ->
         # It's a valid UUID, look up by ID
         Repo.get(Room, uuid)
-      
+
       :error ->
         # It's not a UUID, look up by name
         get_room_by_name(room_identifier)
@@ -167,5 +178,97 @@ defmodule PacketflowChat.Chat do
       preload: [:user]
     )
     |> Repo.all()
+  end
+
+  @doc """
+  Gets room members with detailed user information.
+  """
+  def list_room_members_with_users(room_id) do
+    from(rm in RoomMember,
+      where: rm.room_id == ^room_id,
+      join: u in PacketflowChat.Accounts.User,
+      on: rm.user_id == u.id,
+      select: %{
+        user_id: u.id,
+        username: u.username,
+        email: u.email,
+        avatar_url: u.avatar_url,
+        role: rm.role,
+        joined_at: rm.joined_at
+      },
+      order_by: [desc: rm.joined_at]
+    )
+    |> Repo.all()
+  end
+
+  @doc """
+  Gets a user's role in a room.
+  """
+  def get_user_room_role(room_id, user_id) do
+    from(rm in RoomMember,
+      where: rm.room_id == ^room_id and rm.user_id == ^user_id,
+      select: rm.role,
+      order_by: [desc: rm.joined_at],
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
+  @doc """
+  Updates a user's role in a room (admin only).
+  """
+  def update_room_member_role(room_id, user_id, new_role, requester_user_id) do
+    # Check if requester is admin
+    case get_user_room_role(room_id, requester_user_id) do
+      "admin" ->
+        from(rm in RoomMember,
+          where: rm.room_id == ^room_id and rm.user_id == ^user_id
+        )
+        |> Repo.update_all(set: [role: new_role])
+        |> case do
+          {1, _} -> {:ok, :updated}
+          {0, _} -> {:error, :not_found}
+        end
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  @doc """
+  Creates a private room with specified members.
+  """
+  def create_private_room_with_members(attrs, member_user_ids) do
+    attrs = Map.put(attrs, "is_private", true)
+
+    case create_room(attrs) do
+      {:ok, room} ->
+        # Add specified members
+        results = Enum.map(member_user_ids, fn user_id ->
+          add_room_member(room.id, user_id, "member")
+        end)
+
+        # Check if all members were added successfully
+        case Enum.all?(results, fn result -> match?({:ok, _}, result) end) do
+          true -> {:ok, room}
+          false ->
+            # Rollback - delete the room if we couldn't add all members
+            delete_room(room)
+            {:error, :failed_to_add_members}
+        end
+
+      error ->
+        error
+    end
+  end
+
+  @doc """
+  Checks if a user can manage a room (is admin or creator).
+  """
+  def can_manage_room?(room_id, user_id) do
+    room = get_room!(room_id)
+    user_role = get_user_room_role(room_id, user_id)
+
+    room.created_by == user_id or user_role == "admin"
   end
 end

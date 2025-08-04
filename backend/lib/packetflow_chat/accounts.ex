@@ -17,6 +17,26 @@ defmodule PacketflowChat.Accounts do
   end
 
   @doc """
+  Searches users by username or email.
+  """
+  def search_users(query, limit \\ 10) when is_binary(query) do
+    search_term = "%#{query}%"
+
+    from(u in User,
+      where: ilike(u.username, ^search_term) or ilike(u.email, ^search_term),
+      select: %{
+        id: u.id,
+        username: u.username,
+        email: u.email,
+        avatar_url: u.avatar_url
+      },
+      limit: ^limit,
+      order_by: [asc: u.username]
+    )
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single user.
   """
   def get_user!(id), do: Repo.get!(User, id)

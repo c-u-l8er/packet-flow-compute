@@ -46,14 +46,25 @@ defmodule PacketflowChatWeb.RoomChannel do
       Chat.list_room_messages(room_id, 20)
       |> Enum.map(&format_message/1)
 
+    # Load room members
+    members = Chat.list_room_members_with_users(room_id)
+
+    # Get user info for the joining user
+    user = Accounts.get_user!(user_id)
+
     # Notify others that user joined
     broadcast!(socket, "user_joined", %{
-      user_id: user_id,
+      user: %{
+        id: user.id,
+        username: user.username,
+        avatar_url: user.avatar_url
+      },
       timestamp: DateTime.utc_now()
     })
 
-    # Send recent messages to the joining user
+    # Send recent messages and member list to the joining user
     push(socket, "messages_loaded", %{messages: messages})
+    push(socket, "members_updated", %{members: members})
 
     {:noreply, socket}
   end
@@ -110,8 +121,14 @@ defmodule PacketflowChatWeb.RoomChannel do
 
     # Only broadcast if the socket successfully joined (has room_id assigned)
     if user_id && room_id do
+      user = Accounts.get_user!(user_id)
+
       broadcast!(socket, "user_left", %{
-        user_id: user_id,
+        user: %{
+          id: user.id,
+          username: user.username,
+          avatar_url: user.avatar_url
+        },
         timestamp: DateTime.utc_now()
       })
     end

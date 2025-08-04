@@ -1,6 +1,7 @@
 <script lang="ts">
   import { authStore } from '$lib/stores/auth';
   import { goto } from '$app/navigation';
+  import { APP_NAME } from '$lib/config';
   
   let username = '';
   let email = '';
@@ -47,7 +48,7 @@
 </script>
 
 <svelte:head>
-  <title>Register - PacketFlow Chat</title>
+  <title>Register - {APP_NAME}</title>
 </svelte:head>
 
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
