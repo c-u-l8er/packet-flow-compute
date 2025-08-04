@@ -8,11 +8,10 @@ defmodule PacketflowChat.Chat.Message do
   schema "messages" do
     field :content, :string
     field :message_type, :string, default: "text"
-    field :user_id, :string
     field :created_at, :utc_datetime
 
     belongs_to :room, PacketflowChat.Chat.Room
-    belongs_to :user, PacketflowChat.Accounts.User, foreign_key: :user_id, references: :clerk_user_id, define_field: false
+    belongs_to :user, PacketflowChat.Accounts.User, foreign_key: :user_id, references: :id, type: :binary_id
   end
 
   @doc false

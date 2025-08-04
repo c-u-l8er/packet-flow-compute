@@ -8,25 +8,9 @@ defmodule PacketflowChatWeb.UserController do
   def me(conn, _params) do
     case conn.assigns[:current_user] do
       nil ->
-        # Fallback to clerk-based lookup for backward compatibility
-        user_id = conn.assigns[:current_user_id]
-        case Accounts.get_user_by_clerk_id(user_id) do
-          nil ->
-            conn
-            |> put_status(:not_found)
-            |> json(%{error: "User not found"})
-
-          user ->
-            json(conn, %{
-              user: %{
-                id: user.id,
-                clerk_user_id: user.clerk_user_id,
-                username: user.username,
-                email: user.email,
-                avatar_url: user.avatar_url
-              }
-            })
-        end
+        conn
+        |> put_status(:unauthorized)
+        |> json(%{error: "User not authenticated"})
 
       user ->
         json(conn, %{
@@ -49,40 +33,24 @@ defmodule PacketflowChatWeb.UserController do
   end
 
   def create_or_update(conn, user_params) do
-    case Accounts.create_or_update_user(user_params) do
-      {:ok, user} ->
-        conn
-        |> put_status(:created)
-        |> json(%{
-          id: user.id,
-          clerk_user_id: user.clerk_user_id,
-          username: user.username,
-          email: user.email,
-          avatar_url: user.avatar_url
-        })
-
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> json(%{errors: format_errors(changeset)})
-    end
+    # This endpoint is deprecated as it was used for Clerk integration
+    conn
+    |> put_status(:gone)
+    |> json(%{error: "This endpoint is deprecated. Use registration endpoint instead."})
   end
 
   def update(conn, user_params) do
-    user_id = conn.assigns.current_user_id
-
-    case Accounts.get_user_by_clerk_id(user_id) do
+    case conn.assigns[:current_user] do
       nil ->
         conn
-        |> put_status(:not_found)
-        |> json(%{error: "User not found"})
+        |> put_status(:unauthorized)
+        |> json(%{error: "User not authenticated"})
 
       user ->
         case Accounts.update_user(user, user_params) do
           {:ok, updated_user} ->
             json(conn, %{
               id: updated_user.id,
-              clerk_user_id: updated_user.clerk_user_id,
               username: updated_user.username,
               email: updated_user.email,
               avatar_url: updated_user.avatar_url

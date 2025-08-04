@@ -19,7 +19,19 @@ defmodule PacketflowChatWeb.RoomChannel do
             {:ok, assign(socket, :room_id, room.id)}
 
           false ->
-            {:error, %{reason: "unauthorized"}}
+            # For public rooms, automatically add the user as a member
+            if not room.is_private do
+              case Chat.add_room_member(room.id, user_id) do
+                {:ok, _room_member} ->
+                  send(self(), :after_join)
+                  {:ok, assign(socket, :room_id, room.id)}
+
+                {:error, _changeset} ->
+                  {:error, %{reason: "failed_to_join"}}
+              end
+            else
+              {:error, %{reason: "unauthorized"}}
+            end
         end
     end
   end
@@ -108,14 +120,14 @@ defmodule PacketflowChatWeb.RoomChannel do
   end
 
   defp format_message(message) do
-    user = Accounts.get_user_by_clerk_id(message.user_id)
+    user = Accounts.get_user!(message.user_id)
 
     %{
       id: message.id,
       content: message.content,
       message_type: message.message_type,
       user: %{
-        id: user.clerk_user_id,
+        id: user.id,
         username: user.username,
         avatar_url: user.avatar_url
       },

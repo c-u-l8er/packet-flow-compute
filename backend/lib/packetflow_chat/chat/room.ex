@@ -8,14 +8,13 @@ defmodule PacketflowChat.Chat.Room do
   schema "chat_rooms" do
     field :name, :string
     field :description, :string
-    field :created_by, :string
     field :is_private, :boolean, default: false
     field :created_at, :utc_datetime
 
-    belongs_to :creator, PacketflowChat.Accounts.User, foreign_key: :created_by, references: :clerk_user_id, define_field: false
+    belongs_to :creator, PacketflowChat.Accounts.User, foreign_key: :created_by, references: :id, type: :binary_id
     has_many :messages, PacketflowChat.Chat.Message
     many_to_many :members, PacketflowChat.Accounts.User, join_through: PacketflowChat.Chat.RoomMember,
-      join_keys: [room_id: :id, user_id: :clerk_user_id]
+      join_keys: [room_id: :id, user_id: :id]
   end
 
   @doc false

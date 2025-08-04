@@ -24,33 +24,7 @@ defmodule PacketflowChat.Auth do
     |> add_claim("sub", nil, &is_binary/1)
   end
 
-  @doc """
-  Verifies a JWT token and returns the user ID (for Clerk compatibility).
-  """
-  def verify_token(token) do
-    # Handle mock token in development
-    if token == "mock-jwt-token" and Mix.env() == :dev do
-      {:ok, "user_123"}
-    else
-      case verify_and_validate(token, get_signer()) do
-        {:ok, %{"sub" => user_id}} ->
-          {:ok, user_id}
 
-        {:error, reason} ->
-          {:error, reason}
-      end
-    end
-  end
-
-  @doc """
-  Gets the JWT signer from Clerk's public key.
-  """
-  def get_signer do
-    # For development, we'll use a simple signer
-    # In production, you'd fetch Clerk's public key
-    secret_key = Application.get_env(:packetflow_chat, :clerk_secret_key, "dev-secret-key")
-    Joken.Signer.create("HS256", secret_key)
-  end
 
   @doc """
   Plug for authenticating HTTP requests.
@@ -64,35 +38,20 @@ defmodule PacketflowChat.Auth do
   defp authenticate_jwt_request(conn) do
     case get_req_header(conn, "authorization") do
       ["Bearer " <> token] ->
-        # First try JWT token
-        case verify_token(token) do
-          {:ok, clerk_user_id} ->
-            # Try to find user by clerk_user_id
-            case Accounts.get_user_by_clerk_id(clerk_user_id) do
+        # Try as base64-encoded session token
+        case Base.decode64(token) do
+          {:ok, decoded_token} ->
+            case Accounts.get_user_by_session_token(decoded_token) do
               %Accounts.User{} = user ->
                 assign(conn, :current_user, user)
-                |> assign(:current_user_id, clerk_user_id)
+                |> assign(:current_user_id, user.id)
 
               nil ->
-                unauthorized_response(conn, "User not found")
+                unauthorized_response(conn, "Invalid session token")
             end
 
-          {:error, _reason} ->
-            # JWT failed, try as base64-encoded session token
-            case Base.decode64(token) do
-              {:ok, decoded_token} ->
-                case Accounts.get_user_by_session_token(decoded_token) do
-                  %Accounts.User{} = user ->
-                    assign(conn, :current_user, user)
-                    |> assign(:current_user_id, user.id)
-
-                  nil ->
-                    unauthorized_response(conn, "Invalid session token")
-                end
-
-              :error ->
-                unauthorized_response(conn, "Invalid token format")
-            end
+          :error ->
+            unauthorized_response(conn, "Invalid token format")
         end
 
       _ ->

@@ -6,12 +6,12 @@ defmodule PacketflowChat.Chat.RoomMember do
 
   schema "room_members" do
     field :room_id, :binary_id
-    field :user_id, :string
+    field :user_id, :binary_id
     field :joined_at, :utc_datetime
     field :role, :string, default: "member"
 
     belongs_to :room, PacketflowChat.Chat.Room, foreign_key: :room_id, define_field: false
-    belongs_to :user, PacketflowChat.Accounts.User, foreign_key: :user_id, references: :clerk_user_id, define_field: false
+    belongs_to :user, PacketflowChat.Accounts.User, foreign_key: :user_id, references: :id, define_field: false
   end
 
   @doc false

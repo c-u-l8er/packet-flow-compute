@@ -7,29 +7,7 @@ defmodule PacketflowChat.Accounts do
   alias PacketflowChat.Repo
   alias PacketflowChat.Accounts.{User, UserToken}
 
-  @doc """
-  Gets a single user by clerk_user_id.
-  """
-  def get_user_by_clerk_id(clerk_user_id) do
-    Repo.get_by(User, clerk_user_id: clerk_user_id)
-  end
 
-  @doc """
-  Creates or updates a user from Clerk data.
-  """
-  def create_or_update_user(attrs) do
-    case get_user_by_clerk_id(attrs["clerk_user_id"] || attrs[:clerk_user_id]) do
-      nil ->
-        %User{}
-        |> User.changeset(attrs)
-        |> Repo.insert()
-
-      user ->
-        user
-        |> User.changeset(attrs)
-        |> Repo.update()
-    end
-  end
 
   @doc """
   Returns the list of users.

@@ -8,9 +8,13 @@
 	let channel: any = null;
 	let messages: any[] = [];
 	let newMessage = '';
-	let currentRoom = 'General';
+	let currentRoom = '';
 	let isConnected = false;
 	let rooms: any[] = [];
+	let showCreateRoom = false;
+	let newRoomName = '';
+	let newRoomDescription = '';
+	let isPrivateRoom = false;
 	
 	$: user = $authStore.user;
 	$: token = $authStore.token;
@@ -26,8 +30,8 @@
 		}
 		
 		if ($authStore.user && $authStore.token) {
+			await loadRooms();
 			initializeSocket();
-			loadRooms();
 		}
 	});
 	
@@ -37,8 +41,9 @@
 	}
 	
 	$: if (user && token && !socket) {
-		initializeSocket();
-		loadRooms();
+		loadRooms().then(() => {
+			initializeSocket();
+		});
 	}
 	
 	function initializeSocket() {
@@ -66,7 +71,14 @@
 			isConnected = false;
 		});
 		
-		joinRoom(currentRoom);
+		// Join the first available room if none selected
+		if (!currentRoom && rooms.length > 0) {
+			currentRoom = rooms[0].id;
+		}
+		
+		if (currentRoom) {
+			joinRoom(currentRoom);
+		}
 	}
 	
 	function joinRoom(roomId: string) {
@@ -143,13 +155,73 @@
 		}, 100);
 	}
 	
-	function loadRooms() {
-		// Mock rooms data - these match the seeded rooms in the database
-		rooms = [
-			{ id: 'General', name: 'General', is_private: false },
-			{ id: 'Random', name: 'Random', is_private: false },
-			{ id: 'Tech Talk', name: 'Tech Talk', is_private: false }
-		];
+	async function loadRooms() {
+		if (!token) return;
+		
+		try {
+			const response = await fetch('http://localhost:4000/api/rooms/public', {
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json'
+				}
+			});
+			
+			if (response.ok) {
+				const data = await response.json();
+				rooms = data.rooms || [];
+			} else {
+				console.error('Failed to load rooms:', response.status);
+				// Fallback to seeded room UUIDs
+				rooms = [
+					{ id: '550e8400-e29b-41d4-a716-446655440000', name: 'General', is_private: false },
+					{ id: '550e8400-e29b-41d4-a716-446655440001', name: 'Random', is_private: false },
+					{ id: '550e8400-e29b-41d4-a716-446655440002', name: 'Tech Talk', is_private: false }
+				];
+			}
+		} catch (error) {
+			console.error('Error loading rooms:', error);
+			// Fallback to seeded room UUIDs
+			rooms = [
+				{ id: '550e8400-e29b-41d4-a716-446655440000', name: 'General', is_private: false },
+				{ id: '550e8400-e29b-41d4-a716-446655440001', name: 'Random', is_private: false },
+				{ id: '550e8400-e29b-41d4-a716-446655440002', name: 'Tech Talk', is_private: false }
+			];
+		}
+	}
+	
+	async function createRoom() {
+		if (!newRoomName.trim() || !token) return;
+		
+		try {
+			const response = await fetch('http://localhost:4000/api/rooms', {
+				method: 'POST',
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name: newRoomName.trim(),
+					description: newRoomDescription.trim(),
+					is_private: isPrivateRoom
+				})
+			});
+			
+			if (response.ok) {
+				const data = await response.json();
+				rooms = [...rooms, data.room];
+				showCreateRoom = false;
+				newRoomName = '';
+				newRoomDescription = '';
+				isPrivateRoom = false;
+				
+				// Join the newly created room
+				joinRoom(data.room.id);
+			} else {
+				console.error('Failed to create room:', response.status);
+			}
+		} catch (error) {
+			console.error('Error creating room:', error);
+		}
 	}
 	
 	function formatTime(timestamp: string) {
@@ -193,9 +265,20 @@
 		</div>
 		
 		<div class="p-4">
-			<h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-2">
-				Rooms
-			</h3>
+			<div class="flex items-center justify-between mb-2">
+				<h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+					Rooms
+				</h3>
+				<button
+					on:click={() => showCreateRoom = true}
+					class="text-gray-400 hover:text-white transition-colors p-1 rounded"
+					title="Create Room"
+				>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+					</svg>
+				</button>
+			</div>
 			<div class="space-y-1">
 				{#each rooms as room}
 					<button
@@ -203,6 +286,11 @@
 						on:click={() => joinRoom(room.id)}
 					>
 						# {room.name}
+						{#if room.is_private}
+							<svg class="inline w-3 h-3 ml-1 opacity-50" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+							</svg>
+						{/if}
 					</button>
 				{/each}
 			</div>
@@ -275,4 +363,81 @@
 		</div>
 	</div>
 </div>
+
+<!-- Create Room Modal -->
+{#if showCreateRoom}
+	<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+		<div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+			<div class="flex items-center justify-between mb-4">
+				<h3 class="text-lg font-semibold text-gray-900">Create New Room</h3>
+				<button
+					on:click={() => showCreateRoom = false}
+					class="text-gray-400 hover:text-gray-600"
+				>
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				</button>
+			</div>
+			
+			<form on:submit|preventDefault={createRoom} class="space-y-4">
+				<div>
+					<label for="roomName" class="block text-sm font-medium text-gray-700 mb-1">
+						Room Name *
+					</label>
+					<input
+						id="roomName"
+						type="text"
+						bind:value={newRoomName}
+						placeholder="Enter room name"
+						class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+						required
+					>
+				</div>
+				
+				<div>
+					<label for="roomDescription" class="block text-sm font-medium text-gray-700 mb-1">
+						Description
+					</label>
+					<textarea
+						id="roomDescription"
+						bind:value={newRoomDescription}
+						placeholder="Enter room description (optional)"
+						class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+						rows="2"
+					></textarea>
+				</div>
+				
+				<div class="flex items-center">
+					<input
+						id="isPrivate"
+						type="checkbox"
+						bind:checked={isPrivateRoom}
+						class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+					>
+					<label for="isPrivate" class="ml-2 block text-sm text-gray-700">
+						Private room (invite only)
+					</label>
+				</div>
+				
+				<div class="flex justify-end space-x-3 pt-4">
+					<button
+						type="button"
+						on:click={() => showCreateRoom = false}
+						class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+					>
+						Cancel
+					</button>
+					<button
+						type="submit"
+						disabled={!newRoomName.trim()}
+						class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+					>
+						Create Room
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+{/if}
 {/if}

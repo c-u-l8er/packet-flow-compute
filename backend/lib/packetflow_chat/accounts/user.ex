@@ -6,7 +6,6 @@ defmodule PacketflowChat.Accounts.User do
   @foreign_key_type :binary_id
 
   schema "users" do
-    field :clerk_user_id, :string
     field :username, :string
     field :email, :string
     field :avatar_url, :string
@@ -20,10 +19,10 @@ defmodule PacketflowChat.Accounts.User do
     field :password_confirmation, :string, virtual: true, redact: true
     field :current_password, :string, virtual: true, redact: true
 
-    has_many :created_rooms, PacketflowChat.Chat.Room, foreign_key: :created_by, references: :clerk_user_id
-    has_many :messages, PacketflowChat.Chat.Message, foreign_key: :user_id, references: :clerk_user_id
+    has_many :created_rooms, PacketflowChat.Chat.Room, foreign_key: :created_by, references: :id
+    has_many :messages, PacketflowChat.Chat.Message, foreign_key: :user_id, references: :id
     many_to_many :rooms, PacketflowChat.Chat.Room, join_through: PacketflowChat.Chat.RoomMember,
-      join_keys: [user_id: :clerk_user_id, room_id: :id]
+      join_keys: [user_id: :id, room_id: :id]
   end
 
   @doc """
@@ -92,17 +91,7 @@ defmodule PacketflowChat.Accounts.User do
     |> validate_password(opts)
   end
 
-  @doc """
-  Changeset for Clerk-based users (backward compatibility)
-  """
-  def clerk_changeset(user, attrs) do
-    user
-    |> cast(attrs, [:clerk_user_id, :username, :email, :avatar_url])
-    |> validate_required([:clerk_user_id, :username, :email])
-    |> unique_constraint(:clerk_user_id)
-    |> unique_constraint(:username)
-    |> unique_constraint(:email)
-  end
+
 
   @doc """
   General changeset for updating user profile
