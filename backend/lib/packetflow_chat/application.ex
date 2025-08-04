@@ -14,8 +14,10 @@ defmodule PacketflowChat.Application do
       {Phoenix.PubSub, name: PacketflowChat.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: PacketflowChat.Finch},
-      # Start a worker by calling: PacketflowChat.Worker.start_link(arg)
-      # {PacketflowChat.Worker, arg},
+      # Start PacketFlow core systems
+      PacketFlow.CapabilityRegistry,
+      PacketFlow.ExecutionEngine,
+      PacketFlow.AIPlanner,
       # Start to serve requests, typically the last entry
       PacketflowChatWeb.Endpoint
     ]
@@ -23,7 +25,18 @@ defmodule PacketflowChat.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: PacketflowChat.Supervisor]
-    Supervisor.start_link(children, opts)
+
+    case Supervisor.start_link(children, opts) do
+      {:ok, pid} ->
+        # Load PacketFlow capabilities after everything is started
+        Task.start(fn ->
+          Process.sleep(1000) # Give systems time to fully start
+          PacketFlow.CapabilityLoader.load_all_capabilities()
+        end)
+        {:ok, pid}
+
+      error -> error
+    end
   end
 
   # Tell Phoenix to update the endpoint configuration

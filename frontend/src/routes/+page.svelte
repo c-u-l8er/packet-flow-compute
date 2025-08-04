@@ -4,6 +4,7 @@
 	import { authStore } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import { APP_NAME } from '$lib/config';
+	import AIInterface from '$lib/components/AIInterface.svelte';
 	
 	let socket: Socket | null = null;
 	let channel: any = null;
@@ -726,6 +727,23 @@
 				</button>
 			</div>
 		</div>
+	</div>
+	
+	<!-- AI Assistant Side Panel -->
+	<div class="w-96 bg-gray-50 border-l border-gray-200 flex flex-col">
+		<AIInterface 
+			{currentRoom} 
+			{publicRooms} 
+			{privateRooms}
+			onSendMessage={(content) => {
+				if (channel) {
+					channel.push('send_message', {
+						content: content,
+						message_type: 'ai_response'
+					});
+				}
+			}}
+		/>
 	</div>
 </div>
 

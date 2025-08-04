@@ -47,6 +47,15 @@ defmodule PacketflowChatWeb.Router do
     options "/rooms/:id/remove", CorsController, :options
     options "/rooms/:id/role", CorsController, :options
 
+    # AI/PacketFlow CORS options
+    options "/ai/plan", CorsController, :options
+    options "/ai/execute", CorsController, :options
+    options "/ai/capability/:capability_id", CorsController, :options
+    options "/ai/capabilities", CorsController, :options
+    options "/ai/analyze-intent", CorsController, :options
+    options "/ai/execution/:execution_id", CorsController, :options
+    options "/ai/natural", CorsController, :options
+
     # Public routes
     post "/users", UserController, :create_or_update
 
@@ -82,6 +91,15 @@ defmodule PacketflowChatWeb.Router do
     post "/rooms/:id/invite", RoomController, :invite_user
     delete "/rooms/:id/remove", RoomController, :remove_user
     put "/rooms/:id/role", RoomController, :update_user_role
+
+    # AI/PacketFlow routes
+    post "/ai/plan", AIController, :generate_plan
+    post "/ai/execute", AIController, :execute_plan
+    post "/ai/capability/:capability_id", AIController, :execute_capability
+    get "/ai/capabilities", AIController, :list_capabilities
+    post "/ai/analyze-intent", AIController, :analyze_intent
+    get "/ai/execution/:execution_id", AIController, :get_execution_status
+    post "/ai/natural", AIController, :natural_language_interface
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
