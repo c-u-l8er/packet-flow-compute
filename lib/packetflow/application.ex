@@ -7,6 +7,9 @@ defmodule PacketFlow.Application do
   def start(_type, _args) do
     children = [
       # Add any supervisors or workers here as needed
+      {PacketFlow.Config, []},
+      {PacketFlow.Plugin, []},
+      {PacketFlow.Component, []},
       {PacketFlow.Registry, []}
     ]
 

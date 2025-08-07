@@ -13,7 +13,9 @@ defmodule PacketFlow.Registry do
       reactors: %{},
       capabilities: %{},
       contexts: %{},
-      intents: %{}
+      intents: %{},
+      components: %{},
+      watchers: %{}
     }}
   end
 
@@ -33,6 +35,10 @@ defmodule PacketFlow.Registry do
     GenServer.call(__MODULE__, {:register_intent, id, intent_info})
   end
 
+  def register_component(id, component_info) do
+    GenServer.call(__MODULE__, {:register_component, id, component_info})
+  end
+
   def lookup_reactor(id) do
     GenServer.call(__MODULE__, {:lookup_reactor, id})
   end
@@ -49,6 +55,10 @@ defmodule PacketFlow.Registry do
     GenServer.call(__MODULE__, {:lookup_intent, id})
   end
 
+  def lookup_component(id) do
+    GenServer.call(__MODULE__, {:lookup_component, id})
+  end
+
   def list_reactors do
     GenServer.call(__MODULE__, :list_reactors)
   end
@@ -63,6 +73,18 @@ defmodule PacketFlow.Registry do
 
   def list_intents do
     GenServer.call(__MODULE__, :list_intents)
+  end
+
+  def list_components do
+    GenServer.call(__MODULE__, :list_components)
+  end
+
+  def watch_component(id, pid) do
+    GenServer.call(__MODULE__, {:watch_component, id, pid})
+  end
+
+  def unwatch_component(id, pid) do
+    GenServer.call(__MODULE__, {:unwatch_component, id, pid})
   end
 
   # GenServer callbacks
@@ -87,6 +109,12 @@ defmodule PacketFlow.Registry do
     {:reply, :ok, new_state}
   end
 
+  def handle_call({:register_component, id, component_info}, _from, state) do
+    new_state = Map.put(state, :components, Map.put(state.components, id, component_info))
+    notify_watchers({:component_registered, id}, component_info, state.watchers)
+    {:reply, :ok, new_state}
+  end
+
   def handle_call({:lookup_reactor, id}, _from, state) do
     {:reply, Map.get(state.reactors, id), state}
   end
@@ -103,6 +131,10 @@ defmodule PacketFlow.Registry do
     {:reply, Map.get(state.intents, id), state}
   end
 
+  def handle_call({:lookup_component, id}, _from, state) do
+    {:reply, Map.get(state.components, id), state}
+  end
+
   def handle_call(:list_reactors, _from, state) do
     {:reply, Map.keys(state.reactors), state}
   end
@@ -117,5 +149,32 @@ defmodule PacketFlow.Registry do
 
   def handle_call(:list_intents, _from, state) do
     {:reply, Map.keys(state.intents), state}
+  end
+
+  def handle_call(:list_components, _from, state) do
+    {:reply, Map.keys(state.components), state}
+  end
+
+  def handle_call({:watch_component, id, pid}, _from, state) do
+    watchers = Map.update(state.watchers, id, [pid], &[pid | &1])
+    new_state = %{state | watchers: watchers}
+    {:reply, :ok, new_state}
+  end
+
+  def handle_call({:unwatch_component, id, pid}, _from, state) do
+    watchers = Map.update(state.watchers, id, [], &List.delete(&1, pid))
+    new_state = %{state | watchers: watchers}
+    {:reply, :ok, new_state}
+  end
+
+  # Private functions
+
+  defp notify_watchers(event, data, watchers) do
+    # Notify all watchers of component events
+    Enum.each(watchers, fn {component_id, pids} ->
+      Enum.each(pids, fn pid ->
+        send(pid, {:registry_event, event, data})
+      end)
+    end)
   end
 end

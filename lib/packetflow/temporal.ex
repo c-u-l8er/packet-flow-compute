@@ -302,10 +302,16 @@ defmodule PacketFlow.Temporal.Validation do
         end
 
         defp validate_business_hours(time) do
-          # Validate business hours (9 AM - 5 PM)
-          # Convert milliseconds to hours (simplified)
-          # For testing purposes, always return true
-          true
+          # Validate business hours using dynamic configuration
+          start_hour = PacketFlow.Config.get_component(:temporal, :business_hours_start, {9, 0})
+          end_hour = PacketFlow.Config.get_component(:temporal, :business_hours_end, {17, 0})
+
+          # Convert current time to hour (simplified)
+          current_hour = rem(div(time, 3600000), 24)
+          {start_h, _} = start_hour
+          {end_h, _} = end_hour
+
+          current_hour >= start_h and current_hour <= end_h
         end
 
         defp validate_weekdays(time) do

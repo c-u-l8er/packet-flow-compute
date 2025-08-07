@@ -184,8 +184,15 @@ defmodule PacketFlow.Actor.Routing do
 
         # Default routing implementations
         def route_message(message, targets) do
-          # Default round-robin routing
-          route_round_robin(message, targets)
+          # Use dynamic routing strategy from configuration
+          strategy = PacketFlow.Config.get_component(:actor, :routing_strategy, :round_robin)
+
+          case strategy do
+            :round_robin -> route_round_robin(message, targets)
+            :load_balanced -> route_load_balanced(message, targets)
+            :capability_aware -> route_capability_aware(message, targets)
+            _ -> route_round_robin(message, targets)
+          end
         end
 
         def route_round_robin(message, targets) do

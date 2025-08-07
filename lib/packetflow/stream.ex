@@ -43,11 +43,13 @@ defmodule PacketFlow.Stream.Processing do
       defmodule unquote(name) do
         @behaviour PacketFlow.Stream.Processor
 
-        # Stream configuration
+        # Stream configuration - now using dynamic config
         @stream_config %{
-          backpressure_strategy: :drop_oldest,
-          window_size: 1000,
-          processing_timeout: 5000
+          backpressure_strategy: PacketFlow.Config.get_component(:stream, :backpressure_strategy, :drop_oldest),
+          window_size: PacketFlow.Config.get_component(:stream, :window_size, 1000),
+          processing_timeout: PacketFlow.Config.get_component(:stream, :processing_timeout, 5000),
+          buffer_size: PacketFlow.Config.get_component(:stream, :buffer_size, 10000),
+          batch_size: PacketFlow.Config.get_component(:stream, :batch_size, 100)
         }
 
         unquote(body)
