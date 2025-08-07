@@ -40,6 +40,8 @@
                         'Elixir.PacketFlow.Stream.Window',
                         'Elixir.PacketFlow.Stream.Windowing',
                         'Elixir.PacketFlow.StreamMiddleware',
+                        'Elixir.PacketFlow.Substrate',
+                        'Elixir.PacketFlow.Substrate.Interface',
                         'Elixir.PacketFlow.Temporal',
                         'Elixir.PacketFlow.Temporal.Intent',
                         'Elixir.PacketFlow.Temporal.Logic',
