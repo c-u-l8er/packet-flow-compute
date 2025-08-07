@@ -1,290 +1,407 @@
-# PacketFlow: The Capability-Oriented Distributed Systems Framework
+# PacketFlow
 
-## The Core Problem
+PacketFlow is an Elixir library that provides a domain-specific language (DSL) for building intent-context-capability oriented systems. It offers a clean, declarative approach to modeling complex domain logic with capability-based security, context propagation, and reactor pattern integration.
 
-You know how distributed systems are a mess, right? You've got microservices talking to each other, message queues, load balancers, database clusters - and every time you want to add AI capabilities or optimize for intelligent workflows, you're basically re-engineering the whole thing from scratch. There's no systematic way to model what capabilities your system has or how AI agents should discover and use them.
+## Features
 
-## The Big Idea
+- **DSL Macros**: Rich domain-specific language for rapid development
+- **Capability-Based Security**: Fine-grained permission control with implication hierarchies
+- **Context Propagation**: Automatic context management with propagation strategies
+- **Reactor Pattern**: Stateful message processing with effect system integration
+- **Simple Abstractions**: Easy-to-use macros for common patterns
+- **Registry Integration**: Component discovery and management
+- **Production Ready**: Comprehensive testing, error handling, and documentation
 
-PacketFlow says: "What if we treated distributed computing like a network of discoverable capabilities instead of services?"
+## Installation
 
-Just like how you can discover and invoke functions in a programming language, what if you could discover and compose intelligent capabilities across network boundaries with the same simplicity?
-
-## Declarative Capabilities (The New Primitives)
-
-Instead of thinking about "services" or "endpoints," you think about **capabilities** - declarative units of functionality that can be discovered, composed, and executed. But here's the key: every capability is defined with explicit contracts:
+Add PacketFlow to your `mix.exs` dependencies:
 
 ```elixir
-capability :user_profile_enrichment do
-  intent "Enrich user profile data with AI-powered insights"
-  requires [:user_id, :data_sources]
-  provides [:enriched_profile, :insights, :confidence_score]
-  
-  effect :audit_log, level: :info
-  effect :metrics, type: :histogram, name: "enrichment_duration"
-  
-  execute fn payload, context ->
-    # Capability implementation
-  end
+def deps do
+  [
+    {:packetflow, "~> 0.1.0"}
+  ]
 end
 ```
 
-Each capability declares:
-- **Intent**: Human-readable description of what it does
-- **Requires**: What data it needs to execute
-- **Provides**: What results it guarantees to return
-- **Effects**: Observable side effects (logging, metrics, notifications)
-- **Execute**: The actual implementation logic
-
-## Why This Capability Model Matters
-
-Here's where it gets interesting. Unlike traditional services, capabilities are:
-
-- **Discoverable**: AI agents can find capabilities by searching intents and contracts
-- **Composable**: Capabilities can be automatically chained based on requires/provides contracts
-- **Observable**: Every execution is automatically traced, logged, and metered
-- **Intelligent**: AI can reason about capability combinations to fulfill complex requests
-
-The system can automatically route capability requests, validate contracts, and compose workflows without you having to configure service meshes or write integration code.
-
-## Actor-Based Persistence (Stateful Intelligence) ✅ IMPLEMENTED
-
-Individual capabilities are stateless, but real AI applications need memory and context. That's where **capability actors** come in - persistent processes that maintain conversation state and can execute capabilities with memory:
+## Quick Start
 
 ```elixir
-actor_capability :ai_research_assistant do
-  intent "Conduct multi-turn research conversations with memory"
-  requires [:query, :research_context]
-  provides [:research_results, :conversation_state]
-  
-  # Actor state persists across invocations
-  initial_state %{
-    research_history: [],
-    knowledge_graph: %{},
-    conversation_memory: []
-  }
-  
-  # Handle conversational interactions
-  handle_message do
-    # Pattern matching for different message types
+defmodule MyApp do
+  use PacketFlow.DSL
+
+  # Define capabilities with implications
+  defsimple_capability UserCap, [:basic, :admin] do
+    @implications [
+      {UserCap.admin, [UserCap.basic]}
+    ]
   end
-end
 
-# Usage: Send messages to persistent actors
-PacketFlow.send_to_actor(:ai_research_assistant, "user123", %{
-  query: "What are the latest trends in AI?",
-  context: %{previous_topics: ["machine learning", "neural networks"]}
-})
-```
+  # Define context with propagation strategy
+  defsimple_context UserContext, [:user_id, :capabilities] do
+    @propagation_strategy :inherit
+  end
 
-**Status**: ✅ **Fully implemented in Phase 1** with comprehensive testing showing:
-- Persistent actor state across messages
-- Automatic actor lifecycle management  
-- Stateful conversation capabilities
-- Memory persistence and retrieval
+  # Define intents with capability requirements
+  defsimple_intent IncrementIntent, [:user_id] do
+    @capabilities [UserCap.basic]
+    @effect CounterEffect.increment
+  end
 
-## Composition Workflows (Intelligent Orchestration)
+  defsimple_intent ResetIntent, [:user_id] do
+    @capabilities [UserCap.admin]
+    @effect CounterEffect.reset
+  end
 
-Capabilities can be composed into complex workflows that handle real-world business logic:
-
-```elixir
-capability :customer_onboarding_flow do
-  intent "Complete customer onboarding with AI assistance"
-  requires [:customer_data, :onboarding_preferences]
-  provides [:onboarding_status, :next_steps]
-  
-  pipeline do
-    step :validate_customer_data,
-      from: [:customer_data],
-      to: [:validated_data, :validation_errors]
-    
-    conditional do
-      when :validation_errors == [] do
-        parallel do
-          branch :ai_risk_assessment,
-            from: [:validated_data],
-            to: [:risk_score, :risk_factors]
-            
-          branch :preference_analysis,
-            from: [:onboarding_preferences],
-            to: [:recommended_products, :personalization]
-        end
-        
-        step :generate_onboarding_plan,
-          from: [:risk_score, :recommended_products],
-          to: [:onboarding_plan]
+  # Define reactor with state management
+  defsimple_reactor CounterReactor, [:count] do
+    def process_intent(intent, state) do
+      case intent do
+        %IncrementIntent{} ->
+          new_state = %{state | count: state.count + 1}
+          {:ok, new_state, []}
+        %ResetIntent{} ->
+          new_state = %{state | count: 0}
+          {:ok, new_state, []}
+        _ ->
+          {:error, :unsupported_intent}
       end
-      
-      otherwise do
-        step :request_data_correction,
-          from: [:validation_errors],
-          to: [:correction_request]
-      end
+    end
+  end
+
+  # Define effects
+  defmodule CounterEffect do
+    def increment(intent) do
+      IO.puts("Incrementing counter for user: #{intent.user_id}")
+      {:ok, :incremented}
+    end
+
+    def reset(intent) do
+      IO.puts("Resetting counter for user: #{intent.user_id}")
+      {:ok, :reset}
     end
   end
 end
 ```
 
-## Intelligence Modules (The Extension System)
+## Usage
 
-The core PacketFlow platform (Layers 1-4) provides the infrastructure, but intelligence comes from pluggable Layer 5 modules:
+### Basic DSL Macros
 
-### AI Planning Module
+PacketFlow provides several DSL macros for common patterns:
+
+#### Simple Capabilities
+
 ```elixir
-# Transforms natural language into capability workflows
-"I need to onboard a new enterprise customer with special compliance requirements"
-# Becomes:
-pipeline [
-  :validate_enterprise_data,
-  :compliance_check,
-  :generate_custom_agreement,
-  :schedule_onboarding_call
-]
-```
-
-### Spatial Knowledge Arena Module
-```elixir
-# Creates game-like environments where capabilities interact
-arena :customer_support_environment do
-  zone :intake, capacity: 100, specialization: :general
-  zone :technical_support, capacity: 20, specialization: :technical
-  zone :escalation, capacity: 5, specialization: :management
-  
-  # Capabilities move through zones based on problem complexity
-  physics do
-    capability_attraction :technical_issues -> :technical_support
-    load_balancing :overflow -> :parallel_zones
-  end
+defsimple_capability FileCap, [:read, :write, :admin] do
+  @implications [
+    {FileCap.admin, [FileCap.read, FileCap.write]},
+    {FileCap.write, [FileCap.read]}
+  ]
 end
+
+# Usage
+read_cap = FileCap.read("/path/to/file")
+admin_cap = FileCap.admin()
+FileCap.implies?(admin_cap, read_cap) # true
 ```
 
-## The Runtime System (The Capability Engine)
+#### Simple Contexts
 
-The PacketFlow runtime automatically:
-
-1. **Discovers capabilities** across your distributed system and makes them available to AI agents through MCP protocol integration
-
-2. **Validates contracts** ensuring capabilities receive the data they need and return what they promise
-
-3. **Composes workflows** by matching requires/provides contracts to create intelligent execution plans
-
-4. **Manages actors** providing persistent state and conversation memory for AI interactions
-
-5. **Routes intelligently** using Layer 5 modules that can optimize based on semantic similarity, performance history, or spatial relationships
-
-6. **Handles failures** with automatic retry, circuit breaking, and graceful degradation
-
-## What This Looks Like to You as a Developer
-
-Instead of writing traditional microservices:
-```javascript
-// Traditional approach
-app.post('/api/customer/onboard', async (req, res) => {
-  try {
-    const validation = await callValidationService(req.body);
-    const riskScore = await callRiskService(validation.data);
-    const products = await callRecommendationService(req.body.preferences);
-    const plan = await generateOnboardingPlan(riskScore, products);
-    res.json({plan});
-  } catch (error) {
-    // Manual error handling
-  }
-});
-```
-
-You define capabilities and let PacketFlow handle the orchestration:
 ```elixir
-# PacketFlow approach - define the what, not the how
-capability :customer_onboarding do
-  intent "Complete customer onboarding with AI-powered recommendations"
-  requires [:customer_data, :preferences]
-  provides [:onboarding_plan, :status]
-  
-  # Use composition to express business logic declaratively
-  pipeline do
-    step :validate_customer_data
-    parallel do
-      branch :ai_risk_assessment
-      branch :product_recommendations  
+defsimple_context RequestContext, [:user_id, :session_id, :capabilities] do
+  @propagation_strategy :inherit
+end
+
+# Usage
+context = RequestContext.new(user_id: "user123", session_id: "session456")
+propagated = RequestContext.propagate(context, SomeModule)
+```
+
+#### Simple Intents
+
+```elixir
+defsimple_intent FileReadIntent, [:path, :user_id] do
+  @capabilities [FileCap.read]
+  @effect FileSystemEffect.read_file
+end
+
+# Usage
+intent = FileReadIntent.new("/path/to/file", "user123")
+capabilities = FileReadIntent.required_capabilities(intent)
+```
+
+#### Simple Reactors
+
+```elixir
+defsimple_reactor FileReactor, [:files] do
+  def process_intent(intent, state) do
+    case intent do
+      %FileReadIntent{path: path} ->
+        content = "Content of #{path}"
+        new_state = Map.put(state.files, path, content)
+        {:ok, %{state | files: new_state}, []}
+      _ ->
+        {:error, :unsupported_intent}
     end
-    step :generate_personalized_plan
   end
 end
 ```
 
-AI agents can then discover and use this capability:
+### Advanced DSL Macros
+
+For more complex scenarios, use the full DSL macros:
+
+#### Capabilities
+
+```elixir
+defcapability FileSystemCap do
+  @implications [
+    {FileSystemCap.admin, [FileSystemCap.read, FileSystemCap.write, FileSystemCap.delete]},
+    {FileSystemCap.delete, [FileSystemCap.read, FileSystemCap.write]},
+    {FileSystemCap.write, [FileSystemCap.read]}
+  ]
+
+  def read(path), do: {:read, path}
+  def write(path), do: {:write, path}
+  def delete(path), do: {:delete, path}
+  def admin(), do: {:admin}
+
+  def implies?(cap1, cap2) do
+    implications = @implications
+    |> Enum.find(fn {cap, _} -> cap == cap1 end)
+    |> case do
+      {^cap1, implied_caps} -> Enum.any?(implied_caps, &(&1 == cap2))
+      _ -> cap1 == cap2
+    end
+  end
+end
 ```
-Agent: "I need to onboard a new customer with these details..."
-PacketFlow: *discovers customer_onboarding capability*
-PacketFlow: *validates requirements are met*
-PacketFlow: *executes pipeline with automatic error handling*
-PacketFlow: *returns structured results with full observability*
+
+#### Contexts
+
+```elixir
+defcontext UserContext do
+  @propagation_strategy :inherit
+  @composition_strategy :merge
+
+  defstruct [:user_id, :session_id, :request_id, :capabilities, :trace]
+
+  def new(attrs \\ []) do
+    struct(__MODULE__, attrs)
+    |> compute_capabilities()
+    |> ensure_request_id()
+  end
+
+  def propagate(context, target_module) do
+    case @propagation_strategy do
+      :inherit ->
+        %__MODULE__{
+          user_id: context.user_id,
+          session_id: context.session_id,
+          request_id: generate_request_id(),
+          capabilities: context.capabilities,
+          trace: [target_module | (context.trace || [])]
+        }
+    end
+  end
+
+  def compose(context1, context2, strategy \\ @composition_strategy) do
+    case strategy do
+      :merge ->
+        %__MODULE__{
+          user_id: context2.user_id,
+          session_id: context2.session_id,
+          request_id: generate_request_id(),
+          capabilities: MapSet.union(context1.capabilities, context2.capabilities),
+          trace: (context1.trace || []) ++ (context2.trace || [])
+        }
+    end
+  end
+
+  defp compute_capabilities(context) do
+    capabilities = case context.user_id do
+      "admin" -> MapSet.new([FileSystemCap.admin()])
+      "user" -> MapSet.new([FileSystemCap.read(:any), FileSystemCap.write(:any)])
+      _ -> MapSet.new([FileSystemCap.read(:any)])
+    end
+    %{context | capabilities: capabilities}
+  end
+
+  defp generate_request_id, do: "req_#{:rand.uniform(1000)}"
+  defp ensure_request_id(context) do
+    if context.request_id == nil do
+      %{context | request_id: generate_request_id()}
+    else
+      context
+    end
+  end
+end
 ```
 
-## The Benefits
+#### Intents
 
-**For AI Integration:**
-- AI agents can discover and use capabilities through MCP protocol
-- Natural language requests can be translated into capability workflows
-- Persistent actor state enables multi-turn AI conversations
-- Built-in context propagation for intelligent interactions
+```elixir
+defintent FileReadIntent do
+  @capabilities [FileSystemCap.read]
+  @effect FileSystemEffect.read_file
 
-**For Distributed Systems:**
-- No more manual service discovery or API documentation
-- Automatic workflow composition based on declared contracts
-- Built-in observability without additional tooling
-- Self-optimizing performance through intelligence modules
+  defstruct [:path, :user_id, :session_id]
 
-**For Development Teams:**
-- Declarative business logic that's easy to understand and modify
-- Reusable capabilities that work across different applications
-- Automatic error handling and fault tolerance
-- Rich ecosystem of intelligence modules for specialized needs
+  def new(path, user_id, session_id) do
+    %__MODULE__{
+      path: path,
+      user_id: user_id,
+      session_id: session_id
+    }
+  end
 
-## The Learning Curve
+  def required_capabilities(intent) do
+    [FileSystemCap.read(intent.path)]
+  end
 
-The hardest part is learning to think in terms of capabilities and contracts instead of traditional service APIs. But once you understand how to declare intents, requirements, and effects, you can build distributed AI systems much more systematically.
+  def to_reactor_message(intent, opts \\ []) do
+    %PacketFlow.Reactor.Message{
+      intent: intent,
+      capabilities: required_capabilities(intent),
+      context: opts[:context] || PacketFlow.Context.empty(),
+      metadata: %{type: :file_read, timestamp: System.system_time()},
+      timestamp: System.system_time()
+    }
+  end
 
-Instead of ad-hoc microservice integration, you're composing well-defined capabilities that AI agents can discover and use intelligently.
+  def to_effect(intent, opts \\ []) do
+    PacketFlow.Effect.new(
+      intent: intent,
+      capabilities: required_capabilities(intent),
+      context: opts[:context] || PacketFlow.Context.empty(),
+      continuation: &FileSystemEffect.read_file/1
+    )
+  end
+end
+```
 
-## The Module Ecosystem
+#### Reactors
 
-PacketFlow's power comes from its modular architecture:
+```elixir
+defreactor FileReactor do
+  @initial_state %{files: %{}, operations: []}
 
-- **Core Platform (Layers 1-4)**: Stable, battle-tested infrastructure that handles capabilities, composition, actors, and MCP integration
-- **Intelligence Modules (Layer 5+)**: Pluggable extensions that add AI planning, spatial knowledge environments, performance optimization, and domain-specific intelligence
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__, opts, name: __MODULE__)
+  end
 
-This creates an ecosystem where the platform remains stable while innovation happens in specialized modules.
+  def init(opts) do
+    {:ok, Keyword.get(opts, :initial_state, @initial_state)}
+  end
 
-## Implementation Status
+  def handle_call({:process_intent, intent}, _from, state) do
+    case process_intent(intent, state) do
+      {:ok, new_state, effects} ->
+        schedule_effects(effects)
+        {:reply, :ok, new_state}
+      {:error, reason} ->
+        {:reply, {:error, reason}, state}
+    end
+  end
 
-PacketFlow is a real, working framework with significant functionality already implemented:
+  defp process_intent(intent, state) do
+    case intent do
+      %FileReadIntent{path: path} ->
+        content = Map.get(state.files, path, "Content of #{path}")
+        new_state = %{state | operations: [{:read, path} | state.operations]}
+        {:ok, new_state, [{:file_read, path, content}]}
+      _ ->
+        {:error, :unsupported_intent}
+    end
+  end
 
-### ✅ **Phase 1 Complete: Actor Model Foundation**
-- **Capability Actors**: Persistent processes with state management
-- **Actor Lifecycle**: Automatic creation, timeout handling, and cleanup
-- **Stateful Conversations**: Memory across message interactions
-- **Dynamic Supervision**: Fault-tolerant actor process management
+  defp schedule_effects(effects) do
+    Enum.each(effects, fn effect ->
+      spawn(fn -> execute_effect(effect) end)
+    end)
+  end
 
-### ✅ **Phase 2 Complete: AI Integration**
-- **Natural Language Interface**: Intent analysis and plan generation
-- **LLM Integration**: Anthropic Claude and OpenAI GPT support
-- **Capability Discovery**: AI-powered capability search
-- **Execution Engine**: Automated plan execution with observability
+  defp execute_effect(effect) do
+    IO.puts("Executing effect: #{inspect(effect)}")
+    PacketFlow.Effect.execute(effect)
+  end
+end
+```
 
-### 🚧 **Phase 3 In Progress: MCP Protocol Integration**
-- **Model Context Protocol**: Industry-standard AI tool integration
-- **Tool Discovery**: Automatic MCP tool generation from capabilities
-- **Cross-System Integration**: Connect with external AI systems
-- **Enhanced Frontend**: MCP-aware user interfaces
+### Registry Integration
 
-### 🎯 **Core Capabilities Proven**
+```elixir
+# Register components
+:ok = PacketFlow.Registry.register_reactor("file_reactor", %{id: "file_reactor"})
+:ok = PacketFlow.Registry.register_capability("file_cap", %{id: "file_cap"})
 
-1. ✅ **Discoverable capabilities** - AI agents can find and use capabilities through natural language
-2. ✅ **Declarative composition** - Business logic expressed through capability contracts  
-3. ✅ **Persistent conversations** - Actor state maintains context across interactions
-4. 🚧 **Intelligent optimization** - Performance modules and spatial arenas (upcoming)
+# Look up components
+reactor_info = PacketFlow.Registry.lookup_reactor("file_reactor")
+capability_info = PacketFlow.Registry.lookup_capability("file_cap")
 
-Whether you're building AI agents, distributed applications, or intelligent automation systems, PacketFlow provides working infrastructure to make capabilities discoverable, composable, and observable across network boundaries.
+# List all components
+reactors = PacketFlow.Registry.list_reactors()
+capabilities = PacketFlow.Registry.list_capabilities()
+```
 
-The key insight proven by the implementation: shifting from services and APIs to declarative capabilities enables both humans and AI systems to discover, compose, and execute functionality more intelligently.
+## Testing
+
+Run the test suite:
+
+```bash
+mix test
+```
+
+Run with coverage:
+
+```bash
+mix coveralls
+```
+
+## Examples
+
+See the `examples/` directory for comprehensive examples:
+
+- `simple_example.exs` - Basic DSL usage demonstration
+- `file_system_example.exs` - Advanced file system implementation
+
+## Architecture
+
+### Core Components
+
+1. **DSL Macros**: Provide declarative syntax for common patterns
+2. **Capabilities**: Define permissions with implication hierarchies
+3. **Contexts**: Carry request state with propagation semantics
+4. **Intents**: Represent domain actions with capability requirements
+5. **Reactors**: Process intents with state management
+6. **Effects**: Manage side effects with monadic composition
+7. **Registry**: Manage component discovery and lifecycle
+
+### Design Principles
+
+- **Simplicity**: Easy-to-use macros for common patterns
+- **Type Safety**: All components implement well-defined behaviours
+- **Capability Security**: Fine-grained permission control
+- **Composability**: Components can be combined and extended
+- **Testability**: Comprehensive test coverage and mocking support
+- **Production Ready**: Error handling, logging, and monitoring
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Inspired by algebraic data types and capability-based security
+- Built on Elixir's excellent concurrency primitives
+- Leverages the reactor pattern for scalable processing

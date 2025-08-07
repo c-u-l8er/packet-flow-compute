@@ -1,0 +1,9 @@
+{application,mox,
+             [{applications,[kernel,stdlib,elixir,logger,nimble_ownership]},
+              {description,"Mocks and explicit contracts for Elixir"},
+              {modules,['Elixir.Mox','Elixir.Mox.Application',
+                        'Elixir.Mox.UnexpectedCallError',
+                        'Elixir.Mox.VerificationError']},
+              {registered,[]},
+              {vsn,"1.2.0"},
+              {mod,{'Elixir.Mox.Application',[]}}]}.
