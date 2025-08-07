@@ -4,7 +4,7 @@ defmodule PacketFlow.ActorTest do
 
   # Test actor with lifecycle management
   defactor TestFileActor do
-    def process_intent(intent, context, state) do
+    def process_intent(intent, _context, state) do
       case intent do
         %{operation: :read, path: path} ->
           {:ok, Map.put(state, :last_read, path), []}
@@ -113,7 +113,7 @@ defmodule PacketFlow.ActorTest do
       end)
     end
 
-    defp propagate_to_node(capabilities, node) do
+    defp propagate_to_node(_capabilities, _node) do
       # Mock capability propagation
       :ok
     end

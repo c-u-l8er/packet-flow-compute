@@ -33,7 +33,10 @@ defmodule PacketFlow.MixProject do
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:mox, "~> 1.1", only: :test}
+      {:mox, "~> 1.1", only: :test},
+      {:temple, "~> 0.9"},
+      {:plug, "~> 1.14"},
+      {:jason, "~> 1.4"}
     ]
   end
 

@@ -33,14 +33,14 @@ defmodule PacketFlow.StreamTest do
 
   # Test stream transformation
   deftransform TestFileTransform do
-    def transform(event, context, state) do
+    def transform(event, _context, state) do
       case event do
         %{type: :file_read, path: path} ->
           # Transform read events
           transformed = %{event | path: String.upcase(path)}
           {:ok, transformed, state}
 
-        %{type: :file_write, path: path, content: content} ->
+        %{type: :file_write, path: _path, content: content} ->
           # Transform write events
           transformed = %{event | content: String.upcase(content)}
           {:ok, transformed, state}

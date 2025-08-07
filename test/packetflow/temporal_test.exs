@@ -71,13 +71,13 @@ defmodule PacketFlow.TemporalTest do
 
   # Test temporal validation
   deftemporal_validation TestFileTemporalValidation do
-    defp validate_business_hours(time) do
+    defp validate_business_hours(_time) do
       # Custom business hours validation (9 AM - 5 PM)
       # For testing purposes, always return true
       true
     end
 
-    defp validate_weekdays(time) do
+    defp validate_weekdays(_time) do
       # Custom weekday validation
       # For testing purposes, always return true
       true
@@ -145,7 +145,7 @@ defmodule PacketFlow.TemporalTest do
       # Test constraint validation
       current_time = System.system_time(:millisecond)
       future_time = 2000000000001  # After the deadline
-      past_time = current_time - 1000000
+      _past_time = current_time - 1000000
 
       # Test deadline constraint - should be true for current time if it's before the deadline
       assert TestDeadlineConstraint.validate_constraint(current_time, %{}) == true
@@ -314,7 +314,7 @@ defmodule PacketFlow.TemporalTest do
       context = %{user_id: "user123"}
       state = %{}
 
-      {:ok, new_state, effects} = TestFileTemporalReactor.process_temporal_intent(intent1, context, state)
+      {:ok, new_state, _effects} = TestFileTemporalReactor.process_temporal_intent(intent1, context, state)
       assert {"/test/file", timestamp} = new_state.last_backup
       assert is_integer(timestamp)
 

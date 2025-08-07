@@ -69,7 +69,7 @@ defmodule PacketFlow.ADTTest do
       }
     end
 
-    def compose(context1, context2, _strategy) do
+    def compose(context1, context2, _strategy \\ :default) do
       %__MODULE__{
         user_id: context2.user_id,
         session_id: context2.session_id,
