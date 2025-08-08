@@ -1,36 +1,33 @@
 import Config
 
-# Configure for test environment
-config :packetflow_chat_demo,
-  debug_mode: false,
-  enable_verbose_logging: false
+# Configure your database
+#
+# The MIX_TEST_PARTITION environment variable can be used
+# to provide built-in test partitioning in CI environment.
+# Run `mix help test` for more information.
+# config :packetflow_chat_demo, PacketflowChatDemo.Repo,
+#   username: "postgres",
+#   password: "postgres",
+#   hostname: "localhost",
+#   database: "packetflow_chat_demo_test#{System.get_env("MIX_TEST_PARTITION")}",
+#   pool: Ecto.Adapters.SQL.Sandbox,
+#   pool_size: 10
 
-# Test-specific logging (minimal)
-config :logger, :console,
-  level: :warn,
-  format: "$time [$level] $message\n"
+# We don't run a server during test. If one is required,
+# you can enable the server option below.
+config :packetflow_chat_demo, PacketflowChatDemoWeb.Endpoint,
+  http: [ip: {127, 0, 0, 1}, port: 4002],
+  secret_key_base: "zwNFZ175ewdpJnB2wH+Ve0zmLu6hPbrw54+1l1mrj60zkbdsyunrJexzywMQpQlG",
+  server: false
 
-# PacketFlow test logging (minimal)
-config :logger, :packetflow,
-  level: :warn,
-  format: "$time [PacketFlow] [$level] $message\n"
+# In test we don't send emails.
+# config :packetflow_chat_demo, PacketflowChatDemo.Mailer, adapter: Swoosh.Adapters.Test
 
-# Test web server settings
-config :packetflow_chat_demo, :web,
-  port: 4001,  # Different port for tests
-  host: "localhost",
-  enable_cors: false
+# Disable swoosh api client as it is only required for production adapters.
+# config :swoosh, :api_client, false
 
-# Test chat settings
-config :packetflow_chat_demo, :chat,
-  default_model: "test-model",
-  default_temperature: 0.5,
-  default_max_tokens: 100,
-  enable_simulation: true
+# Print only warnings and errors during test
+config :logger, level: :warn
 
-# Test session settings
-config :packetflow_chat_demo, :sessions,
-  max_sessions_per_user: 5,
-  session_timeout_minutes: 10,
-  enable_session_persistence: false  # Don't persist in tests
-
+# Initialize plugs at runtime for faster test compilation
+config :phoenix, :plug_init_mode, :runtime

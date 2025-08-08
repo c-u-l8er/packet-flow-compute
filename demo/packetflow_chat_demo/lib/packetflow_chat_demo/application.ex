@@ -8,35 +8,22 @@ defmodule PacketflowChatDemo.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start PubSub for streaming support
+      {Phoenix.PubSub, name: PacketflowChatDemo.PubSub},
+
       # Start the chat reactor
-      PacketflowChatDemo.ChatReactor
+      PacketflowChatDemo.ChatReactor,
+
+      # Start the Phoenix endpoint
+      PacketflowChatDemoWeb.Endpoint,
+
+      # Start the telemetry supervisor
+      PacketflowChatDemoWeb.Telemetry
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: PacketflowChatDemo.Supervisor]
-    {:ok, pid} = Supervisor.start_link(children, opts)
-
-    # Start the web server manually
-    start_web_server()
-
-    {:ok, pid}
-  end
-
-  defp start_web_server do
-    # Start Cowboy HTTP server with our Plug
-    {:ok, _} = :cowboy.start_clear(:http,
-      [port: 4000],
-      %{env: %{dispatch: dispatch_table()}}
-    )
-  end
-
-  defp dispatch_table do
-    :cowboy_router.compile([
-      {:_, [
-        {"/", PacketflowChatDemo.Web, []},
-        {"/api/[...]", PacketflowChatDemo.Web, []}
-      ]}
-    ])
+    Supervisor.start_link(children, opts)
   end
 end

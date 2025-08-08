@@ -1,0 +1,21 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Custom styles for the chat demo */
+.chat-container {
+  height: calc(100vh - 200px);
+}
+
+.message-bubble {
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.typing-indicator {
+  display: none;
+}
+
+.typing-indicator.show {
+  display: block;
+}

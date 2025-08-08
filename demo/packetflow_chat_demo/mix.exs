@@ -27,6 +27,13 @@ defmodule PacketflowChatDemo.MixProject do
       # PacketFlow dependency (local path for demo)
       {:packetflow, path: "../.."},
 
+      # Phoenix LiveView for real-time web interface
+      {:phoenix, "~> 1.7"},
+      {:phoenix_live_view, "~> 0.20"},
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
+      {:phoenix_html, "~> 4.0"},
+      {:phoenix_live_dashboard, "~> 0.8", only: :dev},
+
       # Web framework dependencies
       {:plug, "~> 1.14"},
       {:cowboy, "~> 2.10"},
@@ -34,6 +41,10 @@ defmodule PacketflowChatDemo.MixProject do
 
       # HTTP client for API calls
       {:httpoison, "~> 2.0"},
+      {:hackney, "~> 1.18"},
+
+      # Server-Sent Events for streaming
+      {:event_bus, "~> 1.7"},
 
       # Template engine
       {:temple, "~> 0.9"},
@@ -41,7 +52,14 @@ defmodule PacketflowChatDemo.MixProject do
       # Development and testing dependencies
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+
+      # Asset building
+      {:esbuild, "~> 0.8", only: :dev},
+      {:tailwind, "~> 0.2", only: :dev},
+
+      # Internationalization
+      {:gettext, "~> 0.20"}
     ]
   end
 

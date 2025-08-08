@@ -17,11 +17,16 @@ defmodule PacketflowChatDemo.ChatSystem do
     def send_message(), do: {:send_message}
     def view_history(), do: {:view_history}
     def admin(), do: {:admin}
+    def stream_response(), do: {:stream_response}
+    def manage_sessions(), do: {:manage_sessions}
+    def rate_limit(), do: {:rate_limit}
 
     def implications do
       [
-        {admin(), [send_message(), view_history()]},
-        {send_message(), [view_history()]}
+        {admin(), [send_message(), view_history(), stream_response(), manage_sessions()]},
+        {send_message(), [view_history(), rate_limit()]},
+        {stream_response(), [view_history()]},
+        {manage_sessions(), [view_history()]}
       ]
     end
   end
@@ -30,7 +35,7 @@ defmodule PacketflowChatDemo.ChatSystem do
   # CONTEXTS - Define what information flows through the system
   # ============================================================================
 
-  defsimple_context ChatContext, [:user_id, :session_id, :capabilities, :model_config] do
+  defsimple_context ChatContext, [:user_id, :session_id, :capabilities, :model_config, :rate_limits, :stream_config] do
     @propagation_strategy :inherit
   end
 
@@ -42,12 +47,20 @@ defmodule PacketflowChatDemo.ChatSystem do
     @capabilities [ChatCap.send_message]
   end
 
+  defsimple_intent StreamMessageIntent, [:user_id, :message, :session_id] do
+    @capabilities [ChatCap.stream_response]
+  end
+
   defsimple_intent GetHistoryIntent, [:user_id, :session_id] do
     @capabilities [ChatCap.view_history]
   end
 
   defsimple_intent AdminConfigIntent, [:user_id, :model_config] do
     @capabilities [ChatCap.admin]
+  end
+
+  defsimple_intent ManageSessionIntent, [:user_id, :session_id, :action] do
+    @capabilities [ChatCap.manage_sessions]
   end
 
   # ============================================================================
@@ -62,12 +75,32 @@ defmodule PacketflowChatDemo.ChatSystem do
       %__MODULE__{type: :message_sent, data: data}
     end
 
+    def stream_started(data) do
+      %__MODULE__{type: :stream_started, data: data}
+    end
+
+    def stream_chunk(data) do
+      %__MODULE__{type: :stream_chunk, data: data}
+    end
+
+    def stream_ended(data) do
+      %__MODULE__{type: :stream_ended, data: data}
+    end
+
     def history_retrieved(data) do
       %__MODULE__{type: :history_retrieved, data: data}
     end
 
     def config_updated(data) do
       %__MODULE__{type: :config_updated, data: data}
+    end
+
+    def session_managed(data) do
+      %__MODULE__{type: :session_managed, data: data}
+    end
+
+    def rate_limited(data) do
+      %__MODULE__{type: :rate_limited, data: data}
     end
 
     def error(data) do
@@ -79,15 +112,18 @@ defmodule PacketflowChatDemo.ChatSystem do
   # REACTORS - Define how the system responds to intents
   # ============================================================================
 
-  defsimple_reactor ChatReactor, [:sessions, :model_config] do
+  defsimple_reactor ChatReactor, [:sessions, :model_config, :rate_limits, :streams] do
     def init(_opts) do
       initial_state = %__MODULE__{
         sessions: %{},
         model_config: %{
           model: "gpt-3.5-turbo",
           max_tokens: 1000,
-          temperature: 0.7
-        }
+          temperature: 0.7,
+          stream: false
+        },
+        rate_limits: %{},
+        streams: %{}
       }
       {:ok, initial_state}
     end
@@ -95,21 +131,30 @@ defmodule PacketflowChatDemo.ChatSystem do
     def process_intent(intent, state) do
       require Logger
       Logger.info("Processing intent: #{inspect(intent)}")
-      Logger.info("Current state: #{inspect(state)}")
 
-      result = case intent do
-        %SendMessageIntent{} ->
-          handle_send_message(intent, state)
-        %GetHistoryIntent{} ->
-          handle_get_history(intent, state)
-        %AdminConfigIntent{} ->
-          handle_admin_config(intent, state)
-        _ ->
-          {:error, :unsupported_intent}
+      # Check rate limits first
+      case check_rate_limits(intent, state) do
+        {:ok, state} ->
+          result = case intent do
+            %SendMessageIntent{} ->
+              handle_send_message(intent, state)
+            %StreamMessageIntent{} ->
+              handle_stream_message(intent, state)
+            %GetHistoryIntent{} ->
+              handle_get_history(intent, state)
+            %AdminConfigIntent{} ->
+              handle_admin_config(intent, state)
+            %ManageSessionIntent{} ->
+              handle_manage_session(intent, state)
+            _ ->
+              {:error, :unsupported_intent}
+          end
+          Logger.info("Process intent result: #{inspect(result)}")
+          result
+
+        {:error, reason} ->
+          {:error, state, [ChatEffect.rate_limited(%{reason: reason})]}
       end
-
-      Logger.info("Process intent result: #{inspect(result)}")
-      result
     end
 
     def handle_call(:get_state, _from, state) do
@@ -121,7 +166,6 @@ defmodule PacketflowChatDemo.ChatSystem do
     # ============================================================================
 
     defp handle_send_message(intent, state) do
-      # Extract message data
       %{user_id: user_id, message: message, session_id: session_id} = intent
 
       # Get or create session
@@ -156,6 +200,39 @@ defmodule PacketflowChatDemo.ChatSystem do
              message: "Failed to generate AI response: #{reason}"
            })]}
       end
+    end
+
+    defp handle_stream_message(intent, state) do
+      %{user_id: user_id, message: message, session_id: session_id} = intent
+
+      # Get or create session
+      session = get_session(state.sessions, session_id)
+
+      # Add user message to history
+      updated_session = add_message_to_session(session, user_id, message, :user)
+
+      # Start streaming response
+      stream_id = generate_stream_id()
+      updated_streams = Map.put(state.streams, stream_id, %{
+        session_id: session_id,
+        user_id: user_id,
+        started_at: DateTime.utc_now()
+      })
+
+      # Update sessions
+      updated_sessions = Map.put(state.sessions, session_id, updated_session)
+
+      # Start streaming in background
+      Task.start(fn ->
+        stream_ai_response(stream_id, message, updated_session.messages, state.model_config)
+      end)
+
+      {:ok,
+       struct(state, sessions: updated_sessions, streams: updated_streams),
+       [ChatEffect.stream_started(%{
+         stream_id: stream_id,
+         session_id: session_id
+       })]}
     end
 
     defp handle_get_history(intent, state) do
@@ -193,9 +270,70 @@ defmodule PacketflowChatDemo.ChatSystem do
        })]}
     end
 
+    defp handle_manage_session(intent, state) do
+      %{user_id: user_id, session_id: session_id, action: action} = intent
+
+      case action do
+        "delete" ->
+          updated_sessions = Map.delete(state.sessions, session_id)
+          {:ok,
+           struct(state, sessions: updated_sessions),
+           [ChatEffect.session_managed(%{
+             action: "deleted",
+             session_id: session_id,
+             managed_by: user_id
+           })]}
+
+        "clear" ->
+          session = get_session(state.sessions, session_id)
+          cleared_session = %{session | messages: []}
+          updated_sessions = Map.put(state.sessions, session_id, cleared_session)
+          {:ok,
+           struct(state, sessions: updated_sessions),
+           [ChatEffect.session_managed(%{
+             action: "cleared",
+             session_id: session_id,
+             managed_by: user_id
+           })]}
+
+        _ ->
+          {:error,
+           state,
+           [ChatEffect.error(%{
+             error_code: :invalid_action,
+             message: "Invalid session action: #{action}"
+           })]}
+      end
+    end
+
     # ============================================================================
     # HELPER FUNCTIONS
     # ============================================================================
+
+    defp check_rate_limits(intent, state) do
+      %{user_id: user_id} = intent
+      user_limits = Map.get(state.rate_limits, user_id, %{count: 0, reset_at: DateTime.utc_now()})
+
+      now = DateTime.utc_now()
+
+      if DateTime.compare(user_limits.reset_at, now) == :gt do
+        # Within rate limit window
+        if user_limits.count < 10 do
+          # Allow request
+          updated_limits = %{user_limits | count: user_limits.count + 1}
+          updated_rate_limits = Map.put(state.rate_limits, user_id, updated_limits)
+          {:ok, struct(state, rate_limits: updated_rate_limits)}
+        else
+          {:error, "Rate limit exceeded"}
+        end
+      else
+        # Reset rate limit window
+        reset_at = DateTime.add(now, 60, :second) # 1 minute window
+        updated_limits = %{count: 1, reset_at: reset_at}
+        updated_rate_limits = Map.put(state.rate_limits, user_id, updated_limits)
+        {:ok, struct(state, rate_limits: updated_rate_limits)}
+      end
+    end
 
     defp get_session(sessions, session_id) do
       case Map.get(sessions, session_id) do
@@ -220,46 +358,84 @@ defmodule PacketflowChatDemo.ChatSystem do
       :crypto.strong_rand_bytes(16) |> Base.encode16(case: :lower)
     end
 
+    defp generate_stream_id do
+      :crypto.strong_rand_bytes(16) |> Base.encode16(case: :lower)
+    end
+
     defp generate_ai_response(user_message, message_history, config) do
-      # Simulate AI response generation
-      # In a real application, this would call an actual LLM API
-      case simulate_llm_call(user_message, message_history, config) do
+      # Use real OpenAI API instead of simulation
+      case PacketflowChatDemo.OpenAIService.generate_response(user_message, message_history, config) do
         {:ok, response} -> {:ok, response}
         {:error, reason} -> {:error, reason}
       end
     end
 
-    defp simulate_llm_call(user_message, _message_history, _config) do
-      # Simulate API call delay
-      Process.sleep(100)
+    defp stream_ai_response(stream_id, user_message, message_history, config) do
+      # Use real OpenAI streaming API
+      PacketflowChatDemo.OpenAIService.start_stream_to_process(
+        user_message,
+        message_history,
+        config,
+        self()
+      )
 
-      # Simple response simulation based on message content
-      msg = String.downcase(user_message)
-      response = cond do
-        String.contains?(msg, "hello") or String.contains?(msg, "hi") ->
-          "Hello! I'm your AI assistant powered by PacketFlow. How can I help you today?"
-
-        String.contains?(msg, "help") ->
-          "I can help you with various tasks. Try asking me questions about PacketFlow, Elixir, or any other topic!"
-
-        String.contains?(msg, "packetflow") ->
-          "PacketFlow is a production-ready distributed computing framework for Elixir that provides a domain-specific language (DSL) for building intent-context-capability oriented systems."
-
-        String.contains?(msg, "capabilities") ->
-          "Capabilities in PacketFlow provide fine-grained permission control with implication hierarchies. They define what users can do in the system."
-
-        String.contains?(msg, "context") ->
-          "Context in PacketFlow manages information flow through the system with automatic propagation strategies."
-
-        String.contains?(msg, "intent") ->
-          "Intents in PacketFlow represent what users want to do, with capability requirements and effect definitions."
-
-        true ->
-          "That's an interesting question! I'm here to help you explore PacketFlow and its capabilities. What would you like to know more about?"
-      end
-
-      {:ok, response}
+      # Handle streaming messages
+      handle_stream_messages(stream_id)
     end
+
+    defp handle_stream_messages(stream_id) do
+      require Logger
+      receive do
+        {:stream_started, _ref} ->
+          Logger.info("Stream started for #{stream_id}")
+          # Broadcast stream start event
+          Phoenix.PubSub.broadcast(
+            PacketflowChatDemo.PubSub,
+            "chat_stream:#{stream_id}",
+            {:stream_started, stream_id}
+          )
+          handle_stream_messages(stream_id)
+
+        {:stream_chunk, content} ->
+          Logger.info("Stream chunk for #{stream_id}: #{content}")
+          # Broadcast chunk to subscribers
+          Phoenix.PubSub.broadcast(
+            PacketflowChatDemo.PubSub,
+            "chat_stream:#{stream_id}",
+            {:stream_chunk, stream_id, content}
+          )
+          handle_stream_messages(stream_id)
+
+        {:stream_ended} ->
+          Logger.info("Stream ended for #{stream_id}")
+          # Broadcast stream end event
+          Phoenix.PubSub.broadcast(
+            PacketflowChatDemo.PubSub,
+            "chat_stream:#{stream_id}",
+            {:stream_ended, stream_id}
+          )
+
+        {:stream_error, reason} ->
+          Logger.error("Stream error for #{stream_id}: #{reason}")
+          # Broadcast error event
+          Phoenix.PubSub.broadcast(
+            PacketflowChatDemo.PubSub,
+            "chat_stream:#{stream_id}",
+            {:stream_error, stream_id, reason}
+          )
+
+      after
+        30_000 -> # 30 second timeout
+          Logger.error("Stream timeout for #{stream_id}")
+          Phoenix.PubSub.broadcast(
+            PacketflowChatDemo.PubSub,
+            "chat_stream:#{stream_id}",
+            {:stream_error, stream_id, :timeout}
+          )
+      end
+    end
+
+
   end
 
 

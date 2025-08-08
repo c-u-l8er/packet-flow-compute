@@ -18,6 +18,10 @@ defmodule PacketflowChatDemo.ChatReactor do
     GenServer.call(__MODULE__, {:send_message, user_id, message, session_id})
   end
 
+  def stream_message(user_id, message, session_id \\ generate_session_id()) do
+    GenServer.call(__MODULE__, {:stream_message, user_id, message, session_id})
+  end
+
   def get_history(user_id, session_id) do
     GenServer.call(__MODULE__, {:get_history, user_id, session_id})
   end
@@ -26,8 +30,16 @@ defmodule PacketflowChatDemo.ChatReactor do
     GenServer.call(__MODULE__, {:update_config, user_id, config})
   end
 
+  def manage_session(user_id, session_id, action) do
+    GenServer.call(__MODULE__, {:manage_session, user_id, session_id, action})
+  end
+
   def get_sessions do
     GenServer.call(__MODULE__, :get_sessions)
+  end
+
+  def get_rate_limits do
+    GenServer.call(__MODULE__, :get_rate_limits)
   end
 
   # ============================================================================
@@ -73,11 +85,50 @@ defmodule PacketflowChatDemo.ChatReactor do
               %PacketflowChatDemo.ChatSystem.ChatEffect{type: :message_sent, data: data} ->
                 {:reply, {:ok, data}, state}
 
+              %PacketflowChatDemo.ChatSystem.ChatEffect{type: :rate_limited, data: data} ->
+                {:reply, {:error, %{error_code: :rate_limited, message: "Rate limit exceeded"}}, state}
+
               %PacketflowChatDemo.ChatSystem.ChatEffect{type: :error, data: data} ->
                 {:reply, {:error, data}, state}
             end
           _ ->
             {:reply, {:error, %{error_code: :unexpected_effects, message: "Unexpected effects format: #{inspect(effects)}"}}, state}
+        end
+
+      {:error, reason} ->
+        {:reply, {:error, %{error_code: :reactor_error, message: reason}}, state}
+    end
+  end
+
+  def handle_call({:stream_message, user_id, message, session_id}, _from, state) do
+    # Create intent with context
+    _context = PacketflowChatDemo.ChatSystem.ChatContext.new(%{
+      user_id: user_id,
+      session_id: session_id,
+      capabilities: [PacketflowChatDemo.ChatSystem.ChatCap.stream_response],
+      model_config: %{model: "gpt-3.5-turbo", temperature: 0.7, stream: true}
+    })
+
+    intent = PacketflowChatDemo.ChatSystem.StreamMessageIntent.new(user_id, message, session_id)
+
+    # Send intent to reactor
+    Logger.info("Sending stream intent to reactor: #{inspect(intent)}")
+    case GenServer.call(state.reactor_pid, {:process_intent, intent}, 5000) do
+      {:ok, effects} ->
+        case effects do
+          [effect] ->
+            case effect do
+              %PacketflowChatDemo.ChatSystem.ChatEffect{type: :stream_started, data: data} ->
+                {:reply, {:ok, data}, state}
+
+              %PacketflowChatDemo.ChatSystem.ChatEffect{type: :rate_limited, data: data} ->
+                {:reply, {:error, %{error_code: :rate_limited, message: "Rate limit exceeded"}}, state}
+
+              %PacketflowChatDemo.ChatSystem.ChatEffect{type: :error, data: data} ->
+                {:reply, {:error, data}, state}
+            end
+          _ ->
+            {:reply, {:error, %{error_code: :unexpected_effects, message: "Unexpected effects format"}}, state}
         end
 
       {:error, reason} ->
@@ -149,11 +200,54 @@ defmodule PacketflowChatDemo.ChatReactor do
     end
   end
 
+  def handle_call({:manage_session, user_id, session_id, action}, _from, state) do
+    # Create intent with context
+    _context = PacketflowChatDemo.ChatSystem.ChatContext.new(%{
+      user_id: user_id,
+      session_id: session_id,
+      capabilities: [PacketflowChatDemo.ChatSystem.ChatCap.manage_sessions],
+      model_config: %{}
+    })
+
+    intent = PacketflowChatDemo.ChatSystem.ManageSessionIntent.new(user_id, session_id, action)
+
+    # Send intent to reactor
+    case GenServer.call(state.reactor_pid, {:process_intent, intent}, 5000) do
+      {:ok, effects} ->
+        case effects do
+          [effect] ->
+            case effect do
+              %PacketflowChatDemo.ChatSystem.ChatEffect{type: :session_managed, data: data} ->
+                {:reply, {:ok, data}, state}
+
+              %PacketflowChatDemo.ChatSystem.ChatEffect{type: :error, data: data} ->
+                {:reply, {:error, data}, state}
+            end
+          _ ->
+            {:reply, {:error, %{error_code: :unexpected_effects, message: "Unexpected effects format"}}, state}
+        end
+
+      {:error, reason} ->
+        {:reply, {:error, %{error_code: :reactor_error, message: reason}}, state}
+    end
+  end
+
   def handle_call(:get_sessions, _from, state) do
     # Get reactor state to access sessions
     case GenServer.call(state.reactor_pid, :get_state, 5000) do
       {:ok, %{sessions: sessions}} ->
         {:reply, {:ok, sessions}, state}
+
+      {:error, reason} ->
+        {:reply, {:error, %{error_code: :state_error, message: reason}}, state}
+    end
+  end
+
+  def handle_call(:get_rate_limits, _from, state) do
+    # Get reactor state to access rate limits
+    case GenServer.call(state.reactor_pid, :get_state, 5000) do
+      {:ok, %{rate_limits: rate_limits}} ->
+        {:reply, {:ok, rate_limits}, state}
 
       {:error, reason} ->
         {:reply, {:error, %{error_code: :state_error, message: reason}}, state}
