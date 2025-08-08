@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Registry.Discovery — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Registry.Discovery</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Component discovery and lookup mechanisms</p><p>This module provides sophisticated component discovery capabilities including:</p><ul><li>Component pattern matching</li><li>Component capability matching</li><li>Component version matching</li><li>Component health filtering</li><li>Component load balancing</li></ul>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:component_match/0" data-no-tooltip="" translate="no">component_match()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:discovery_pattern/0" data-no-tooltip="" translate="no">discovery_pattern()</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#child_spec/1" data-no-tooltip="" translate="no">child_spec(init_arg)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#find_by_capabilities/1" data-no-tooltip="" translate="no">find_by_capabilities(required_capabilities)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Find components by capability requirements</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#find_by_type/1" data-no-tooltip="" translate="no">find_by_type(component_type)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Find components by type</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#find_components/1" data-no-tooltip="" translate="no">find_components(pattern)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Find components matching a pattern</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#find_healthy_components/1" data-no-tooltip="" translate="no">find_healthy_components(pattern \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Find healthy components only</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_best_match/2" data-no-tooltip="" translate="no">get_best_match(pattern, strategy \\ :round_robin)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get best component match using load balancing</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_component_health/1" data-no-tooltip="" translate="no">get_component_health(id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get component health with caching</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_component_metadata/1" data-no-tooltip="" translate="no">get_component_metadata(id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get component metadata</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#init/1" data-no-tooltip="" translate="no">init(opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Callback implementation for <a><code class="inline">GenServer.init/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#refresh_health_cache/0" data-no-tooltip="" translate="no">refresh_health_cache()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Refresh health cache for all components</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#register_component/3" data-no-tooltip="" translate="no">register_component(id, module, metadata \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Register a component for discovery</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_link/1" data-no-tooltip="" translate="no">start_link(opts \\ [])</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#unregister_component/1" data-no-tooltip="" translate="no">unregister_component(id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Unregister a component from discovery</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_component_metadata/2" data-no-tooltip="" translate="no">update_component_metadata(id, metadata)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Update component metadata</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:component_match/0">
+
+  <div class="detail-header">
+    <a href="#t:component_match/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">component_match()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> component_match() :: %{
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
+  module: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(),
+  metadata: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
+  score: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">float</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:discovery_pattern/0">
+
+  <div class="detail-header">
+    <a href="#t:discovery_pattern/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">discovery_pattern()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> discovery_pattern() :: %{
+  name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | :any,
+  type: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | :any,
+  capabilities: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()] | :any,
+  version: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | :any,
+  health: :healthy | :unhealthy | :degraded | :any,
+  tags: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()] | :any
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="child_spec/1">
+
+  <div class="detail-header">
+    <a href="#child_spec/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">child_spec(init_arg)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="find_by_capabilities/1">
+
+  <div class="detail-header">
+    <a href="#find_by_capabilities/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">find_by_capabilities(required_capabilities)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> find_by_capabilities([<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()]) :: [<a href="#t:component_match/0">component_match</a>()]</pre>
+
+      </div>
+
+<p>Find components by capability requirements</p>
+  </section>
+</section>
+<section class="detail" id="find_by_type/1">
+
+  <div class="detail-header">
+    <a href="#find_by_type/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">find_by_type(component_type)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> find_by_type(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: [<a href="#t:component_match/0">component_match</a>()]</pre>
+
+      </div>
+
+<p>Find components by type</p>
+  </section>
+</section>
+<section class="detail" id="find_components/1">
+
+  <div class="detail-header">
+    <a href="#find_components/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">find_components(pattern)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> find_components(<a href="#t:discovery_pattern/0">discovery_pattern</a>()) :: [<a href="#t:component_match/0">component_match</a>()]</pre>
+
+      </div>
+
+<p>Find components matching a pattern</p>
+  </section>
+</section>
+<section class="detail" id="find_healthy_components/1">
+
+    <span id="find_healthy_components/0"></span>
+
+  <div class="detail-header">
+    <a href="#find_healthy_components/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">find_healthy_components(pattern \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> find_healthy_components(<a href="#t:discovery_pattern/0">discovery_pattern</a>()) :: [<a href="#t:component_match/0">component_match</a>()]</pre>
+
+      </div>
+
+<p>Find healthy components only</p>
+  </section>
+</section>
+<section class="detail" id="get_best_match/2">
+
+    <span id="get_best_match/1"></span>
+
+  <div class="detail-header">
+    <a href="#get_best_match/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_best_match(pattern, strategy \\ :round_robin)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_best_match(<a href="#t:discovery_pattern/0">discovery_pattern</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: <a href="#t:component_match/0">component_match</a>() | nil</pre>
+
+      </div>
+
+<p>Get best component match using load balancing</p>
+  </section>
+</section>
+<section class="detail" id="get_component_health/1">
+
+  <div class="detail-header">
+    <a href="#get_component_health/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_component_health(id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_component_health(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :healthy | :unhealthy | :degraded | :unknown</pre>
+
+      </div>
+
+<p>Get component health with caching</p>
+  </section>
+</section>
+<section class="detail" id="get_component_metadata/1">
+
+  <div class="detail-header">
+    <a href="#get_component_metadata/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_component_metadata(id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_component_metadata(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil</pre>
+
+      </div>
+
+<p>Get component metadata</p>
+  </section>
+</section>
+<section class="detail" id="init/1">
+
+  <div class="detail-header">
+    <a href="#init/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">init(opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="refresh_health_cache/0">
+
+  <div class="detail-header">
+    <a href="#refresh_health_cache/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">refresh_health_cache()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> refresh_health_cache() :: :ok</pre>
+
+      </div>
+
+<p>Refresh health cache for all components</p>
+  </section>
+</section>
+<section class="detail" id="register_component/3">
+
+    <span id="register_component/2"></span>
+
+  <div class="detail-header">
+    <a href="#register_component/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">register_component(id, module, metadata \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> register_component(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Register a component for discovery</p>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+    <span id="start_link/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_link(opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="unregister_component/1">
+
+  <div class="detail-header">
+    <a href="#unregister_component/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">unregister_component(id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> unregister_component(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Unregister a component from discovery</p>
+  </section>
+</section>
+<section class="detail" id="update_component_metadata/2">
+
+  <div class="detail-header">
+    <a href="#update_component_metadata/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_component_metadata(id, metadata)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_component_metadata(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Update component metadata</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

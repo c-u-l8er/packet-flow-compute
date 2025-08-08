@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.DSL.Context — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.DSL.Context</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>DSL for defining PacketFlow contexts with propagation and composition strategies</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defcontext/2" data-no-tooltip="" translate="no">defcontext(name, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Define a context with propagation and composition strategies</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defsimple_context/3" data-no-tooltip="" translate="no">defsimple_context(name, fields, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Define a simple context with basic fields</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="defcontext/2">
+
+  <div class="detail-header">
+    <a href="#defcontext/2" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defcontext(name, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Define a context with propagation and composition strategies</p><h2 id="defcontext/2-example" class="section-heading"><a href="#defcontext/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defcontext</span><span class="w"> </span><span class="nc">RequestContext</span><span class="w"> </span><span class="k" data-group-id="9653442088-1">do</span><span class="w">
+  </span><span class="na">@propagation_strategy</span><span class="w"> </span><span class="ss">:inherit</span><span class="w">
+  </span><span class="na">@composition_strategy</span><span class="w"> </span><span class="ss">:merge</span><span class="w">
+
+  </span><span class="kd">defstruct</span><span class="w"> </span><span class="p" data-group-id="9653442088-2">[</span><span class="ss">:user_id</span><span class="p">,</span><span class="w"> </span><span class="ss">:session_id</span><span class="p">,</span><span class="w"> </span><span class="ss">:request_id</span><span class="p">,</span><span class="w"> </span><span class="ss">:capabilities</span><span class="p">,</span><span class="w"> </span><span class="ss">:trace</span><span class="p" data-group-id="9653442088-2">]</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">new</span><span class="p" data-group-id="9653442088-3">(</span><span class="n">attrs</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="p" data-group-id="9653442088-4">[</span><span class="p" data-group-id="9653442088-4">]</span><span class="p" data-group-id="9653442088-3">)</span><span class="w"> </span><span class="k" data-group-id="9653442088-5">do</span><span class="w">
+    </span><span class="n">struct</span><span class="p" data-group-id="9653442088-6">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">attrs</span><span class="p" data-group-id="9653442088-6">)</span><span class="w">
+    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">compute_capabilities</span><span class="p" data-group-id="9653442088-7">(</span><span class="p" data-group-id="9653442088-7">)</span><span class="w">
+    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">ensure_request_id</span><span class="p" data-group-id="9653442088-8">(</span><span class="p" data-group-id="9653442088-8">)</span><span class="w">
+  </span><span class="k" data-group-id="9653442088-5">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">propagate</span><span class="p" data-group-id="9653442088-9">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">target_module</span><span class="p" data-group-id="9653442088-9">)</span><span class="w"> </span><span class="k" data-group-id="9653442088-10">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="na">@propagation_strategy</span><span class="w"> </span><span class="k" data-group-id="9653442088-11">do</span><span class="w">
+      </span><span class="ss">:inherit</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p">%</span><span class="bp">__MODULE__</span><span class="p" data-group-id="9653442088-12">{</span><span class="w">
+          </span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span><span class="w">
+          </span><span class="ss">session_id</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span><span class="w">
+          </span><span class="ss">request_id</span><span class="p">:</span><span class="w"> </span><span class="n">generate_request_id</span><span class="p" data-group-id="9653442088-13">(</span><span class="p" data-group-id="9653442088-13">)</span><span class="p">,</span><span class="w">
+          </span><span class="ss">capabilities</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">capabilities</span><span class="p">,</span><span class="w">
+          </span><span class="ss">trace</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9653442088-14">[</span><span class="n">target_module</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">trace</span><span class="p" data-group-id="9653442088-14">]</span><span class="w">
+        </span><span class="p" data-group-id="9653442088-12">}</span><span class="w">
+      </span><span class="ss">:copy</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p">%</span><span class="bp">__MODULE__</span><span class="p" data-group-id="9653442088-15">{</span><span class="w">
+          </span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span><span class="w">
+          </span><span class="ss">session_id</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span><span class="w">
+          </span><span class="ss">request_id</span><span class="p">:</span><span class="w"> </span><span class="n">generate_request_id</span><span class="p" data-group-id="9653442088-16">(</span><span class="p" data-group-id="9653442088-16">)</span><span class="p">,</span><span class="w">
+          </span><span class="ss">capabilities</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">capabilities</span><span class="p">,</span><span class="w">
+          </span><span class="ss">trace</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">trace</span><span class="w">
+        </span><span class="p" data-group-id="9653442088-15">}</span><span class="w">
+    </span><span class="k" data-group-id="9653442088-11">end</span><span class="w">
+  </span><span class="k" data-group-id="9653442088-10">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">compose</span><span class="p" data-group-id="9653442088-17">(</span><span class="n">context1</span><span class="p">,</span><span class="w"> </span><span class="n">context2</span><span class="p">,</span><span class="w"> </span><span class="n">strategy</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="na">@composition_strategy</span><span class="p" data-group-id="9653442088-17">)</span><span class="w"> </span><span class="k" data-group-id="9653442088-18">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">strategy</span><span class="w"> </span><span class="k" data-group-id="9653442088-19">do</span><span class="w">
+      </span><span class="ss">:merge</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p">%</span><span class="bp">__MODULE__</span><span class="p" data-group-id="9653442088-20">{</span><span class="w">
+          </span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="n">context2</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span><span class="w">
+          </span><span class="ss">session_id</span><span class="p">:</span><span class="w"> </span><span class="n">context2</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span><span class="w">
+          </span><span class="ss">request_id</span><span class="p">:</span><span class="w"> </span><span class="n">generate_request_id</span><span class="p" data-group-id="9653442088-21">(</span><span class="p" data-group-id="9653442088-21">)</span><span class="p">,</span><span class="w">
+          </span><span class="ss">capabilities</span><span class="p">:</span><span class="w"> </span><span class="nc">MapSet</span><span class="o">.</span><span class="n">union</span><span class="p" data-group-id="9653442088-22">(</span><span class="n">context1</span><span class="o">.</span><span class="n">capabilities</span><span class="p">,</span><span class="w"> </span><span class="n">context2</span><span class="o">.</span><span class="n">capabilities</span><span class="p" data-group-id="9653442088-22">)</span><span class="p">,</span><span class="w">
+          </span><span class="ss">trace</span><span class="p">:</span><span class="w"> </span><span class="n">context1</span><span class="o">.</span><span class="n">trace</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">context2</span><span class="o">.</span><span class="n">trace</span><span class="w">
+        </span><span class="p" data-group-id="9653442088-20">}</span><span class="w">
+      </span><span class="ss">:override</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">context2</span><span class="w">
+    </span><span class="k" data-group-id="9653442088-19">end</span><span class="w">
+  </span><span class="k" data-group-id="9653442088-18">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">compute_capabilities</span><span class="p" data-group-id="9653442088-23">(</span><span class="n">context</span><span class="p" data-group-id="9653442088-23">)</span><span class="w"> </span><span class="k" data-group-id="9653442088-24">do</span><span class="w">
+    </span><span class="n">capabilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">user_id</span><span class="w"> </span><span class="k" data-group-id="9653442088-25">do</span><span class="w">
+      </span><span class="s">&quot;admin&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">MapSet</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9653442088-26">(</span><span class="p" data-group-id="9653442088-27">[</span><span class="nc">AdminCap</span><span class="o">.</span><span class="n">admin</span><span class="p" data-group-id="9653442088-28">(</span><span class="p" data-group-id="9653442088-28">)</span><span class="p" data-group-id="9653442088-27">]</span><span class="p" data-group-id="9653442088-26">)</span><span class="w">
+      </span><span class="s">&quot;user&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">MapSet</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9653442088-29">(</span><span class="p" data-group-id="9653442088-30">[</span><span class="nc">UserCap</span><span class="o">.</span><span class="n">basic</span><span class="p" data-group-id="9653442088-31">(</span><span class="p" data-group-id="9653442088-31">)</span><span class="p" data-group-id="9653442088-30">]</span><span class="p" data-group-id="9653442088-29">)</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">MapSet</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9653442088-32">(</span><span class="p" data-group-id="9653442088-33">[</span><span class="nc">GuestCap</span><span class="o">.</span><span class="n">read</span><span class="p" data-group-id="9653442088-34">(</span><span class="p" data-group-id="9653442088-34">)</span><span class="p" data-group-id="9653442088-33">]</span><span class="p" data-group-id="9653442088-32">)</span><span class="w">
+    </span><span class="k" data-group-id="9653442088-25">end</span><span class="w">
+    </span><span class="p" data-group-id="9653442088-35">%{</span><span class="n">context</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ss">capabilities</span><span class="p">:</span><span class="w"> </span><span class="n">capabilities</span><span class="p" data-group-id="9653442088-35">}</span><span class="w">
+  </span><span class="k" data-group-id="9653442088-24">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">generate_request_id</span><span class="p">,</span><span class="w"> </span><span class="ss">do</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;req_311&quot;</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">ensure_request_id</span><span class="p" data-group-id="9653442088-36">(</span><span class="n">context</span><span class="p" data-group-id="9653442088-36">)</span><span class="w"> </span><span class="k" data-group-id="9653442088-37">do</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">request_id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="k" data-group-id="9653442088-38">do</span><span class="w">
+      </span><span class="p" data-group-id="9653442088-39">%{</span><span class="n">context</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ss">request_id</span><span class="p">:</span><span class="w"> </span><span class="n">generate_request_id</span><span class="p" data-group-id="9653442088-40">(</span><span class="p" data-group-id="9653442088-40">)</span><span class="p" data-group-id="9653442088-39">}</span><span class="w">
+    </span><span class="k" data-group-id="9653442088-38">else</span><span class="w">
+      </span><span class="n">context</span><span class="w">
+    </span><span class="k" data-group-id="9653442088-38">end</span><span class="w">
+  </span><span class="k" data-group-id="9653442088-37">end</span><span class="w">
+</span><span class="k" data-group-id="9653442088-1">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="defsimple_context/3">
+
+  <div class="detail-header">
+    <a href="#defsimple_context/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defsimple_context(name, fields, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Define a simple context with basic fields</p><h2 id="defsimple_context/3-example" class="section-heading"><a href="#defsimple_context/3-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defsimple_context</span><span class="w"> </span><span class="nc">UserContext</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1291934062-1">[</span><span class="ss">:user_id</span><span class="p">,</span><span class="w"> </span><span class="ss">:session_id</span><span class="p">,</span><span class="w"> </span><span class="ss">:capabilities</span><span class="p" data-group-id="1291934062-1">]</span><span class="w"> </span><span class="k" data-group-id="1291934062-2">do</span><span class="w">
+  </span><span class="na">@propagation_strategy</span><span class="w"> </span><span class="ss">:inherit</span><span class="w">
+</span><span class="k" data-group-id="1291934062-2">end</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

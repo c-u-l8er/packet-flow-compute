@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>API Reference — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-extra" id="main" data-type="extras">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>API Reference <small class="app-vsn">packetflow v#0.1.0</small></h1>
+
+  </div>
+
+    <section class="details-list">
+      <h2 id="modules" class="section-heading">Modules</h2>
+      <div class="summary">
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="FileCap.html" translate="no">FileCap</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Simple FileCap module for testing purposes</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.ADT.html" translate="no">PacketFlow.ADT</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow ADT Substrate: Intent-Context-Capability oriented algebraic data types
+with reactors and effect system integration.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.ADT.Composition.html" translate="no">PacketFlow.ADT.Composition</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Algebraic composition operators for advanced type-level reasoning</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.ADT.Macros.html" translate="no">PacketFlow.ADT.Macros</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Enhanced ADT macros for algebraic data type definitions</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.ADT.TypeConstraints.html" translate="no">PacketFlow.ADT.TypeConstraints</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Type-level capability constraints for ADT validation</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.html" translate="no">PacketFlow.Actor</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow Actor Substrate: Distributed actor orchestration with lifecycle management,
+supervision strategies, and cross-node capability propagation.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Behaviour.html" translate="no">PacketFlow.Actor.Behaviour</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Cluster.html" translate="no">PacketFlow.Actor.Cluster</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Clustering.html" translate="no">PacketFlow.Actor.Clustering</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Actor clustering and discovery capabilities</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Lifecycle.html" translate="no">PacketFlow.Actor.Lifecycle</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Actor lifecycle management for creation, termination, and migration</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Router.html" translate="no">PacketFlow.Actor.Router</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Routing.html" translate="no">PacketFlow.Actor.Routing</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Actor message routing and load balancing</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Actor.Supervision.html" translate="no">PacketFlow.Actor.Supervision</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Actor supervision strategies and fault handling</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Application.html" translate="no">PacketFlow.Application</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow Application: Main application supervisor for the PacketFlow system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Capability.html" translate="no">PacketFlow.Capability</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Capability.Dynamic.html" translate="no">PacketFlow.Capability.Dynamic</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Dynamic capability management and validation for PacketFlow.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Capability.Plugin.html" translate="no">PacketFlow.Capability.Plugin</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Plugin system for capability extensions in PacketFlow.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.CapabilityMiddleware.html" translate="no">PacketFlow.CapabilityMiddleware</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.html" translate="no">PacketFlow.Component</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Component lifecycle management for PacketFlow</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Communication.html" translate="no">PacketFlow.Component.Communication</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Component communication protocols for inter-component messaging</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Configuration.html" translate="no">PacketFlow.Component.Configuration</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Component configuration interfaces for dynamic configuration</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Interface.html" translate="no">PacketFlow.Component.Interface</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Standard interfaces for PacketFlow components</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Monitoring.html" translate="no">PacketFlow.Component.Monitoring</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Component monitoring interfaces for health checks and metrics</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Testing.html" translate="no">PacketFlow.Component.Testing</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Component testing interfaces for automated testing</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Testing.MockComponent.html" translate="no">PacketFlow.Component.Testing.MockComponent</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Mock component implementation for testing</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Component.Testing.MockSupervisor.html" translate="no">PacketFlow.Component.Testing.MockSupervisor</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Dynamic supervisor for mock components</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Config.html" translate="no">PacketFlow.Config</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Dynamic configuration management for PacketFlow components</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Context.html" translate="no">PacketFlow.Context</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.DSL.html" translate="no">PacketFlow.DSL</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow DSL: Domain-specific language for defining PacketFlow components</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.DSL.Capability.html" translate="no">PacketFlow.DSL.Capability</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>DSL for defining PacketFlow capabilities with implication hierarchies and grants</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.DSL.Context.html" translate="no">PacketFlow.DSL.Context</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>DSL for defining PacketFlow contexts with propagation and composition strategies</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.DSL.Intent.html" translate="no">PacketFlow.DSL.Intent</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>DSL for defining PacketFlow intents with capability requirements and effects</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.DSL.Reactor.html" translate="no">PacketFlow.DSL.Reactor</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>DSL for defining PacketFlow reactors with state management and message processing</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Effect.html" translate="no">PacketFlow.Effect</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.html" translate="no">PacketFlow.Intent</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Dynamic.html" translate="no">PacketFlow.Intent.Dynamic</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Dynamic intent processing and routing system for PacketFlow</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugin.html" translate="no">PacketFlow.Intent.Plugin</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Plugin system for intent extensions</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugin.Behaviour.html" translate="no">PacketFlow.Intent.Plugin.Behaviour</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour for intent plugins</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugin.CompositionPattern.html" translate="no">PacketFlow.Intent.Plugin.CompositionPattern</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour for custom composition patterns</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugin.CustomType.html" translate="no">PacketFlow.Intent.Plugin.CustomType</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour for custom intent types</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugin.RoutingStrategy.html" translate="no">PacketFlow.Intent.Plugin.RoutingStrategy</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour for custom routing strategies</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugins.CustomFileOperationIntent.html" translate="no">PacketFlow.Intent.Plugins.CustomFileOperationIntent</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Custom file operation intent type</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugins.FileValidationPlugin.html" translate="no">PacketFlow.Intent.Plugins.FileValidationPlugin</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>File validation plugin for intent system</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugins.LoadBalancedRoutingStrategy.html" translate="no">PacketFlow.Intent.Plugins.LoadBalancedRoutingStrategy</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Load-balanced routing strategy for intent system</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugins.RetryCompositionPattern.html" translate="no">PacketFlow.Intent.Plugins.RetryCompositionPattern</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Retry composition pattern for intent system</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Intent.Plugins.UserValidationPlugin.html" translate="no">PacketFlow.Intent.Plugins.UserValidationPlugin</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>User validation plugin for intent system</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Plugin.html" translate="no">PacketFlow.Plugin</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Plugin system for extending PacketFlow functionality</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Plugin.Interface.html" translate="no">PacketFlow.Plugin.Interface</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Standard interfaces for PacketFlow plugins</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Reactor.html" translate="no">PacketFlow.Reactor</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Reactor.Message.html" translate="no">PacketFlow.Reactor.Message</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Registry.html" translate="no">PacketFlow.Registry</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow Registry: Manages registration and discovery of PacketFlow components.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Registry.Discovery.html" translate="no">PacketFlow.Registry.Discovery</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Component discovery and lookup mechanisms</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.html" translate="no">PacketFlow.Stream</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow Stream Substrate: Real-time stream processing with backpressure handling,
+windowing operations, and capability-aware stream composition.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Backpressure.html" translate="no">PacketFlow.Stream.Backpressure</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Backpressure handling strategies for stream processing</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Monitor.html" translate="no">PacketFlow.Stream.Monitor</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Monitoring.html" translate="no">PacketFlow.Stream.Monitoring</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Stream monitoring and metrics collection</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Processing.html" translate="no">PacketFlow.Stream.Processing</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Stream processing operations and transformations</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Processor.html" translate="no">PacketFlow.Stream.Processor</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Transform.html" translate="no">PacketFlow.Stream.Transform</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Window.html" translate="no">PacketFlow.Stream.Window</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Stream.Windowing.html" translate="no">PacketFlow.Stream.Windowing</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Time and count-based windowing operations</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.StreamMiddleware.html" translate="no">PacketFlow.StreamMiddleware</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Substrate.html" translate="no">PacketFlow.Substrate</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Dynamic substrate composition and management for PacketFlow</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Substrate.Interface.html" translate="no">PacketFlow.Substrate.Interface</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Standard interfaces for PacketFlow substrates</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.html" translate="no">PacketFlow.Temporal</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow Temporal Substrate: Time-aware computation with temporal reasoning,
+scheduling, and time-based capability validation.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Intent.html" translate="no">PacketFlow.Temporal.Intent</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Logic.html" translate="no">PacketFlow.Temporal.Logic</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Processing.html" translate="no">PacketFlow.Temporal.Processing</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Time-aware reactor processing and temporal effects</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Reactor.html" translate="no">PacketFlow.Temporal.Reactor</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Reasoning.html" translate="no">PacketFlow.Temporal.Reasoning</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Temporal reasoning and logic for time-aware computation</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Scheduler.html" translate="no">PacketFlow.Temporal.Scheduler</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Scheduling.html" translate="no">PacketFlow.Temporal.Scheduling</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Intent scheduling and execution with temporal awareness</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Validation.html" translate="no">PacketFlow.Temporal.Validation</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Time-based capability validation and temporal security</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Temporal.Validator.html" translate="no">PacketFlow.Temporal.Validator</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.TemporalMiddleware.html" translate="no">PacketFlow.TemporalMiddleware</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.html" translate="no">PacketFlow.Web</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>PacketFlow Web Framework: Higher-level web framework that leverages
+PacketFlow substrates for backend processing and Temple for UI components.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Capability.html" translate="no">PacketFlow.Web.Capability</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Web-specific capabilities for UI components and routes</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Capability.FileCap.html" translate="no">PacketFlow.Web.Capability.FileCap</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Capability.RouteCap.html" translate="no">PacketFlow.Web.Capability.RouteCap</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Capability.StreamCap.html" translate="no">PacketFlow.Web.Capability.StreamCap</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Capability.UICap.html" translate="no">PacketFlow.Web.Capability.UICap</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Capability.UserCap.html" translate="no">PacketFlow.Web.Capability.UserCap</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Component.html" translate="no">PacketFlow.Web.Component</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Temple component integration with PacketFlow capabilities</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Middleware.html" translate="no">PacketFlow.Web.Middleware</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Capability-aware middleware for PacketFlow web applications</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="PacketFlow.Web.Router.html" translate="no">PacketFlow.Web.Router</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Intent-based routing that maps HTTP requests to PacketFlow intents</p></div>
+
+</div>
+
+      </div>
+    </section>
+
+
+</div>
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

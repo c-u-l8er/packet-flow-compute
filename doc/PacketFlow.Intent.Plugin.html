@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Intent.Plugin — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Intent.Plugin</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Plugin system for intent extensions</p><p>This module provides a framework for creating custom intent types,
+routing logic, validation logic, transformation logic, and composition patterns.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defcustom_composition_pattern/2" data-no-tooltip="" translate="no">defcustom_composition_pattern(name, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a custom composition pattern</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defcustom_intent_type/2" data-no-tooltip="" translate="no">defcustom_intent_type(name, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a custom intent type</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defcustom_routing_strategy/2" data-no-tooltip="" translate="no">defcustom_routing_strategy(name, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a custom routing strategy</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defintent_plugin/2" data-no-tooltip="" translate="no">defintent_plugin(name, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Define an intent plugin with custom behavior</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_plugins/0" data-no-tooltip="" translate="no">get_plugins()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get all registered intent plugins</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_plugins_by_type/1" data-no-tooltip="" translate="no">get_plugins_by_type(plugin_type)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get plugins by type</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#register_plugin/1" data-no-tooltip="" translate="no">register_plugin(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Register an intent plugin with the system</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#unregister_plugin/1" data-no-tooltip="" translate="no">unregister_plugin(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Unregister an intent plugin from the system</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="defcustom_composition_pattern/2">
+
+  <div class="detail-header">
+    <a href="#defcustom_composition_pattern/2" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defcustom_composition_pattern(name, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Create a custom composition pattern</p><h2 id="defcustom_composition_pattern/2-example" class="section-heading"><a href="#defcustom_composition_pattern/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defcustom_composition_pattern</span><span class="w"> </span><span class="nc">RetryComposition</span><span class="w"> </span><span class="k" data-group-id="5908096010-1">do</span><span class="w">
+  </span><span class="na">@pattern_type</span><span class="w"> </span><span class="ss">:retry</span><span class="w">
+  </span><span class="na">@max_retries</span><span class="w"> </span><span class="mi">3</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">compose</span><span class="p" data-group-id="5908096010-2">(</span><span class="n">intents</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p" data-group-id="5908096010-2">)</span><span class="w"> </span><span class="k" data-group-id="5908096010-3">do</span><span class="w">
+    </span><span class="n">max_retries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="5908096010-4">(</span><span class="n">opts</span><span class="p">,</span><span class="w"> </span><span class="ss">:max_retries</span><span class="p">,</span><span class="w"> </span><span class="na">@max_retries</span><span class="p" data-group-id="5908096010-4">)</span><span class="w">
+    </span><span class="n">compose_with_retry</span><span class="p" data-group-id="5908096010-5">(</span><span class="n">intents</span><span class="p">,</span><span class="w"> </span><span class="n">max_retries</span><span class="p" data-group-id="5908096010-5">)</span><span class="w">
+  </span><span class="k" data-group-id="5908096010-3">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">compose_with_retry</span><span class="p" data-group-id="5908096010-6">(</span><span class="n">intents</span><span class="p">,</span><span class="w"> </span><span class="n">retries_left</span><span class="p" data-group-id="5908096010-6">)</span><span class="w"> </span><span class="k" data-group-id="5908096010-7">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="nc">PacketFlow.Intent.Dynamic</span><span class="o">.</span><span class="n">compose_intents</span><span class="p" data-group-id="5908096010-8">(</span><span class="n">intents</span><span class="p">,</span><span class="w"> </span><span class="ss">:sequential</span><span class="p" data-group-id="5908096010-8">)</span><span class="w"> </span><span class="k" data-group-id="5908096010-9">do</span><span class="w">
+      </span><span class="p" data-group-id="5908096010-10">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">results</span><span class="p" data-group-id="5908096010-10">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="5908096010-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">results</span><span class="p" data-group-id="5908096010-11">}</span><span class="w">
+      </span><span class="p" data-group-id="5908096010-12">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="c">_reason</span><span class="p" data-group-id="5908096010-12">}</span><span class="w"> </span><span class="ow">when</span><span class="w"> </span><span class="n">retries_left</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">compose_with_retry</span><span class="p" data-group-id="5908096010-13">(</span><span class="n">intents</span><span class="p">,</span><span class="w"> </span><span class="n">retries_left</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5908096010-13">)</span><span class="w">
+      </span><span class="p" data-group-id="5908096010-14">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="5908096010-14">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="5908096010-15">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="5908096010-15">}</span><span class="w">
+    </span><span class="k" data-group-id="5908096010-9">end</span><span class="w">
+  </span><span class="k" data-group-id="5908096010-7">end</span><span class="w">
+</span><span class="k" data-group-id="5908096010-1">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="defcustom_intent_type/2">
+
+  <div class="detail-header">
+    <a href="#defcustom_intent_type/2" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defcustom_intent_type(name, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Create a custom intent type</p><h2 id="defcustom_intent_type/2-example" class="section-heading"><a href="#defcustom_intent_type/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defcustom_intent_type</span><span class="w"> </span><span class="nc">FileOperationIntent</span><span class="w"> </span><span class="k" data-group-id="8062193918-1">do</span><span class="w">
+  </span><span class="na">@intent_type</span><span class="w"> </span><span class="ss">:file_operation</span><span class="w">
+  </span><span class="na">@capabilities</span><span class="w"> </span><span class="p" data-group-id="8062193918-2">[</span><span class="nc">FileCap</span><span class="o">.</span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="nc">FileCap</span><span class="o">.</span><span class="n">write</span><span class="p" data-group-id="8062193918-2">]</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">new</span><span class="p" data-group-id="8062193918-3">(</span><span class="n">operation</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p" data-group-id="8062193918-3">)</span><span class="w"> </span><span class="k" data-group-id="8062193918-4">do</span><span class="w">
+    </span><span class="p" data-group-id="8062193918-5">%{</span><span class="w">
+      </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="na">@intent_type</span><span class="p">,</span><span class="w">
+      </span><span class="ss">operation</span><span class="p">:</span><span class="w"> </span><span class="n">operation</span><span class="p">,</span><span class="w">
+      </span><span class="ss">path</span><span class="p">:</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w">
+      </span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w">
+      </span><span class="ss">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8062193918-6">[</span><span class="nc">FileCap</span><span class="o">.</span><span class="n">read</span><span class="p" data-group-id="8062193918-7">(</span><span class="n">path</span><span class="p" data-group-id="8062193918-7">)</span><span class="p">,</span><span class="w"> </span><span class="nc">FileCap</span><span class="o">.</span><span class="n">write</span><span class="p" data-group-id="8062193918-8">(</span><span class="n">path</span><span class="p" data-group-id="8062193918-8">)</span><span class="p" data-group-id="8062193918-6">]</span><span class="w">
+    </span><span class="p" data-group-id="8062193918-5">}</span><span class="w">
+  </span><span class="k" data-group-id="8062193918-4">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">validate</span><span class="p" data-group-id="8062193918-9">(</span><span class="n">intent</span><span class="p" data-group-id="8062193918-9">)</span><span class="w"> </span><span class="k" data-group-id="8062193918-10">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">operation</span><span class="w"> </span><span class="k" data-group-id="8062193918-11">do</span><span class="w">
+      </span><span class="ss">:read</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">validate_read_operation</span><span class="p" data-group-id="8062193918-12">(</span><span class="n">intent</span><span class="p" data-group-id="8062193918-12">)</span><span class="w">
+      </span><span class="ss">:write</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">validate_write_operation</span><span class="p" data-group-id="8062193918-13">(</span><span class="n">intent</span><span class="p" data-group-id="8062193918-13">)</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8062193918-14">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:unsupported_operation</span><span class="p" data-group-id="8062193918-14">}</span><span class="w">
+    </span><span class="k" data-group-id="8062193918-11">end</span><span class="w">
+  </span><span class="k" data-group-id="8062193918-10">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">validate_read_operation</span><span class="p" data-group-id="8062193918-15">(</span><span class="n">intent</span><span class="p" data-group-id="8062193918-15">)</span><span class="w"> </span><span class="k" data-group-id="8062193918-16">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="nc">File</span><span class="o">.</span><span class="n">exists?</span><span class="p" data-group-id="8062193918-17">(</span><span class="n">intent</span><span class="o">.</span><span class="n">path</span><span class="p" data-group-id="8062193918-17">)</span><span class="w"> </span><span class="k" data-group-id="8062193918-18">do</span><span class="w">
+      </span><span class="no">true</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8062193918-19">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="8062193918-19">}</span><span class="w">
+      </span><span class="no">false</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8062193918-20">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:file_not_found</span><span class="p" data-group-id="8062193918-20">}</span><span class="w">
+    </span><span class="k" data-group-id="8062193918-18">end</span><span class="w">
+  </span><span class="k" data-group-id="8062193918-16">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">validate_write_operation</span><span class="p" data-group-id="8062193918-21">(</span><span class="n">intent</span><span class="p" data-group-id="8062193918-21">)</span><span class="w"> </span><span class="k" data-group-id="8062193918-22">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="nc">File</span><span class="o">.</span><span class="n">writable?</span><span class="p" data-group-id="8062193918-23">(</span><span class="nc">Path</span><span class="o">.</span><span class="n">dirname</span><span class="p" data-group-id="8062193918-24">(</span><span class="n">intent</span><span class="o">.</span><span class="n">path</span><span class="p" data-group-id="8062193918-24">)</span><span class="p" data-group-id="8062193918-23">)</span><span class="w"> </span><span class="k" data-group-id="8062193918-25">do</span><span class="w">
+      </span><span class="no">true</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8062193918-26">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="8062193918-26">}</span><span class="w">
+      </span><span class="no">false</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8062193918-27">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:directory_not_writable</span><span class="p" data-group-id="8062193918-27">}</span><span class="w">
+    </span><span class="k" data-group-id="8062193918-25">end</span><span class="w">
+  </span><span class="k" data-group-id="8062193918-22">end</span><span class="w">
+</span><span class="k" data-group-id="8062193918-1">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="defcustom_routing_strategy/2">
+
+  <div class="detail-header">
+    <a href="#defcustom_routing_strategy/2" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defcustom_routing_strategy(name, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Create a custom routing strategy</p><h2 id="defcustom_routing_strategy/2-example" class="section-heading"><a href="#defcustom_routing_strategy/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defcustom_routing_strategy</span><span class="w"> </span><span class="nc">LoadBalancedRouting</span><span class="w"> </span><span class="k" data-group-id="0852128034-1">do</span><span class="w">
+  </span><span class="na">@strategy_type</span><span class="w"> </span><span class="ss">:load_balanced</span><span class="w">
+  </span><span class="na">@targets</span><span class="w"> </span><span class="p" data-group-id="0852128034-2">[</span><span class="ss">:reactor1</span><span class="p">,</span><span class="w"> </span><span class="ss">:reactor2</span><span class="p">,</span><span class="w"> </span><span class="ss">:reactor3</span><span class="p" data-group-id="0852128034-2">]</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">route</span><span class="p" data-group-id="0852128034-3">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">available_targets</span><span class="p" data-group-id="0852128034-3">)</span><span class="w"> </span><span class="k" data-group-id="0852128034-4">do</span><span class="w">
+    </span><span class="c1"># Load balancing logic</span><span class="w">
+    </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select_target</span><span class="p" data-group-id="0852128034-5">(</span><span class="n">available_targets</span><span class="p" data-group-id="0852128034-5">)</span><span class="w">
+    </span><span class="p" data-group-id="0852128034-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p" data-group-id="0852128034-6">}</span><span class="w">
+  </span><span class="k" data-group-id="0852128034-4">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">select_target</span><span class="p" data-group-id="0852128034-7">(</span><span class="n">targets</span><span class="p" data-group-id="0852128034-7">)</span><span class="w"> </span><span class="k" data-group-id="0852128034-8">do</span><span class="w">
+    </span><span class="c1"># Simple round-robin selection</span><span class="w">
+    </span><span class="nc">Enum</span><span class="o">.</span><span class="n">random</span><span class="p" data-group-id="0852128034-9">(</span><span class="n">targets</span><span class="p" data-group-id="0852128034-9">)</span><span class="w">
+  </span><span class="k" data-group-id="0852128034-8">end</span><span class="w">
+</span><span class="k" data-group-id="0852128034-1">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="defintent_plugin/2">
+
+  <div class="detail-header">
+    <a href="#defintent_plugin/2" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defintent_plugin(name, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Define an intent plugin with custom behavior</p><h2 id="defintent_plugin/2-example" class="section-heading"><a href="#defintent_plugin/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defintent_plugin</span><span class="w"> </span><span class="nc">MyCustomIntentPlugin</span><span class="w"> </span><span class="k" data-group-id="7494206468-1">do</span><span class="w">
+  </span><span class="na">@plugin_type</span><span class="w"> </span><span class="ss">:intent_validation</span><span class="w">
+  </span><span class="na">@priority</span><span class="w"> </span><span class="mi">10</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">validate</span><span class="p" data-group-id="7494206468-2">(</span><span class="n">intent</span><span class="p" data-group-id="7494206468-2">)</span><span class="w"> </span><span class="k" data-group-id="7494206468-3">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">type</span><span class="w"> </span><span class="k" data-group-id="7494206468-4">do</span><span class="w">
+      </span><span class="s">&quot;FileReadIntent&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">validate_file_read</span><span class="p" data-group-id="7494206468-5">(</span><span class="n">intent</span><span class="p" data-group-id="7494206468-5">)</span><span class="w">
+      </span><span class="s">&quot;UserIntent&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">validate_user_intent</span><span class="p" data-group-id="7494206468-6">(</span><span class="n">intent</span><span class="p" data-group-id="7494206468-6">)</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="7494206468-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="7494206468-7">}</span><span class="w">
+    </span><span class="k" data-group-id="7494206468-4">end</span><span class="w">
+  </span><span class="k" data-group-id="7494206468-3">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">transform</span><span class="p" data-group-id="7494206468-8">(</span><span class="n">intent</span><span class="p" data-group-id="7494206468-8">)</span><span class="w"> </span><span class="k" data-group-id="7494206468-9">do</span><span class="w">
+    </span><span class="c1"># Transform intent as needed</span><span class="w">
+    </span><span class="p" data-group-id="7494206468-10">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="7494206468-10">}</span><span class="w">
+  </span><span class="k" data-group-id="7494206468-9">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">route</span><span class="p" data-group-id="7494206468-11">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p" data-group-id="7494206468-11">)</span><span class="w"> </span><span class="k" data-group-id="7494206468-12">do</span><span class="w">
+    </span><span class="c1"># Custom routing logic</span><span class="w">
+    </span><span class="p" data-group-id="7494206468-13">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p" data-group-id="7494206468-13">}</span><span class="w">
+  </span><span class="k" data-group-id="7494206468-12">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">compose</span><span class="p" data-group-id="7494206468-14">(</span><span class="n">intents</span><span class="p">,</span><span class="w"> </span><span class="n">strategy</span><span class="p" data-group-id="7494206468-14">)</span><span class="w"> </span><span class="k" data-group-id="7494206468-15">do</span><span class="w">
+    </span><span class="c1"># Custom composition logic</span><span class="w">
+    </span><span class="p" data-group-id="7494206468-16">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intents</span><span class="p" data-group-id="7494206468-16">}</span><span class="w">
+  </span><span class="k" data-group-id="7494206468-15">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">validate_file_read</span><span class="p" data-group-id="7494206468-17">(</span><span class="n">intent</span><span class="p" data-group-id="7494206468-17">)</span><span class="w"> </span><span class="k" data-group-id="7494206468-18">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">path</span><span class="w"> </span><span class="k" data-group-id="7494206468-19">do</span><span class="w">
+      </span><span class="n">path</span><span class="w"> </span><span class="ow">when</span><span class="w"> </span><span class="n">is_binary</span><span class="p" data-group-id="7494206468-20">(</span><span class="n">path</span><span class="p" data-group-id="7494206468-20">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">byte_size</span><span class="p" data-group-id="7494206468-21">(</span><span class="n">path</span><span class="p" data-group-id="7494206468-21">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="7494206468-22">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="7494206468-22">}</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="7494206468-23">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:invalid_file_path</span><span class="p" data-group-id="7494206468-23">}</span><span class="w">
+    </span><span class="k" data-group-id="7494206468-19">end</span><span class="w">
+  </span><span class="k" data-group-id="7494206468-18">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">validate_user_intent</span><span class="p" data-group-id="7494206468-24">(</span><span class="n">intent</span><span class="p" data-group-id="7494206468-24">)</span><span class="w"> </span><span class="k" data-group-id="7494206468-25">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">user_id</span><span class="w"> </span><span class="k" data-group-id="7494206468-26">do</span><span class="w">
+      </span><span class="n">user_id</span><span class="w"> </span><span class="ow">when</span><span class="w"> </span><span class="n">is_binary</span><span class="p" data-group-id="7494206468-27">(</span><span class="n">user_id</span><span class="p" data-group-id="7494206468-27">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">byte_size</span><span class="p" data-group-id="7494206468-28">(</span><span class="n">user_id</span><span class="p" data-group-id="7494206468-28">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="7494206468-29">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="7494206468-29">}</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="7494206468-30">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:invalid_user_id</span><span class="p" data-group-id="7494206468-30">}</span><span class="w">
+    </span><span class="k" data-group-id="7494206468-26">end</span><span class="w">
+  </span><span class="k" data-group-id="7494206468-25">end</span><span class="w">
+</span><span class="k" data-group-id="7494206468-1">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_plugins/0">
+
+  <div class="detail-header">
+    <a href="#get_plugins/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_plugins()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Get all registered intent plugins</p><h2 id="get_plugins/0-example" class="section-heading"><a href="#get_plugins/0-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">plugins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PacketFlow.Intent.Plugin</span><span class="o">.</span><span class="n">get_plugins</span><span class="p" data-group-id="7054308924-1">(</span><span class="p" data-group-id="7054308924-1">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_plugins_by_type/1">
+
+  <div class="detail-header">
+    <a href="#get_plugins_by_type/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_plugins_by_type(plugin_type)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Get plugins by type</p><h2 id="get_plugins_by_type/1-example" class="section-heading"><a href="#get_plugins_by_type/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">validation_plugins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PacketFlow.Intent.Plugin</span><span class="o">.</span><span class="n">get_plugins_by_type</span><span class="p" data-group-id="2419625909-1">(</span><span class="ss">:intent_validation</span><span class="p" data-group-id="2419625909-1">)</span><span class="w">
+</span><span class="n">transformation_plugins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PacketFlow.Intent.Plugin</span><span class="o">.</span><span class="n">get_plugins_by_type</span><span class="p" data-group-id="2419625909-2">(</span><span class="ss">:intent_transformation</span><span class="p" data-group-id="2419625909-2">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="register_plugin/1">
+
+  <div class="detail-header">
+    <a href="#register_plugin/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">register_plugin(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Register an intent plugin with the system</p><h2 id="register_plugin/1-example" class="section-heading"><a href="#register_plugin/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="nc">PacketFlow.Intent.Plugin</span><span class="o">.</span><span class="n">register_plugin</span><span class="p" data-group-id="0674940177-1">(</span><span class="nc">MyCustomIntentPlugin</span><span class="p" data-group-id="0674940177-1">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="unregister_plugin/1">
+
+  <div class="detail-header">
+    <a href="#unregister_plugin/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">unregister_plugin(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Unregister an intent plugin from the system</p><h2 id="unregister_plugin/1-example" class="section-heading"><a href="#unregister_plugin/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="nc">PacketFlow.Intent.Plugin</span><span class="o">.</span><span class="n">unregister_plugin</span><span class="p" data-group-id="0714035824-1">(</span><span class="nc">MyCustomIntentPlugin</span><span class="p" data-group-id="0714035824-1">)</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

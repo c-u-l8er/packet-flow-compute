@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.DSL.Reactor — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.DSL.Reactor</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>DSL for defining PacketFlow reactors with state management and message processing</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defreactor/2" data-no-tooltip="" translate="no">defreactor(name, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Define a reactor with state management and message processing</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#defsimple_reactor/3" data-no-tooltip="" translate="no">defsimple_reactor(name, state_fields, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Define a simple reactor with basic state management</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="defreactor/2">
+
+  <div class="detail-header">
+    <a href="#defreactor/2" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defreactor(name, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Define a reactor with state management and message processing</p><h2 id="defreactor/2-example" class="section-heading"><a href="#defreactor/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defreactor</span><span class="w"> </span><span class="nc">FileSystemReactor</span><span class="w"> </span><span class="k" data-group-id="2269853937-1">do</span><span class="w">
+  </span><span class="na">@initial_state</span><span class="w"> </span><span class="p" data-group-id="2269853937-2">%{</span><span class="ss">files</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2269853937-3">%{</span><span class="p" data-group-id="2269853937-3">}</span><span class="p">,</span><span class="w"> </span><span class="ss">operations</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2269853937-4">[</span><span class="p" data-group-id="2269853937-4">]</span><span class="p" data-group-id="2269853937-2">}</span><span class="w">
+  </span><span class="na">@capabilities</span><span class="w"> </span><span class="p" data-group-id="2269853937-5">[</span><span class="nc">FileSystemCap</span><span class="o">.</span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="nc">FileSystemCap</span><span class="o">.</span><span class="n">write</span><span class="p">,</span><span class="w"> </span><span class="nc">FileSystemCap</span><span class="o">.</span><span class="n">delete</span><span class="p" data-group-id="2269853937-5">]</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="2269853937-6">(</span><span class="n">opts</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="p" data-group-id="2269853937-7">[</span><span class="p" data-group-id="2269853937-7">]</span><span class="p" data-group-id="2269853937-6">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-8">do</span><span class="w">
+    </span><span class="nc">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="2269853937-9">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="2269853937-9">)</span><span class="w">
+  </span><span class="k" data-group-id="2269853937-8">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="2269853937-10">(</span><span class="n">opts</span><span class="p" data-group-id="2269853937-10">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-11">do</span><span class="w">
+    </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Keyword</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="2269853937-12">(</span><span class="n">opts</span><span class="p">,</span><span class="w"> </span><span class="ss">:initial_state</span><span class="p">,</span><span class="w"> </span><span class="na">@initial_state</span><span class="p" data-group-id="2269853937-12">)</span><span class="w">
+    </span><span class="p" data-group-id="2269853937-13">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-13">}</span><span class="w">
+  </span><span class="k" data-group-id="2269853937-11">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_call</span><span class="p" data-group-id="2269853937-14">(</span><span class="p" data-group-id="2269853937-15">{</span><span class="ss">:process_intent</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="p" data-group-id="2269853937-15">}</span><span class="p">,</span><span class="w"> </span><span class="c">_from</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-14">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-16">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">process_intent</span><span class="p" data-group-id="2269853937-17">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-17">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-18">do</span><span class="w">
+      </span><span class="p" data-group-id="2269853937-19">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">,</span><span class="w"> </span><span class="n">effects</span><span class="p" data-group-id="2269853937-19">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="2269853937-20">{</span><span class="ss">:reply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2269853937-21">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">effects</span><span class="p" data-group-id="2269853937-21">}</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p" data-group-id="2269853937-20">}</span><span class="w">
+      </span><span class="p" data-group-id="2269853937-22">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="2269853937-22">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="2269853937-23">{</span><span class="ss">:reply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2269853937-24">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="2269853937-24">}</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-23">}</span><span class="w">
+    </span><span class="k" data-group-id="2269853937-18">end</span><span class="w">
+  </span><span class="k" data-group-id="2269853937-16">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">process_intent</span><span class="p" data-group-id="2269853937-25">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-25">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-26">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">intent</span><span class="w"> </span><span class="k" data-group-id="2269853937-27">do</span><span class="w">
+      </span><span class="p" data-group-id="2269853937-28">%</span><span class="nc" data-group-id="2269853937-28">FileReadIntent</span><span class="p" data-group-id="2269853937-28">{</span><span class="p" data-group-id="2269853937-28">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">handle_file_read</span><span class="p" data-group-id="2269853937-29">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-29">)</span><span class="w">
+      </span><span class="p" data-group-id="2269853937-30">%</span><span class="nc" data-group-id="2269853937-30">FileWriteIntent</span><span class="p" data-group-id="2269853937-30">{</span><span class="p" data-group-id="2269853937-30">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">handle_file_write</span><span class="p" data-group-id="2269853937-31">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-31">)</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="2269853937-32">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:unsupported_intent</span><span class="p" data-group-id="2269853937-32">}</span><span class="w">
+    </span><span class="k" data-group-id="2269853937-27">end</span><span class="w">
+  </span><span class="k" data-group-id="2269853937-26">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">handle_file_read</span><span class="p" data-group-id="2269853937-33">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-33">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-34">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="nc">Map</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="2269853937-35">(</span><span class="n">state</span><span class="o">.</span><span class="n">files</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">path</span><span class="p" data-group-id="2269853937-35">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-36">do</span><span class="w">
+      </span><span class="no">nil</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="2269853937-37">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:file_not_found</span><span class="p" data-group-id="2269853937-37">}</span><span class="w">
+      </span><span class="n">content</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">new_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update_in</span><span class="p" data-group-id="2269853937-38">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2269853937-39">[</span><span class="ss">:operations</span><span class="p" data-group-id="2269853937-39">]</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p" data-group-id="2269853937-40">[</span><span class="n">intent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ni">&amp;1</span><span class="p" data-group-id="2269853937-40">]</span><span class="p" data-group-id="2269853937-38">)</span><span class="w">
+        </span><span class="p" data-group-id="2269853937-41">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2269853937-42">[</span><span class="p" data-group-id="2269853937-42">]</span><span class="p" data-group-id="2269853937-41">}</span><span class="w">
+    </span><span class="k" data-group-id="2269853937-36">end</span><span class="w">
+  </span><span class="k" data-group-id="2269853937-34">end</span><span class="w">
+
+  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">handle_file_write</span><span class="p" data-group-id="2269853937-43">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2269853937-43">)</span><span class="w"> </span><span class="k" data-group-id="2269853937-44">do</span><span class="w">
+    </span><span class="n">new_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="w">
+    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">update_in</span><span class="p" data-group-id="2269853937-45">(</span><span class="p" data-group-id="2269853937-46">[</span><span class="ss">:files</span><span class="p" data-group-id="2269853937-46">]</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nc">Map</span><span class="o">.</span><span class="n">put</span><span class="p" data-group-id="2269853937-47">(</span><span class="ni">&amp;1</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">intent</span><span class="o">.</span><span class="n">content</span><span class="p" data-group-id="2269853937-47">)</span><span class="p" data-group-id="2269853937-45">)</span><span class="w">
+    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">update_in</span><span class="p" data-group-id="2269853937-48">(</span><span class="p" data-group-id="2269853937-49">[</span><span class="ss">:operations</span><span class="p" data-group-id="2269853937-49">]</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p" data-group-id="2269853937-50">[</span><span class="n">intent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ni">&amp;1</span><span class="p" data-group-id="2269853937-50">]</span><span class="p" data-group-id="2269853937-48">)</span><span class="w">
+    </span><span class="p" data-group-id="2269853937-51">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2269853937-52">[</span><span class="p" data-group-id="2269853937-52">]</span><span class="p" data-group-id="2269853937-51">}</span><span class="w">
+  </span><span class="k" data-group-id="2269853937-44">end</span><span class="w">
+</span><span class="k" data-group-id="2269853937-1">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="defsimple_reactor/3">
+
+  <div class="detail-header">
+    <a href="#defsimple_reactor/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">defsimple_reactor(name, state_fields, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Define a simple reactor with basic state management</p><h2 id="defsimple_reactor/3-example" class="section-heading"><a href="#defsimple_reactor/3-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">defsimple_reactor</span><span class="w"> </span><span class="nc">CounterReactor</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7641013921-1">[</span><span class="ss">:count</span><span class="p" data-group-id="7641013921-1">]</span><span class="w"> </span><span class="k" data-group-id="7641013921-2">do</span><span class="w">
+  </span><span class="na">@capabilities</span><span class="w"> </span><span class="p" data-group-id="7641013921-3">[</span><span class="nc">CounterCap</span><span class="o">.</span><span class="n">increment</span><span class="p">,</span><span class="w"> </span><span class="nc">CounterCap</span><span class="o">.</span><span class="n">decrement</span><span class="p" data-group-id="7641013921-3">]</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">process_intent</span><span class="p" data-group-id="7641013921-4">(</span><span class="n">intent</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="7641013921-4">)</span><span class="w"> </span><span class="k" data-group-id="7641013921-5">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">intent</span><span class="w"> </span><span class="k" data-group-id="7641013921-6">do</span><span class="w">
+      </span><span class="p" data-group-id="7641013921-7">%</span><span class="nc" data-group-id="7641013921-7">IncrementIntent</span><span class="p" data-group-id="7641013921-7">{</span><span class="p" data-group-id="7641013921-7">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">new_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update_in</span><span class="p" data-group-id="7641013921-8">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7641013921-9">[</span><span class="ss">:count</span><span class="p" data-group-id="7641013921-9">]</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p" data-group-id="7641013921-10">(</span><span class="ni">&amp;1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7641013921-10">)</span><span class="p" data-group-id="7641013921-8">)</span><span class="w">
+        </span><span class="p" data-group-id="7641013921-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7641013921-12">[</span><span class="p" data-group-id="7641013921-12">]</span><span class="p" data-group-id="7641013921-11">}</span><span class="w">
+      </span><span class="p" data-group-id="7641013921-13">%</span><span class="nc" data-group-id="7641013921-13">DecrementIntent</span><span class="p" data-group-id="7641013921-13">{</span><span class="p" data-group-id="7641013921-13">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">new_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update_in</span><span class="p" data-group-id="7641013921-14">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7641013921-15">[</span><span class="ss">:count</span><span class="p" data-group-id="7641013921-15">]</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p" data-group-id="7641013921-16">(</span><span class="ni">&amp;1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7641013921-16">)</span><span class="p" data-group-id="7641013921-14">)</span><span class="w">
+        </span><span class="p" data-group-id="7641013921-17">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7641013921-18">[</span><span class="p" data-group-id="7641013921-18">]</span><span class="p" data-group-id="7641013921-17">}</span><span class="w">
+      </span><span class="bp">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="7641013921-19">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:unsupported_intent</span><span class="p" data-group-id="7641013921-19">}</span><span class="w">
+      </span><span class="k" data-group-id="7641013921-6">end</span><span class="w">
+    </span><span class="k" data-group-id="7641013921-5">end</span><span class="w">
+  </span><span class="k" data-group-id="7641013921-2">end</span><span class="w">
+</span><span class="k">end</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

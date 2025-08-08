@@ -1,0 +1,2388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Substrate.Interface — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-behaviour" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Substrate.Interface</span> <small>behaviour</small>
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Standard interfaces for PacketFlow substrates</p><p>This module defines the standard interfaces that all substrates must implement
+for proper communication, composition, and monitoring.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-callbacks summary">
+  <h2>
+    <a href="#callbacks">Callbacks</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:accept_migration/2" data-no-tooltip="" translate="no">accept_migration(migrating_substrate, state)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:add_dependency/1" data-no-tooltip="" translate="no">add_dependency(dependency)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:authenticate/1" data-no-tooltip="" translate="no">authenticate(credentials)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate security interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:authorize/2" data-no-tooltip="" translate="no">authorize(permission, resource)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:begin_transaction/0" data-no-tooltip="" translate="no">begin_transaction()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate transaction interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:clear_failure_history/0" data-no-tooltip="" translate="no">clear_failure_history()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:commit_transaction/1" data-no-tooltip="" translate="no">commit_transaction(transaction_id)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:compose_with/2" data-no-tooltip="" translate="no">compose_with(other_substrate, config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate composition interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:connect_port/3" data-no-tooltip="" translate="no">connect_port(port_type, port_id, target)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:create_backup/0" data-no-tooltip="" translate="no">create_backup()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate backup interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:deserialize_state/1" data-no-tooltip="" translate="no">deserialize_state(serialized)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:disconnect_from/1" data-no-tooltip="" translate="no">disconnect_from(integration_id)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:disconnect_port/2" data-no-tooltip="" translate="no">disconnect_port(port_type, port_id)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:discover_peers/0" data-no-tooltip="" translate="no">discover_peers()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate discovery interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:emit_event/2" data-no-tooltip="" translate="no">emit_event(event, data)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_capabilities/0" data-no-tooltip="" translate="no">get_capabilities()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate capability interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_debug_info/0" data-no-tooltip="" translate="no">get_debug_info()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate debugging interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_dependencies/0" data-no-tooltip="" translate="no">get_dependencies()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate dependency interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_failure_history/0" data-no-tooltip="" translate="no">get_failure_history()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_health_status/0" data-no-tooltip="" translate="no">get_health_status()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate monitoring interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_input_ports/0" data-no-tooltip="" translate="no">get_input_ports()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate data flow interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_logs/0" data-no-tooltip="" translate="no">get_logs()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_metrics/0" data-no-tooltip="" translate="no">get_metrics()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate metrics interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_output_ports/0" data-no-tooltip="" translate="no">get_output_ports()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_performance_stats/0" data-no-tooltip="" translate="no">get_performance_stats()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_resource_limits/0" data-no-tooltip="" translate="no">get_resource_limits()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_resource_usage/0" data-no-tooltip="" translate="no">get_resource_usage()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate resource management interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_scaling_recommendations/0" data-no-tooltip="" translate="no">get_scaling_recommendations()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_state/0" data-no-tooltip="" translate="no">get_state()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate state management interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_time_constraints/0" data-no-tooltip="" translate="no">get_time_constraints()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate time management interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_version/0" data-no-tooltip="" translate="no">get_version()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate versioning interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:handle_failure/1" data-no-tooltip="" translate="no">handle_failure(failure)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate fault tolerance interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:has_capability/1" data-no-tooltip="" translate="no">has_capability(capability)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:init_substrate/1" data-no-tooltip="" translate="no">init_substrate(config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate initialization interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:integrate_with/2" data-no-tooltip="" translate="no">integrate_with(external_system, config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate integration interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:is_compatible_with/1" data-no-tooltip="" translate="no">is_compatible_with(other_version)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:is_within_time_constraints/0" data-no-tooltip="" translate="no">is_within_time_constraints()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:migrate_to/1" data-no-tooltip="" translate="no">migrate_to(target_node)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate migration interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:optimize/0" data-no-tooltip="" translate="no">optimize()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate optimization interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:record_metric/2" data-no-tooltip="" translate="no">record_metric(metric, value)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:register_with_registry/1" data-no-tooltip="" translate="no">register_with_registry(registry)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:remove_dependency/1" data-no-tooltip="" translate="no">remove_dependency(dependency)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:reset_state/0" data-no-tooltip="" translate="no">reset_state()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:restart_substrate/0" data-no-tooltip="" translate="no">restart_substrate()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:restore_from_backup/1" data-no-tooltip="" translate="no">restore_from_backup(backup_data)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:rollback_transaction/1" data-no-tooltip="" translate="no">rollback_transaction(transaction_id)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:scale_down/1" data-no-tooltip="" translate="no">scale_down(factor)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:scale_up/1" data-no-tooltip="" translate="no">scale_up(factor)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate scaling interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:send_message/2" data-no-tooltip="" translate="no">send_message(message, target)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate communication interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:send_notification/2" data-no-tooltip="" translate="no">send_notification(notification_type, data)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:serialize_state/0" data-no-tooltip="" translate="no">serialize_state()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate serialization interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:set_debug_level/1" data-no-tooltip="" translate="no">set_debug_level(level)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:set_resource_limits/1" data-no-tooltip="" translate="no">set_resource_limits(limits)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:set_state/1" data-no-tooltip="" translate="no">set_state(state)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:set_time_constraints/1" data-no-tooltip="" translate="no">set_time_constraints(constraints)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:start_substrate/0" data-no-tooltip="" translate="no">start_substrate()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate lifecycle interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:stop_substrate/0" data-no-tooltip="" translate="no">stop_substrate()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:subscribe_to_events/1" data-no-tooltip="" translate="no">subscribe_to_events(pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate event interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:subscribe_to_notifications/2" data-no-tooltip="" translate="no">subscribe_to_notifications(pid, notification_types)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate notification interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:unregister_from_registry/1" data-no-tooltip="" translate="no">unregister_from_registry(registry)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:unsubscribe_from_events/1" data-no-tooltip="" translate="no">unsubscribe_from_events(pid)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:unsubscribe_from_notifications/1" data-no-tooltip="" translate="no">unsubscribe_from_notifications(pid)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:update_config/1" data-no-tooltip="" translate="no">update_config(config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate configuration interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:update_state/1" data-no-tooltip="" translate="no">update_state(updates)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:validate_config/1" data-no-tooltip="" translate="no">validate_config(config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate validation interface</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:validate_message/1" data-no-tooltip="" translate="no">validate_message(message)</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#__using__/1" data-no-tooltip="" translate="no">__using__(opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Substrate validation helpers</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Callbacks</span>
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:accept_migration/2">
+
+  <div class="detail-header">
+    <a href="#c:accept_migration/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">accept_migration(migrating_substrate, state)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> accept_migration(migrating_substrate :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(), state :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:add_dependency/1">
+
+  <div class="detail-header">
+    <a href="#c:add_dependency/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_dependency(dependency)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> add_dependency(dependency :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:authenticate/1">
+
+  <div class="detail-header">
+    <a href="#c:authenticate/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">authenticate(credentials)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> authenticate(credentials :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  {:ok, permissions :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate security interface</p>
+  </section>
+</section>
+<section class="detail" id="c:authorize/2">
+
+  <div class="detail-header">
+    <a href="#c:authorize/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">authorize(permission, resource)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> authorize(permission :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), resource :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:begin_transaction/0">
+
+  <div class="detail-header">
+    <a href="#c:begin_transaction/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">begin_transaction()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> begin_transaction() ::
+  {:ok, transaction_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate transaction interface</p>
+  </section>
+</section>
+<section class="detail" id="c:clear_failure_history/0">
+
+  <div class="detail-header">
+    <a href="#c:clear_failure_history/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clear_failure_history()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> clear_failure_history() :: :ok</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:commit_transaction/1">
+
+  <div class="detail-header">
+    <a href="#c:commit_transaction/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">commit_transaction(transaction_id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> commit_transaction(transaction_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:compose_with/2">
+
+  <div class="detail-header">
+    <a href="#c:compose_with/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">compose_with(other_substrate, config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> compose_with(other_substrate :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(), config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  {:ok, composed_module :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate composition interface</p>
+  </section>
+</section>
+<section class="detail" id="c:connect_port/3">
+
+  <div class="detail-header">
+    <a href="#c:connect_port/3" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">connect_port(port_type, port_id, target)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> connect_port(port_type :: :input | :output, port_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), target :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) ::
+  :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:create_backup/0">
+
+  <div class="detail-header">
+    <a href="#c:create_backup/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_backup()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> create_backup() :: {:ok, backup_data :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate backup interface</p>
+  </section>
+</section>
+<section class="detail" id="c:deserialize_state/1">
+
+  <div class="detail-header">
+    <a href="#c:deserialize_state/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">deserialize_state(serialized)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> deserialize_state(serialized :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()) ::
+  {:ok, state :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:disconnect_from/1">
+
+  <div class="detail-header">
+    <a href="#c:disconnect_from/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">disconnect_from(integration_id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> disconnect_from(integration_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:disconnect_port/2">
+
+  <div class="detail-header">
+    <a href="#c:disconnect_port/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">disconnect_port(port_type, port_id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> disconnect_port(port_type :: :input | :output, port_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) ::
+  :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:discover_peers/0">
+
+  <div class="detail-header">
+    <a href="#c:discover_peers/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">discover_peers()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> discover_peers() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]</pre>
+
+      </div>
+
+<p>Substrate discovery interface</p>
+  </section>
+</section>
+<section class="detail" id="c:emit_event/2">
+
+  <div class="detail-header">
+    <a href="#c:emit_event/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">emit_event(event, data)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> emit_event(event :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), data :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: :ok</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_capabilities/0">
+
+  <div class="detail-header">
+    <a href="#c:get_capabilities/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_capabilities()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_capabilities() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]</pre>
+
+      </div>
+
+<p>Substrate capability interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_debug_info/0">
+
+  <div class="detail-header">
+    <a href="#c:get_debug_info/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_debug_info()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_debug_info() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Substrate debugging interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_dependencies/0">
+
+  <div class="detail-header">
+    <a href="#c:get_dependencies/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_dependencies()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_dependencies() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()]</pre>
+
+      </div>
+
+<p>Substrate dependency interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_failure_history/0">
+
+  <div class="detail-header">
+    <a href="#c:get_failure_history/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_failure_history()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_failure_history() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_health_status/0">
+
+  <div class="detail-header">
+    <a href="#c:get_health_status/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_health_status()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_health_status() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Substrate monitoring interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_input_ports/0">
+
+  <div class="detail-header">
+    <a href="#c:get_input_ports/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_input_ports()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_input_ports() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]</pre>
+
+      </div>
+
+<p>Substrate data flow interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_logs/0">
+
+  <div class="detail-header">
+    <a href="#c:get_logs/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_logs()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_logs() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_metrics/0">
+
+  <div class="detail-header">
+    <a href="#c:get_metrics/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_metrics()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_metrics() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Substrate metrics interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_output_ports/0">
+
+  <div class="detail-header">
+    <a href="#c:get_output_ports/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_output_ports()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_output_ports() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_performance_stats/0">
+
+  <div class="detail-header">
+    <a href="#c:get_performance_stats/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_performance_stats()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_performance_stats() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_resource_limits/0">
+
+  <div class="detail-header">
+    <a href="#c:get_resource_limits/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_resource_limits()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_resource_limits() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_resource_usage/0">
+
+  <div class="detail-header">
+    <a href="#c:get_resource_usage/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_resource_usage()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_resource_usage() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Substrate resource management interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_scaling_recommendations/0">
+
+  <div class="detail-header">
+    <a href="#c:get_scaling_recommendations/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_scaling_recommendations()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_scaling_recommendations() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_state/0">
+
+  <div class="detail-header">
+    <a href="#c:get_state/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_state()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_state() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Substrate state management interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_time_constraints/0">
+
+  <div class="detail-header">
+    <a href="#c:get_time_constraints/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_time_constraints()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_time_constraints() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]</pre>
+
+      </div>
+
+<p>Substrate time management interface</p>
+  </section>
+</section>
+<section class="detail" id="c:get_version/0">
+
+  <div class="detail-header">
+    <a href="#c:get_version/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_version()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_version() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Substrate versioning interface</p>
+  </section>
+</section>
+<section class="detail" id="c:handle_failure/1">
+
+  <div class="detail-header">
+    <a href="#c:handle_failure/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">handle_failure(failure)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> handle_failure(failure :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate fault tolerance interface</p>
+  </section>
+</section>
+<section class="detail" id="c:has_capability/1">
+
+  <div class="detail-header">
+    <a href="#c:has_capability/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">has_capability(capability)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> has_capability(capability :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:init_substrate/1">
+
+  <div class="detail-header">
+    <a href="#c:init_substrate/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">init_substrate(config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> init_substrate(config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  {:ok, state :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate initialization interface</p>
+  </section>
+</section>
+<section class="detail" id="c:integrate_with/2">
+
+  <div class="detail-header">
+    <a href="#c:integrate_with/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">integrate_with(external_system, config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> integrate_with(external_system :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  {:ok, integration_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate integration interface</p>
+  </section>
+</section>
+<section class="detail" id="c:is_compatible_with/1">
+
+  <div class="detail-header">
+    <a href="#c:is_compatible_with/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">is_compatible_with(other_version)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> is_compatible_with(other_version :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:is_within_time_constraints/0">
+
+  <div class="detail-header">
+    <a href="#c:is_within_time_constraints/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">is_within_time_constraints()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> is_within_time_constraints() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:migrate_to/1">
+
+  <div class="detail-header">
+    <a href="#c:migrate_to/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">migrate_to(target_node)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> migrate_to(target_node :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate migration interface</p>
+  </section>
+</section>
+<section class="detail" id="c:optimize/0">
+
+  <div class="detail-header">
+    <a href="#c:optimize/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">optimize()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> optimize() :: {:ok, optimizations :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate optimization interface</p>
+  </section>
+</section>
+<section class="detail" id="c:record_metric/2">
+
+  <div class="detail-header">
+    <a href="#c:record_metric/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">record_metric(metric, value)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> record_metric(metric :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), value :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: :ok</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:register_with_registry/1">
+
+  <div class="detail-header">
+    <a href="#c:register_with_registry/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">register_with_registry(registry)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> register_with_registry(registry :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:remove_dependency/1">
+
+  <div class="detail-header">
+    <a href="#c:remove_dependency/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">remove_dependency(dependency)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> remove_dependency(dependency :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:reset_state/0">
+
+  <div class="detail-header">
+    <a href="#c:reset_state/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">reset_state()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> reset_state() :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:restart_substrate/0">
+
+  <div class="detail-header">
+    <a href="#c:restart_substrate/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">restart_substrate()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> restart_substrate() :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:restore_from_backup/1">
+
+  <div class="detail-header">
+    <a href="#c:restore_from_backup/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">restore_from_backup(backup_data)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> restore_from_backup(backup_data :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:rollback_transaction/1">
+
+  <div class="detail-header">
+    <a href="#c:rollback_transaction/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">rollback_transaction(transaction_id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> rollback_transaction(transaction_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) ::
+  :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:scale_down/1">
+
+  <div class="detail-header">
+    <a href="#c:scale_down/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">scale_down(factor)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> scale_down(factor :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">float</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:scale_up/1">
+
+  <div class="detail-header">
+    <a href="#c:scale_up/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">scale_up(factor)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> scale_up(factor :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">float</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate scaling interface</p>
+  </section>
+</section>
+<section class="detail" id="c:send_message/2">
+
+  <div class="detail-header">
+    <a href="#c:send_message/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">send_message(message, target)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> send_message(message :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), target :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) ::
+  {:ok, response :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate communication interface</p>
+  </section>
+</section>
+<section class="detail" id="c:send_notification/2">
+
+  <div class="detail-header">
+    <a href="#c:send_notification/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">send_notification(notification_type, data)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> send_notification(notification_type :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), data :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: :ok</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:serialize_state/0">
+
+  <div class="detail-header">
+    <a href="#c:serialize_state/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">serialize_state()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> serialize_state() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
+
+<p>Substrate serialization interface</p>
+  </section>
+</section>
+<section class="detail" id="c:set_debug_level/1">
+
+  <div class="detail-header">
+    <a href="#c:set_debug_level/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_debug_level(level)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> set_debug_level(level :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:set_resource_limits/1">
+
+  <div class="detail-header">
+    <a href="#c:set_resource_limits/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_resource_limits(limits)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> set_resource_limits(limits :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:set_state/1">
+
+  <div class="detail-header">
+    <a href="#c:set_state/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_state(state)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> set_state(state :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:set_time_constraints/1">
+
+  <div class="detail-header">
+    <a href="#c:set_time_constraints/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_time_constraints(constraints)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> set_time_constraints(constraints :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:start_substrate/0">
+
+  <div class="detail-header">
+    <a href="#c:start_substrate/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_substrate()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> start_substrate() :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate lifecycle interface</p>
+  </section>
+</section>
+<section class="detail" id="c:stop_substrate/0">
+
+  <div class="detail-header">
+    <a href="#c:stop_substrate/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">stop_substrate()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> stop_substrate() :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:subscribe_to_events/1">
+
+  <div class="detail-header">
+    <a href="#c:subscribe_to_events/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">subscribe_to_events(pid)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> subscribe_to_events(pid :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate event interface</p>
+  </section>
+</section>
+<section class="detail" id="c:subscribe_to_notifications/2">
+
+  <div class="detail-header">
+    <a href="#c:subscribe_to_notifications/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">subscribe_to_notifications(pid, notification_types)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> subscribe_to_notifications(pid :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), notification_types :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]) ::
+  :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate notification interface</p>
+  </section>
+</section>
+<section class="detail" id="c:unregister_from_registry/1">
+
+  <div class="detail-header">
+    <a href="#c:unregister_from_registry/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">unregister_from_registry(registry)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> unregister_from_registry(registry :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:unsubscribe_from_events/1">
+
+  <div class="detail-header">
+    <a href="#c:unsubscribe_from_events/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">unsubscribe_from_events(pid)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> unsubscribe_from_events(pid :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:unsubscribe_from_notifications/1">
+
+  <div class="detail-header">
+    <a href="#c:unsubscribe_from_notifications/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">unsubscribe_from_notifications(pid)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> unsubscribe_from_notifications(pid :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:update_config/1">
+
+  <div class="detail-header">
+    <a href="#c:update_config/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_config(config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> update_config(config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate configuration interface</p>
+  </section>
+</section>
+<section class="detail" id="c:update_state/1">
+
+  <div class="detail-header">
+    <a href="#c:update_state/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_state(updates)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> update_state(updates :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:validate_config/1">
+
+  <div class="detail-header">
+    <a href="#c:validate_config/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_config(config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> validate_config(config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  {:ok, validated_config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Substrate validation interface</p>
+  </section>
+</section>
+<section class="detail" id="c:validate_message/1">
+
+  <div class="detail-header">
+    <a href="#c:validate_message/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_message(message)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> validate_message(message :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) ::
+  {:ok, validated_message :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="__using__/1">
+
+  <div class="detail-header">
+    <a href="#__using__/1" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">__using__(opts)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Substrate validation helpers</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

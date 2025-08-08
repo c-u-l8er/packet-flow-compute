@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Capability.Dynamic — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Capability.Dynamic</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Dynamic capability management and validation for PacketFlow.</p><p>This module provides runtime capability creation, dynamic capability validation,
+capability composition patterns, capability delegation, and capability revocation.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability/0" data-no-tooltip="" translate="no">capability()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability_context/0" data-no-tooltip="" translate="no">capability_context()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability_rule/0" data-no-tooltip="" translate="no">capability_rule()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability_set/0" data-no-tooltip="" translate="no">capability_set()</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#compose_capabilities/1" data-no-tooltip="" translate="no">compose_capabilities(capabilities)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Composes multiple capabilities into a single capability set.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_capabilities/2" data-no-tooltip="" translate="no">create_capabilities(names, params \\ nil)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates multiple capabilities at runtime.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_capability/2" data-no-tooltip="" translate="no">create_capability(name, params \\ nil)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new capability at runtime with the given name and parameters.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_inheritance_hierarchy/1" data-no-tooltip="" translate="no">create_inheritance_hierarchy(capabilities)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a capability inheritance hierarchy.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_temporal_capability/3" data-no-tooltip="" translate="no">create_temporal_capability(capability, valid_from, valid_until)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a capability with temporal constraints.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delegate_capabilities/3" data-no-tooltip="" translate="no">delegate_capabilities(capabilities, from_entity, to_entity)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Delegates multiple capabilities from one entity to another.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delegate_capability/3" data-no-tooltip="" translate="no">delegate_capability(capability, from_entity, to_entity)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Delegates a capability from one entity to another.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#filter_capabilities/2" data-no-tooltip="" translate="no">filter_capabilities(capabilities, predicate)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Filters capabilities based on a predicate function.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_implied_capabilities/1" data-no-tooltip="" translate="no">get_implied_capabilities(capability)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Gets all capabilities that are implied by a given capability.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#implies?/2" data-no-tooltip="" translate="no">implies?(capability1, capability2)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks if one capability implies another capability.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#inherits_from?/3" data-no-tooltip="" translate="no">inherits_from?(capability, parent_capability, hierarchy)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks if a capability inherits from another capability.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#merge_capability_sets/1" data-no-tooltip="" translate="no">merge_capability_sets(capability_sets)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Merges multiple capability sets into a single set.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#revoke_capabilities/2" data-no-tooltip="" translate="no">revoke_capabilities(capabilities, entity)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Revokes multiple capabilities from an entity.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#revoke_capability/2" data-no-tooltip="" translate="no">revoke_capability(capability, entity)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Revokes a capability from an entity.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_capabilities/2" data-no-tooltip="" translate="no">validate_capabilities(required_capabilities, available_capabilities)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates multiple capabilities against a set of available capabilities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_capability/2" data-no-tooltip="" translate="no">validate_capability(capability, available_capabilities)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a capability against a set of available capabilities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_capability_in_context/2" data-no-tooltip="" translate="no">validate_capability_in_context(capability, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a capability in a specific context.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_delegation/2" data-no-tooltip="" translate="no">validate_delegation(arg, available_capabilities)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a capability delegation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_temporal_capability/2" data-no-tooltip="" translate="no">validate_temporal_capability(arg, current_time)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a temporal capability at a specific time.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:capability/0">
+
+  <div class="detail-header">
+    <a href="#t:capability/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:capability_context/0">
+
+  <div class="detail-header">
+    <a href="#t:capability_context/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability_context()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability_context() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:capability_rule/0">
+
+  <div class="detail-header">
+    <a href="#t:capability_rule/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability_rule()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability_rule() :: {<a href="#t:capability/0">capability</a>(), [<a href="#t:capability/0">capability</a>()]}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:capability_set/0">
+
+  <div class="detail-header">
+    <a href="#t:capability_set/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability_set()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability_set() :: <a href="https://hexdocs.pm/elixir/MapSet.html#t:t/1">MapSet.t</a>(<a href="#t:capability/0">capability</a>())</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="compose_capabilities/1">
+
+  <div class="detail-header">
+    <a href="#compose_capabilities/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">compose_capabilities(capabilities)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> compose_capabilities([<a href="#t:capability/0">capability</a>()]) :: <a href="#t:capability_set/0">capability_set</a>()</pre>
+
+      </div>
+
+<p>Composes multiple capabilities into a single capability set.</p><h2 id="compose_capabilities/1-examples" class="section-heading"><a href="#compose_capabilities/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">compose_capabilities</span><span class="p" data-group-id="1869106071-1">(</span><span class="p" data-group-id="1869106071-2">[</span><span class="p" data-group-id="1869106071-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1869106071-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1869106071-4">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1869106071-4">}</span><span class="p" data-group-id="1869106071-2">]</span><span class="p" data-group-id="1869106071-1">)</span><span class="w">
+</span><span class="p" data-group-id="1869106071-5">#</span><span class="nc" data-group-id="1869106071-5">MapSet</span><span class="p" data-group-id="1869106071-5">&lt;</span><span class="p" data-group-id="1869106071-6">[</span><span class="p" data-group-id="1869106071-7">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1869106071-7">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1869106071-8">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1869106071-8">}</span><span class="p" data-group-id="1869106071-6">]</span><span class="p" data-group-id="1869106071-5">&gt;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_capabilities/2">
+
+    <span id="create_capabilities/1"></span>
+
+  <div class="detail-header">
+    <a href="#create_capabilities/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_capabilities(names, params \\ nil)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_capabilities([<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()], <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: [<a href="#t:capability/0">capability</a>()]</pre>
+
+      </div>
+
+<p>Creates multiple capabilities at runtime.</p><h2 id="create_capabilities/2-examples" class="section-heading"><a href="#create_capabilities/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">create_capabilities</span><span class="p" data-group-id="8680073827-1">(</span><span class="p" data-group-id="8680073827-2">[</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="ss">:write</span><span class="p" data-group-id="8680073827-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/path/to/file&quot;</span><span class="p" data-group-id="8680073827-1">)</span><span class="w">
+</span><span class="p" data-group-id="8680073827-3">[</span><span class="p" data-group-id="8680073827-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/path/to/file&quot;</span><span class="p" data-group-id="8680073827-4">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8680073827-5">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/path/to/file&quot;</span><span class="p" data-group-id="8680073827-5">}</span><span class="p" data-group-id="8680073827-3">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_capability/2">
+
+    <span id="create_capability/1"></span>
+
+  <div class="detail-header">
+    <a href="#create_capability/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_capability(name, params \\ nil)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_capability(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="#t:capability/0">capability</a>()</pre>
+
+      </div>
+
+<p>Creates a new capability at runtime with the given name and parameters.</p><h2 id="create_capability/2-examples" class="section-heading"><a href="#create_capability/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">create_capability</span><span class="p" data-group-id="8840666978-1">(</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/path/to/file&quot;</span><span class="p" data-group-id="8840666978-1">)</span><span class="w">
+</span><span class="p" data-group-id="8840666978-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/path/to/file&quot;</span><span class="p" data-group-id="8840666978-2">}</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="n">create_capability</span><span class="p" data-group-id="8840666978-3">(</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user123&quot;</span><span class="p" data-group-id="8840666978-3">)</span><span class="w">
+</span><span class="p" data-group-id="8840666978-4">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user123&quot;</span><span class="p" data-group-id="8840666978-4">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_inheritance_hierarchy/1">
+
+  <div class="detail-header">
+    <a href="#create_inheritance_hierarchy/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_inheritance_hierarchy(capabilities)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_inheritance_hierarchy([<a href="#t:capability/0">capability</a>()]) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Creates a capability inheritance hierarchy.</p><h2 id="create_inheritance_hierarchy/1-examples" class="section-heading"><a href="#create_inheritance_hierarchy/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">create_inheritance_hierarchy</span><span class="p" data-group-id="8409547750-1">(</span><span class="p" data-group-id="8409547750-2">[</span><span class="p" data-group-id="8409547750-3">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8409547750-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-4">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8409547750-5">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-5">}</span><span class="p" data-group-id="8409547750-2">]</span><span class="p" data-group-id="8409547750-1">)</span><span class="w">
+</span><span class="p" data-group-id="8409547750-6">%{</span><span class="w">
+  </span><span class="p" data-group-id="8409547750-7">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-7">}</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8409547750-8">[</span><span class="p" data-group-id="8409547750-9">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-9">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8409547750-10">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-10">}</span><span class="p" data-group-id="8409547750-8">]</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="8409547750-11">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-11">}</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8409547750-12">[</span><span class="p" data-group-id="8409547750-13">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8409547750-13">}</span><span class="p" data-group-id="8409547750-12">]</span><span class="w">
+</span><span class="p" data-group-id="8409547750-6">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_temporal_capability/3">
+
+  <div class="detail-header">
+    <a href="#create_temporal_capability/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_temporal_capability(capability, valid_from, valid_until)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_temporal_capability(<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(), <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()) ::
+  {:temporal, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(), <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a capability with temporal constraints.</p><h2 id="create_temporal_capability/3-examples" class="section-heading"><a href="#create_temporal_capability/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">create_temporal_capability</span><span class="p" data-group-id="8721173588-1">(</span><span class="p" data-group-id="8721173588-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8721173588-2">}</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-01 12:00:00Z]</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-02 12:00:00Z]</span><span class="p" data-group-id="8721173588-1">)</span><span class="w">
+</span><span class="p" data-group-id="8721173588-3">{</span><span class="ss">:temporal</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8721173588-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8721173588-4">}</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-01 12:00:00Z]</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-02 12:00:00Z]</span><span class="p" data-group-id="8721173588-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delegate_capabilities/3">
+
+  <div class="detail-header">
+    <a href="#delegate_capabilities/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delegate_capabilities(capabilities, from_entity, to_entity)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delegate_capabilities([<a href="#t:capability/0">capability</a>()], <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: [
+  {:delegated, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}
+]</pre>
+
+      </div>
+
+<p>Delegates multiple capabilities from one entity to another.</p><h2 id="delegate_capabilities/3-examples" class="section-heading"><a href="#delegate_capabilities/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">delegate_capabilities</span><span class="p" data-group-id="5176473246-1">(</span><span class="p" data-group-id="5176473246-2">[</span><span class="p" data-group-id="5176473246-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5176473246-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5176473246-4">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5176473246-4">}</span><span class="p" data-group-id="5176473246-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="5176473246-1">)</span><span class="w">
+</span><span class="p" data-group-id="5176473246-5">[</span><span class="p" data-group-id="5176473246-6">{</span><span class="ss">:delegated</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5176473246-7">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5176473246-7">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="5176473246-6">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5176473246-8">{</span><span class="ss">:delegated</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5176473246-9">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5176473246-9">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="5176473246-8">}</span><span class="p" data-group-id="5176473246-5">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delegate_capability/3">
+
+  <div class="detail-header">
+    <a href="#delegate_capability/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delegate_capability(capability, from_entity, to_entity)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delegate_capability(<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) ::
+  {:delegated, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Delegates a capability from one entity to another.</p><h2 id="delegate_capability/3-examples" class="section-heading"><a href="#delegate_capability/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">delegate_capability</span><span class="p" data-group-id="0685708411-1">(</span><span class="p" data-group-id="0685708411-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0685708411-2">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="0685708411-1">)</span><span class="w">
+</span><span class="p" data-group-id="0685708411-3">{</span><span class="ss">:delegated</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0685708411-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0685708411-4">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="0685708411-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="filter_capabilities/2">
+
+  <div class="detail-header">
+    <a href="#filter_capabilities/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">filter_capabilities(capabilities, predicate)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> filter_capabilities([<a href="#t:capability/0">capability</a>()], (<a href="#t:capability/0">capability</a>() -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>())) :: [
+  <a href="#t:capability/0">capability</a>()
+]</pre>
+
+      </div>
+
+<p>Filters capabilities based on a predicate function.</p><h2 id="filter_capabilities/2-examples" class="section-heading"><a href="#filter_capabilities/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">filter_capabilities</span><span class="p" data-group-id="6839001814-1">(</span><span class="p" data-group-id="6839001814-2">[</span><span class="p" data-group-id="6839001814-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="6839001814-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6839001814-4">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="6839001814-4">}</span><span class="p" data-group-id="6839001814-2">]</span><span class="p">,</span><span class="w"> </span><span class="k" data-group-id="6839001814-5">fn</span><span class="w"> </span><span class="p" data-group-id="6839001814-6">{</span><span class="n">op</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="6839001814-6">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">:read</span><span class="w"> </span><span class="k" data-group-id="6839001814-5">end</span><span class="p" data-group-id="6839001814-1">)</span><span class="w">
+</span><span class="p" data-group-id="6839001814-7">[</span><span class="p" data-group-id="6839001814-8">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="6839001814-8">}</span><span class="p" data-group-id="6839001814-7">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_implied_capabilities/1">
+
+  <div class="detail-header">
+    <a href="#get_implied_capabilities/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_implied_capabilities(capability)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_implied_capabilities(<a href="#t:capability/0">capability</a>()) :: [<a href="#t:capability/0">capability</a>()]</pre>
+
+      </div>
+
+<p>Gets all capabilities that are implied by a given capability.</p><h2 id="get_implied_capabilities/1-examples" class="section-heading"><a href="#get_implied_capabilities/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">get_implied_capabilities</span><span class="p" data-group-id="0192953999-1">(</span><span class="p" data-group-id="0192953999-2">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0192953999-2">}</span><span class="p" data-group-id="0192953999-1">)</span><span class="w">
+</span><span class="p" data-group-id="0192953999-3">[</span><span class="p" data-group-id="0192953999-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0192953999-4">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0192953999-5">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0192953999-5">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0192953999-6">{</span><span class="ss">:delete</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0192953999-6">}</span><span class="p" data-group-id="0192953999-3">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="implies?/2">
+
+  <div class="detail-header">
+    <a href="#implies?/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">implies?(capability1, capability2)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> implies?(<a href="#t:capability/0">capability</a>(), <a href="#t:capability/0">capability</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Checks if one capability implies another capability.</p><h2 id="implies?/2-examples" class="section-heading"><a href="#implies?/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">implies?</span><span class="p" data-group-id="1871002407-1">(</span><span class="p" data-group-id="1871002407-2">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1871002407-2">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1871002407-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1871002407-3">}</span><span class="p" data-group-id="1871002407-1">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="n">implies?</span><span class="p" data-group-id="1871002407-4">(</span><span class="p" data-group-id="1871002407-5">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1871002407-5">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1871002407-6">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="1871002407-6">}</span><span class="p" data-group-id="1871002407-4">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="inherits_from?/3">
+
+  <div class="detail-header">
+    <a href="#inherits_from?/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">inherits_from?(capability, parent_capability, hierarchy)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> inherits_from?(<a href="#t:capability/0">capability</a>(), <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Checks if a capability inherits from another capability.</p><h2 id="inherits_from?/3-examples" class="section-heading"><a href="#inherits_from?/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">inherits_from?</span><span class="p" data-group-id="3089370371-1">(</span><span class="p" data-group-id="3089370371-2">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3089370371-2">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3089370371-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3089370371-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3089370371-4">%{</span><span class="p" data-group-id="3089370371-5">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3089370371-5">}</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="3089370371-6">[</span><span class="p" data-group-id="3089370371-7">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3089370371-7">}</span><span class="p" data-group-id="3089370371-6">]</span><span class="p" data-group-id="3089370371-4">}</span><span class="p" data-group-id="3089370371-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="merge_capability_sets/1">
+
+  <div class="detail-header">
+    <a href="#merge_capability_sets/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">merge_capability_sets(capability_sets)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> merge_capability_sets([<a href="#t:capability_set/0">capability_set</a>()]) :: <a href="#t:capability_set/0">capability_set</a>()</pre>
+
+      </div>
+
+<p>Merges multiple capability sets into a single set.</p><h2 id="merge_capability_sets/1-examples" class="section-heading"><a href="#merge_capability_sets/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">merge_capability_sets</span><span class="p" data-group-id="3234875189-1">(</span><span class="p" data-group-id="3234875189-2">[</span><span class="nc">MapSet</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3234875189-3">(</span><span class="p" data-group-id="3234875189-4">[</span><span class="p" data-group-id="3234875189-5">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3234875189-5">}</span><span class="p" data-group-id="3234875189-4">]</span><span class="p" data-group-id="3234875189-3">)</span><span class="p">,</span><span class="w"> </span><span class="nc">MapSet</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3234875189-6">(</span><span class="p" data-group-id="3234875189-7">[</span><span class="p" data-group-id="3234875189-8">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3234875189-8">}</span><span class="p" data-group-id="3234875189-7">]</span><span class="p" data-group-id="3234875189-6">)</span><span class="p" data-group-id="3234875189-2">]</span><span class="p" data-group-id="3234875189-1">)</span><span class="w">
+</span><span class="p" data-group-id="3234875189-9">#</span><span class="nc" data-group-id="3234875189-9">MapSet</span><span class="p" data-group-id="3234875189-9">&lt;</span><span class="p" data-group-id="3234875189-10">[</span><span class="p" data-group-id="3234875189-11">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3234875189-11">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3234875189-12">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="3234875189-12">}</span><span class="p" data-group-id="3234875189-10">]</span><span class="p" data-group-id="3234875189-9">&gt;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="revoke_capabilities/2">
+
+  <div class="detail-header">
+    <a href="#revoke_capabilities/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">revoke_capabilities(capabilities, entity)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> revoke_capabilities([<a href="#t:capability/0">capability</a>()], <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: [{:revoked, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}]</pre>
+
+      </div>
+
+<p>Revokes multiple capabilities from an entity.</p><h2 id="revoke_capabilities/2-examples" class="section-heading"><a href="#revoke_capabilities/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">revoke_capabilities</span><span class="p" data-group-id="8554387415-1">(</span><span class="p" data-group-id="8554387415-2">[</span><span class="p" data-group-id="8554387415-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8554387415-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8554387415-4">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8554387415-4">}</span><span class="p" data-group-id="8554387415-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p" data-group-id="8554387415-1">)</span><span class="w">
+</span><span class="p" data-group-id="8554387415-5">[</span><span class="p" data-group-id="8554387415-6">{</span><span class="ss">:revoked</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8554387415-7">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8554387415-7">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p" data-group-id="8554387415-6">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8554387415-8">{</span><span class="ss">:revoked</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8554387415-9">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="8554387415-9">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p" data-group-id="8554387415-8">}</span><span class="p" data-group-id="8554387415-5">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="revoke_capability/2">
+
+  <div class="detail-header">
+    <a href="#revoke_capability/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">revoke_capability(capability, entity)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> revoke_capability(<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: {:revoked, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Revokes a capability from an entity.</p><h2 id="revoke_capability/2-examples" class="section-heading"><a href="#revoke_capability/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">revoke_capability</span><span class="p" data-group-id="4439722597-1">(</span><span class="p" data-group-id="4439722597-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4439722597-2">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p" data-group-id="4439722597-1">)</span><span class="w">
+</span><span class="p" data-group-id="4439722597-3">{</span><span class="ss">:revoked</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4439722597-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4439722597-4">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p" data-group-id="4439722597-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_capabilities/2">
+
+  <div class="detail-header">
+    <a href="#validate_capabilities/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_capabilities(required_capabilities, available_capabilities)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_capabilities([<a href="#t:capability/0">capability</a>()], [<a href="#t:capability/0">capability</a>()]) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Validates multiple capabilities against a set of available capabilities.</p><h2 id="validate_capabilities/2-examples" class="section-heading"><a href="#validate_capabilities/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">validate_capabilities</span><span class="p" data-group-id="6653443163-1">(</span><span class="p" data-group-id="6653443163-2">[</span><span class="p" data-group-id="6653443163-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="6653443163-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6653443163-4">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="6653443163-4">}</span><span class="p" data-group-id="6653443163-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6653443163-5">[</span><span class="p" data-group-id="6653443163-6">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="6653443163-6">}</span><span class="p" data-group-id="6653443163-5">]</span><span class="p" data-group-id="6653443163-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_capability/2">
+
+  <div class="detail-header">
+    <a href="#validate_capability/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_capability(capability, available_capabilities)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_capability(<a href="#t:capability/0">capability</a>(), [<a href="#t:capability/0">capability</a>()]) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Validates a capability against a set of available capabilities.</p><h2 id="validate_capability/2-examples" class="section-heading"><a href="#validate_capability/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">validate_capability</span><span class="p" data-group-id="4085641518-1">(</span><span class="p" data-group-id="4085641518-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4085641518-2">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4085641518-3">[</span><span class="p" data-group-id="4085641518-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4085641518-4">}</span><span class="p" data-group-id="4085641518-3">]</span><span class="p" data-group-id="4085641518-1">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="n">validate_capability</span><span class="p" data-group-id="4085641518-5">(</span><span class="p" data-group-id="4085641518-6">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p" data-group-id="4085641518-6">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4085641518-7">[</span><span class="p" data-group-id="4085641518-8">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4085641518-8">}</span><span class="p" data-group-id="4085641518-7">]</span><span class="p" data-group-id="4085641518-5">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_capability_in_context/2">
+
+  <div class="detail-header">
+    <a href="#validate_capability_in_context/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_capability_in_context(capability, context)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_capability_in_context(<a href="#t:capability/0">capability</a>(), <a href="#t:capability_context/0">capability_context</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Validates a capability in a specific context.</p><h2 id="validate_capability_in_context/2-examples" class="section-heading"><a href="#validate_capability_in_context/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">validate_capability_in_context</span><span class="p" data-group-id="7792498454-1">(</span><span class="p" data-group-id="7792498454-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="7792498454-2">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7792498454-3">%{</span><span class="ss">user</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">time</span><span class="p">:</span><span class="w"> </span><span class="ld">~U[2023-01-01 12:00:00Z]</span><span class="p" data-group-id="7792498454-3">}</span><span class="p" data-group-id="7792498454-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_delegation/2">
+
+  <div class="detail-header">
+    <a href="#validate_delegation/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_delegation(arg, available_capabilities)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_delegation({:delegated, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}, [<a href="#t:capability/0">capability</a>()]) ::
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Validates a capability delegation.</p><h2 id="validate_delegation/2-examples" class="section-heading"><a href="#validate_delegation/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">validate_delegation</span><span class="p" data-group-id="7732872674-1">(</span><span class="p" data-group-id="7732872674-2">{</span><span class="ss">:delegated</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7732872674-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="7732872674-3">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="7732872674-2">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7732872674-4">[</span><span class="p" data-group-id="7732872674-5">{</span><span class="ss">:admin</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="7732872674-5">}</span><span class="p" data-group-id="7732872674-4">]</span><span class="p" data-group-id="7732872674-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_temporal_capability/2">
+
+  <div class="detail-header">
+    <a href="#validate_temporal_capability/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_temporal_capability(arg, current_time)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_temporal_capability(
+  {:temporal, <a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(), <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()},
+  <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()
+) ::
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Validates a temporal capability at a specific time.</p><h2 id="validate_temporal_capability/2-examples" class="section-heading"><a href="#validate_temporal_capability/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">validate_temporal_capability</span><span class="p" data-group-id="9032042765-1">(</span><span class="p" data-group-id="9032042765-2">{</span><span class="ss">:temporal</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9032042765-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="9032042765-3">}</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-01 12:00:00Z]</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-02 12:00:00Z]</span><span class="p" data-group-id="9032042765-2">}</span><span class="p">,</span><span class="w"> </span><span class="ld">~U[2023-01-01 15:00:00Z]</span><span class="p" data-group-id="9032042765-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

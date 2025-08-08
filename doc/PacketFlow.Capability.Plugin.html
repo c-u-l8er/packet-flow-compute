@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Capability.Plugin — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Capability.Plugin</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Plugin system for capability extensions in PacketFlow.</p><p>This module provides a framework for creating custom capability types,
+custom validation logic, custom composition patterns, custom delegation logic,
+and custom revocation patterns.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability/0" data-no-tooltip="" translate="no">capability()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability_plugin/0" data-no-tooltip="" translate="no">capability_plugin()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:capability_set/0" data-no-tooltip="" translate="no">capability_set()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:plugin_config/0" data-no-tooltip="" translate="no">plugin_config()</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_custom_composition/2" data-no-tooltip="" translate="no">add_custom_composition(plugin_module, composition_function)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Adds custom composition logic to a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_custom_delegation/2" data-no-tooltip="" translate="no">add_custom_delegation(plugin_module, delegation_function)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Adds custom delegation logic to a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_custom_revocation/2" data-no-tooltip="" translate="no">add_custom_revocation(plugin_module, revocation_function)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Adds custom revocation logic to a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#add_custom_validation/2" data-no-tooltip="" translate="no">add_custom_validation(plugin_module, validation_function)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Adds custom validation logic to a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#check_plugin_compatibility/1" data-no-tooltip="" translate="no">check_plugin_compatibility(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks if a capability plugin is compatible with the current system.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#check_plugin_health/1" data-no-tooltip="" translate="no">check_plugin_health(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks the health of a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_custom_capability_type/2" data-no-tooltip="" translate="no">create_custom_capability_type(name, operations)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a custom capability type with the given name and operations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#discover_plugins/1" data-no-tooltip="" translate="no">discover_plugins(directory)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Discovers capability plugins in the given directory.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#execute_custom_composition/2" data-no-tooltip="" translate="no">execute_custom_composition(capabilities, plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes custom composition logic for capabilities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#execute_custom_delegation/4" data-no-tooltip="" translate="no">execute_custom_delegation(capability, from_entity, to_entity, plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes custom delegation logic for a capability.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#execute_custom_revocation/3" data-no-tooltip="" translate="no">execute_custom_revocation(capability, entity, plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes custom revocation logic for a capability.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#execute_custom_validation/2" data-no-tooltip="" translate="no">execute_custom_validation(capability, plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes custom validation logic for a capability.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_plugin_config/1" data-no-tooltip="" translate="no">get_plugin_config(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Gets the configuration for a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_plugin_stats/1" data-no-tooltip="" translate="no">get_plugin_stats(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Gets statistics for a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_plugin_version/1" data-no-tooltip="" translate="no">get_plugin_version(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Gets the version of a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#initialize_plugin/2" data-no-tooltip="" translate="no">initialize_plugin(plugin_module, config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Initializes a capability plugin with the given configuration.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list_plugins/0" data-no-tooltip="" translate="no">list_plugins()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists all registered capability plugins.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#load_plugin/1" data-no-tooltip="" translate="no">load_plugin(file_path)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Loads a capability plugin from a file.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#register_plugin/2" data-no-tooltip="" translate="no">register_plugin(plugin_module, config \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Registers a capability plugin with the system.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#shutdown_plugin/1" data-no-tooltip="" translate="no">shutdown_plugin(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Shuts down a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#unregister_plugin/1" data-no-tooltip="" translate="no">unregister_plugin(plugin_module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Unregisters a capability plugin from the system.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_plugin_config/2" data-no-tooltip="" translate="no">update_plugin_config(plugin_module, new_config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates the configuration for a capability plugin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_custom_capability/2" data-no-tooltip="" translate="no">validate_custom_capability(capability, plugins)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a custom capability using registered plugins.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:capability/0">
+
+  <div class="detail-header">
+    <a href="#t:capability/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:capability_plugin/0">
+
+  <div class="detail-header">
+    <a href="#t:capability_plugin/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability_plugin()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability_plugin() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:capability_set/0">
+
+  <div class="detail-header">
+    <a href="#t:capability_set/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">capability_set()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> capability_set() :: <a href="https://hexdocs.pm/elixir/MapSet.html#t:t/1">MapSet.t</a>(<a href="#t:capability/0">capability</a>())</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:plugin_config/0">
+
+  <div class="detail-header">
+    <a href="#t:plugin_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">plugin_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> plugin_config() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="add_custom_composition/2">
+
+  <div class="detail-header">
+    <a href="#add_custom_composition/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_custom_composition(plugin_module, composition_function)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_custom_composition(
+  <a href="#t:capability_plugin/0">capability_plugin</a>(),
+  ([<a href="#t:capability/0">capability</a>()] -&gt; <a href="#t:capability_set/0">capability_set</a>())
+) :: :ok</pre>
+
+      </div>
+
+<p>Adds custom composition logic to a capability plugin.</p><h2 id="add_custom_composition/2-examples" class="section-heading"><a href="#add_custom_composition/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">add_custom_composition</span><span class="p" data-group-id="5988123912-1">(</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="k" data-group-id="5988123912-2">fn</span><span class="w"> </span><span class="n">capabilities</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">compose_my_way</span><span class="p" data-group-id="5988123912-3">(</span><span class="n">capabilities</span><span class="p" data-group-id="5988123912-3">)</span><span class="w"> </span><span class="k" data-group-id="5988123912-2">end</span><span class="p" data-group-id="5988123912-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="add_custom_delegation/2">
+
+  <div class="detail-header">
+    <a href="#add_custom_delegation/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_custom_delegation(plugin_module, delegation_function)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_custom_delegation(
+  <a href="#t:capability_plugin/0">capability_plugin</a>(),
+  (<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>() -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>())
+) :: :ok</pre>
+
+      </div>
+
+<p>Adds custom delegation logic to a capability plugin.</p><h2 id="add_custom_delegation/2-examples" class="section-heading"><a href="#add_custom_delegation/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">add_custom_delegation</span><span class="p" data-group-id="8249705451-1">(</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="k" data-group-id="8249705451-2">fn</span><span class="w"> </span><span class="n">capability</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">delegate_my_way</span><span class="p" data-group-id="8249705451-3">(</span><span class="n">capability</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p" data-group-id="8249705451-3">)</span><span class="w"> </span><span class="k" data-group-id="8249705451-2">end</span><span class="p" data-group-id="8249705451-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="add_custom_revocation/2">
+
+  <div class="detail-header">
+    <a href="#add_custom_revocation/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_custom_revocation(plugin_module, revocation_function)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_custom_revocation(<a href="#t:capability_plugin/0">capability_plugin</a>(), (<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>() -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>())) ::
+  :ok</pre>
+
+      </div>
+
+<p>Adds custom revocation logic to a capability plugin.</p><h2 id="add_custom_revocation/2-examples" class="section-heading"><a href="#add_custom_revocation/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">add_custom_revocation</span><span class="p" data-group-id="1449140281-1">(</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="k" data-group-id="1449140281-2">fn</span><span class="w"> </span><span class="n">capability</span><span class="p">,</span><span class="w"> </span><span class="n">entity</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">revoke_my_way</span><span class="p" data-group-id="1449140281-3">(</span><span class="n">capability</span><span class="p">,</span><span class="w"> </span><span class="n">entity</span><span class="p" data-group-id="1449140281-3">)</span><span class="w"> </span><span class="k" data-group-id="1449140281-2">end</span><span class="p" data-group-id="1449140281-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="add_custom_validation/2">
+
+  <div class="detail-header">
+    <a href="#add_custom_validation/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">add_custom_validation(plugin_module, validation_function)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> add_custom_validation(<a href="#t:capability_plugin/0">capability_plugin</a>(), (<a href="#t:capability/0">capability</a>() -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>())) :: :ok</pre>
+
+      </div>
+
+<p>Adds custom validation logic to a capability plugin.</p><h2 id="add_custom_validation/2-examples" class="section-heading"><a href="#add_custom_validation/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">add_custom_validation</span><span class="p" data-group-id="8164703157-1">(</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="k" data-group-id="8164703157-2">fn</span><span class="w"> </span><span class="n">capability</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">validate_my_logic</span><span class="p" data-group-id="8164703157-3">(</span><span class="n">capability</span><span class="p" data-group-id="8164703157-3">)</span><span class="w"> </span><span class="k" data-group-id="8164703157-2">end</span><span class="p" data-group-id="8164703157-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="check_plugin_compatibility/1">
+
+  <div class="detail-header">
+    <a href="#check_plugin_compatibility/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">check_plugin_compatibility(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> check_plugin_compatibility(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Checks if a capability plugin is compatible with the current system.</p><h2 id="check_plugin_compatibility/1-examples" class="section-heading"><a href="#check_plugin_compatibility/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">check_plugin_compatibility</span><span class="p" data-group-id="0372981829-1">(</span><span class="nc">MyPlugin</span><span class="p" data-group-id="0372981829-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="check_plugin_health/1">
+
+  <div class="detail-header">
+    <a href="#check_plugin_health/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">check_plugin_health(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> check_plugin_health(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: :healthy | :unhealthy | :unknown</pre>
+
+      </div>
+
+<p>Checks the health of a capability plugin.</p><h2 id="check_plugin_health/1-examples" class="section-heading"><a href="#check_plugin_health/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">check_plugin_health</span><span class="p" data-group-id="9910353918-1">(</span><span class="nc">MyPlugin</span><span class="p" data-group-id="9910353918-1">)</span><span class="w">
+</span><span class="ss">:healthy</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_custom_capability_type/2">
+
+  <div class="detail-header">
+    <a href="#create_custom_capability_type/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_custom_capability_type(name, operations)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_custom_capability_type(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]) :: :ok</pre>
+
+      </div>
+
+<p>Creates a custom capability type with the given name and operations.</p><h2 id="create_custom_capability_type/2-examples" class="section-heading"><a href="#create_custom_capability_type/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">create_custom_capability_type</span><span class="p" data-group-id="2662840745-1">(</span><span class="ss">:FileSystemCap</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2662840745-2">[</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="ss">:delete</span><span class="p" data-group-id="2662840745-2">]</span><span class="p" data-group-id="2662840745-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="discover_plugins/1">
+
+  <div class="detail-header">
+    <a href="#discover_plugins/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">discover_plugins(directory)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> discover_plugins(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: [<a href="#t:capability_plugin/0">capability_plugin</a>()]</pre>
+
+      </div>
+
+<p>Discovers capability plugins in the given directory.</p><h2 id="discover_plugins/1-examples" class="section-heading"><a href="#discover_plugins/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">discover_plugins</span><span class="p" data-group-id="1273092788-1">(</span><span class="s">&quot;lib/packetflow/capability/plugins&quot;</span><span class="p" data-group-id="1273092788-1">)</span><span class="w">
+</span><span class="p" data-group-id="1273092788-2">[</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="nc">AnotherPlugin</span><span class="p" data-group-id="1273092788-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="execute_custom_composition/2">
+
+  <div class="detail-header">
+    <a href="#execute_custom_composition/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">execute_custom_composition(capabilities, plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> execute_custom_composition([<a href="#t:capability/0">capability</a>()], <a href="#t:capability_plugin/0">capability_plugin</a>()) ::
+  <a href="#t:capability_set/0">capability_set</a>()</pre>
+
+      </div>
+
+<p>Executes custom composition logic for capabilities.</p><h2 id="execute_custom_composition/2-examples" class="section-heading"><a href="#execute_custom_composition/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">execute_custom_composition</span><span class="p" data-group-id="5117083812-1">(</span><span class="p" data-group-id="5117083812-2">[</span><span class="p" data-group-id="5117083812-3">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5117083812-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5117083812-4">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5117083812-4">}</span><span class="p" data-group-id="5117083812-2">]</span><span class="p">,</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p" data-group-id="5117083812-1">)</span><span class="w">
+</span><span class="p" data-group-id="5117083812-5">#</span><span class="nc" data-group-id="5117083812-5">MapSet</span><span class="p" data-group-id="5117083812-5">&lt;</span><span class="p" data-group-id="5117083812-6">[</span><span class="p" data-group-id="5117083812-7">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5117083812-7">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5117083812-8">{</span><span class="ss">:write</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5117083812-8">}</span><span class="p" data-group-id="5117083812-6">]</span><span class="p" data-group-id="5117083812-5">&gt;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="execute_custom_delegation/4">
+
+  <div class="detail-header">
+    <a href="#execute_custom_delegation/4" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">execute_custom_delegation(capability, from_entity, to_entity, plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> execute_custom_delegation(<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="#t:capability_plugin/0">capability_plugin</a>()) ::
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+<p>Executes custom delegation logic for a capability.</p><h2 id="execute_custom_delegation/4-examples" class="section-heading"><a href="#execute_custom_delegation/4-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">execute_custom_delegation</span><span class="p" data-group-id="4562974566-1">(</span><span class="p" data-group-id="4562974566-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4562974566-2">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p" data-group-id="4562974566-1">)</span><span class="w">
+</span><span class="p" data-group-id="4562974566-3">{</span><span class="ss">:delegated</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4562974566-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4562974566-4">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user2&quot;</span><span class="p" data-group-id="4562974566-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="execute_custom_revocation/3">
+
+  <div class="detail-header">
+    <a href="#execute_custom_revocation/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">execute_custom_revocation(capability, entity, plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> execute_custom_revocation(<a href="#t:capability/0">capability</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="#t:capability_plugin/0">capability_plugin</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+<p>Executes custom revocation logic for a capability.</p><h2 id="execute_custom_revocation/3-examples" class="section-heading"><a href="#execute_custom_revocation/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">execute_custom_revocation</span><span class="p" data-group-id="5016039548-1">(</span><span class="p" data-group-id="5016039548-2">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5016039548-2">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p" data-group-id="5016039548-1">)</span><span class="w">
+</span><span class="p" data-group-id="5016039548-3">{</span><span class="ss">:revoked</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5016039548-4">{</span><span class="ss">:read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="5016039548-4">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user1&quot;</span><span class="p" data-group-id="5016039548-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="execute_custom_validation/2">
+
+  <div class="detail-header">
+    <a href="#execute_custom_validation/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">execute_custom_validation(capability, plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> execute_custom_validation(<a href="#t:capability/0">capability</a>(), <a href="#t:capability_plugin/0">capability_plugin</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Executes custom validation logic for a capability.</p><h2 id="execute_custom_validation/2-examples" class="section-heading"><a href="#execute_custom_validation/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">execute_custom_validation</span><span class="p" data-group-id="0494196396-1">(</span><span class="p" data-group-id="0494196396-2">{</span><span class="ss">:custom_read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="0494196396-2">}</span><span class="p">,</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p" data-group-id="0494196396-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_plugin_config/1">
+
+  <div class="detail-header">
+    <a href="#get_plugin_config/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_plugin_config(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_plugin_config(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: <a href="#t:plugin_config/0">plugin_config</a>() | nil</pre>
+
+      </div>
+
+<p>Gets the configuration for a capability plugin.</p><h2 id="get_plugin_config/1-examples" class="section-heading"><a href="#get_plugin_config/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">get_plugin_config</span><span class="p" data-group-id="9001673591-1">(</span><span class="nc">MyPlugin</span><span class="p" data-group-id="9001673591-1">)</span><span class="w">
+</span><span class="p" data-group-id="9001673591-2">%{</span><span class="ss">enabled</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">config</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9001673591-3">%{</span><span class="p" data-group-id="9001673591-3">}</span><span class="p" data-group-id="9001673591-2">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_plugin_stats/1">
+
+  <div class="detail-header">
+    <a href="#get_plugin_stats/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_plugin_stats(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_plugin_stats(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil</pre>
+
+      </div>
+
+<p>Gets statistics for a capability plugin.</p><h2 id="get_plugin_stats/1-examples" class="section-heading"><a href="#get_plugin_stats/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">get_plugin_stats</span><span class="p" data-group-id="4445745511-1">(</span><span class="nc">MyPlugin</span><span class="p" data-group-id="4445745511-1">)</span><span class="w">
+</span><span class="p" data-group-id="4445745511-2">%{</span><span class="ss">validations</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="ss">delegations</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">revocations</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="4445745511-2">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_plugin_version/1">
+
+  <div class="detail-header">
+    <a href="#get_plugin_version/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_plugin_version(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_plugin_version(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>Gets the version of a capability plugin.</p><h2 id="get_plugin_version/1-examples" class="section-heading"><a href="#get_plugin_version/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">get_plugin_version</span><span class="p" data-group-id="1415523881-1">(</span><span class="nc">MyPlugin</span><span class="p" data-group-id="1415523881-1">)</span><span class="w">
+</span><span class="s">&quot;1.0.0&quot;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="initialize_plugin/2">
+
+  <div class="detail-header">
+    <a href="#initialize_plugin/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">initialize_plugin(plugin_module, config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> initialize_plugin(<a href="#t:capability_plugin/0">capability_plugin</a>(), <a href="#t:plugin_config/0">plugin_config</a>()) ::
+  :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Initializes a capability plugin with the given configuration.</p><h2 id="initialize_plugin/2-examples" class="section-heading"><a href="#initialize_plugin/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">initialize_plugin</span><span class="p" data-group-id="7970949130-1">(</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7970949130-2">%{</span><span class="ss">enabled</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">config</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7970949130-3">%{</span><span class="p" data-group-id="7970949130-3">}</span><span class="p" data-group-id="7970949130-2">}</span><span class="p" data-group-id="7970949130-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="list_plugins/0">
+
+  <div class="detail-header">
+    <a href="#list_plugins/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_plugins()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_plugins() :: [<a href="#t:capability_plugin/0">capability_plugin</a>()]</pre>
+
+      </div>
+
+<p>Lists all registered capability plugins.</p><h2 id="list_plugins/0-examples" class="section-heading"><a href="#list_plugins/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">list_plugins</span><span class="p" data-group-id="3348958310-1">(</span><span class="p" data-group-id="3348958310-1">)</span><span class="w">
+</span><span class="p" data-group-id="3348958310-2">[</span><span class="nc">MyCustomCapabilityPlugin</span><span class="p">,</span><span class="w"> </span><span class="nc">AnotherCapabilityPlugin</span><span class="p" data-group-id="3348958310-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="load_plugin/1">
+
+  <div class="detail-header">
+    <a href="#load_plugin/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">load_plugin(file_path)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> load_plugin(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: {:ok, <a href="#t:capability_plugin/0">capability_plugin</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Loads a capability plugin from a file.</p><h2 id="load_plugin/1-examples" class="section-heading"><a href="#load_plugin/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">load_plugin</span><span class="p" data-group-id="8662421738-1">(</span><span class="s">&quot;lib/packetflow/capability/plugins/my_plugin.ex&quot;</span><span class="p" data-group-id="8662421738-1">)</span><span class="w">
+</span><span class="p" data-group-id="8662421738-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p" data-group-id="8662421738-2">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="register_plugin/2">
+
+    <span id="register_plugin/1"></span>
+
+  <div class="detail-header">
+    <a href="#register_plugin/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">register_plugin(plugin_module, config \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> register_plugin(<a href="#t:capability_plugin/0">capability_plugin</a>(), <a href="#t:plugin_config/0">plugin_config</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Registers a capability plugin with the system.</p><h2 id="register_plugin/2-examples" class="section-heading"><a href="#register_plugin/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">register_plugin</span><span class="p" data-group-id="8535811664-1">(</span><span class="nc">MyCustomCapabilityPlugin</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8535811664-2">%{</span><span class="ss">enabled</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="8535811664-2">}</span><span class="p" data-group-id="8535811664-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="shutdown_plugin/1">
+
+  <div class="detail-header">
+    <a href="#shutdown_plugin/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">shutdown_plugin(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> shutdown_plugin(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Shuts down a capability plugin.</p><h2 id="shutdown_plugin/1-examples" class="section-heading"><a href="#shutdown_plugin/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">shutdown_plugin</span><span class="p" data-group-id="6904512427-1">(</span><span class="nc">MyPlugin</span><span class="p" data-group-id="6904512427-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="unregister_plugin/1">
+
+  <div class="detail-header">
+    <a href="#unregister_plugin/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">unregister_plugin(plugin_module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> unregister_plugin(<a href="#t:capability_plugin/0">capability_plugin</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Unregisters a capability plugin from the system.</p><h2 id="unregister_plugin/1-examples" class="section-heading"><a href="#unregister_plugin/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">unregister_plugin</span><span class="p" data-group-id="0055827818-1">(</span><span class="nc">MyCustomCapabilityPlugin</span><span class="p" data-group-id="0055827818-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="update_plugin_config/2">
+
+  <div class="detail-header">
+    <a href="#update_plugin_config/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_plugin_config(plugin_module, new_config)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_plugin_config(<a href="#t:capability_plugin/0">capability_plugin</a>(), <a href="#t:plugin_config/0">plugin_config</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Updates the configuration for a capability plugin.</p><h2 id="update_plugin_config/2-examples" class="section-heading"><a href="#update_plugin_config/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_plugin_config</span><span class="p" data-group-id="1748456315-1">(</span><span class="nc">MyPlugin</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1748456315-2">%{</span><span class="ss">enabled</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p" data-group-id="1748456315-2">}</span><span class="p" data-group-id="1748456315-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="validate_custom_capability/2">
+
+  <div class="detail-header">
+    <a href="#validate_custom_capability/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_custom_capability(capability, plugins)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_custom_capability(<a href="#t:capability/0">capability</a>(), [<a href="#t:capability_plugin/0">capability_plugin</a>()]) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Validates a custom capability using registered plugins.</p><h2 id="validate_custom_capability/2-examples" class="section-heading"><a href="#validate_custom_capability/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">validate_custom_capability</span><span class="p" data-group-id="4253808238-1">(</span><span class="p" data-group-id="4253808238-2">{</span><span class="ss">:custom_read</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/file&quot;</span><span class="p" data-group-id="4253808238-2">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4253808238-3">[</span><span class="nc">MyCustomPlugin</span><span class="p" data-group-id="4253808238-3">]</span><span class="p" data-group-id="4253808238-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

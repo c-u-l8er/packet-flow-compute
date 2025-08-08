@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Component.Testing — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Component.Testing</span> 
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Component testing interfaces for automated testing</p><p>This module provides:</p><ul><li>Component test suite generation</li><li>Integration testing utilities</li><li>Mock and stub implementations</li><li>Test data factories</li><li>Performance testing tools</li><li>Test reporting and analysis</li></ul>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:test_case/0" data-no-tooltip="" translate="no">test_case()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:test_report/0" data-no-tooltip="" translate="no">test_report()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:test_result/0" data-no-tooltip="" translate="no">test_result()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:test_suite/0" data-no-tooltip="" translate="no">test_suite()</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_mock_component/2" data-no-tooltip="" translate="no">create_mock_component(component_id, mock_config \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a mock component for testing</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_test_case/4" data-no-tooltip="" translate="no">create_test_case(name, description, test_function, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a test case</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_test_data_factory/2" data-no-tooltip="" translate="no">create_test_data_factory(component_type, options \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create test data factory for a component</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_test_suite/4" data-no-tooltip="" translate="no">create_test_suite(name, component_id, test_cases, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Create a test suite for a component</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_test_data/3" data-no-tooltip="" translate="no">generate_test_data(factory, data_type, overrides \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate test data using a factory</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_test_report/2" data-no-tooltip="" translate="no">generate_test_report(report, format \\ :text)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generate test report in various formats</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#run_integration_tests/2" data-no-tooltip="" translate="no">run_integration_tests(component_ids, test_cases)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Run integration tests between components</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#run_performance_tests/2" data-no-tooltip="" translate="no">run_performance_tests(component_id, test_config \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Run performance tests for a component</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#run_test_case/1" data-no-tooltip="" translate="no">run_test_case(test_case)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Run a single test case</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#run_test_suite/1" data-no-tooltip="" translate="no">run_test_suite(suite)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Run a test suite</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:test_case/0">
+
+  <div class="detail-header">
+    <a href="#t:test_case/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">test_case()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> test_case() :: %{
+  name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  description: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  setup: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>() | nil,
+  test_function: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>(),
+  cleanup: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>() | nil,
+  timeout: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  tags: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()],
+  metadata: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:test_report/0">
+
+  <div class="detail-header">
+    <a href="#t:test_report/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">test_report()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> test_report() :: %{
+  suite: <a href="#t:test_suite/0">test_suite</a>(),
+  results: [<a href="#t:test_result/0">test_result</a>()],
+  summary: %{
+    total: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+    passed: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+    failed: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+    skipped: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+    timeout: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+    total_duration_ms: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>()
+  },
+  timestamp: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:test_result/0">
+
+  <div class="detail-header">
+    <a href="#t:test_result/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">test_result()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> test_result() :: %{
+  test_case: <a href="#t:test_case/0">test_case</a>(),
+  status: :passed | :failed | :skipped | :timeout,
+  duration_ms: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">number</a>(),
+  message: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  error: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>() | nil,
+  timestamp: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:test_suite/0">
+
+  <div class="detail-header">
+    <a href="#t:test_suite/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">test_suite()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> test_suite() :: %{
+  name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  component_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
+  test_cases: [<a href="#t:test_case/0">test_case</a>()],
+  setup_all: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>() | nil,
+  cleanup_all: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>() | nil,
+  metadata: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="create_mock_component/2">
+
+    <span id="create_mock_component/1"></span>
+
+  <div class="detail-header">
+    <a href="#create_mock_component/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_mock_component(component_id, mock_config \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_mock_component(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Create a mock component for testing</p>
+  </section>
+</section>
+<section class="detail" id="create_test_case/4">
+
+    <span id="create_test_case/3"></span>
+
+  <div class="detail-header">
+    <a href="#create_test_case/4" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_test_case(name, description, test_function, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_test_case(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="#t:test_case/0">test_case</a>()</pre>
+
+      </div>
+
+<p>Create a test case</p>
+  </section>
+</section>
+<section class="detail" id="create_test_data_factory/2">
+
+    <span id="create_test_data_factory/1"></span>
+
+  <div class="detail-header">
+    <a href="#create_test_data_factory/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_test_data_factory(component_type, options \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_test_data_factory(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Create test data factory for a component</p>
+  </section>
+</section>
+<section class="detail" id="create_test_suite/4">
+
+    <span id="create_test_suite/3"></span>
+
+  <div class="detail-header">
+    <a href="#create_test_suite/4" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_test_suite(name, component_id, test_cases, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_test_suite(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), [<a href="#t:test_case/0">test_case</a>()], <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="#t:test_suite/0">test_suite</a>()</pre>
+
+      </div>
+
+<p>Create a test suite for a component</p>
+  </section>
+</section>
+<section class="detail" id="generate_test_data/3">
+
+    <span id="generate_test_data/2"></span>
+
+  <div class="detail-header">
+    <a href="#generate_test_data/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">generate_test_data(factory, data_type, overrides \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> generate_test_data(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+
+      </div>
+
+<p>Generate test data using a factory</p>
+  </section>
+</section>
+<section class="detail" id="generate_test_report/2">
+
+    <span id="generate_test_report/1"></span>
+
+  <div class="detail-header">
+    <a href="#generate_test_report/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">generate_test_report(report, format \\ :text)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> generate_test_report(<a href="#t:test_report/0">test_report</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Generate test report in various formats</p>
+  </section>
+</section>
+<section class="detail" id="run_integration_tests/2">
+
+  <div class="detail-header">
+    <a href="#run_integration_tests/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run_integration_tests(component_ids, test_cases)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> run_integration_tests([<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()], [<a href="#t:test_case/0">test_case</a>()]) :: <a href="#t:test_report/0">test_report</a>()</pre>
+
+      </div>
+
+<p>Run integration tests between components</p>
+  </section>
+</section>
+<section class="detail" id="run_performance_tests/2">
+
+    <span id="run_performance_tests/1"></span>
+
+  <div class="detail-header">
+    <a href="#run_performance_tests/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run_performance_tests(component_id, test_config \\ %{})</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> run_performance_tests(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Run performance tests for a component</p>
+  </section>
+</section>
+<section class="detail" id="run_test_case/1">
+
+  <div class="detail-header">
+    <a href="#run_test_case/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run_test_case(test_case)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> run_test_case(<a href="#t:test_case/0">test_case</a>()) :: <a href="#t:test_result/0">test_result</a>()</pre>
+
+      </div>
+
+<p>Run a single test case</p>
+  </section>
+</section>
+<section class="detail" id="run_test_suite/1">
+
+  <div class="detail-header">
+    <a href="#run_test_suite/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run_test_suite(suite)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> run_test_suite(<a href="#t:test_suite/0">test_suite</a>()) :: <a href="#t:test_report/0">test_report</a>()</pre>
+
+      </div>
+
+<p>Run a test suite</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

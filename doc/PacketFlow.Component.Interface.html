@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="packetflow v0.1.0">
+
+
+    <title>PacketFlow.Component.Interface — packetflow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-B202574D.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
+packetflow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-behaviour" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of packetflow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">PacketFlow.Component.Interface</span> <small>behaviour</small>
+      <small class="app-vsn" translate="no">(packetflow v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Standard interfaces for PacketFlow components</p><p>This module defines the core interfaces that all PacketFlow components
+should implement to ensure consistent behavior and interoperability.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-callbacks summary">
+  <h2>
+    <a href="#callbacks">Callbacks</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:component_init/1" data-no-tooltip="" translate="no">component_init(config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component initialization interface (use component-specific init functions to avoid GenServer conflicts)</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_config/0" data-no-tooltip="" translate="no">get_config()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component configuration interface - get configuration</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_dependencies/0" data-no-tooltip="" translate="no">get_dependencies()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component dependency interface - get dependencies</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_metrics/0" data-no-tooltip="" translate="no">get_metrics()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component monitoring interface - get metrics</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_provided_capabilities/0" data-no-tooltip="" translate="no">get_provided_capabilities()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component capability interface - get provided capabilities</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_required_capabilities/0" data-no-tooltip="" translate="no">get_required_capabilities()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component capability interface - get required capabilities</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_state/0" data-no-tooltip="" translate="no">get_state()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component state interface - get current state</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:handle_message/2" data-no-tooltip="" translate="no">handle_message(message, state)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component communication interface - handle message</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:health_check/0" data-no-tooltip="" translate="no">health_check()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component monitoring interface - health check</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:send_message/2" data-no-tooltip="" translate="no">send_message(target, message)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component communication interface - send message</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:start_component/1" data-no-tooltip="" translate="no">start_component(config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component lifecycle interface - start component</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:stop_component/0" data-no-tooltip="" translate="no">stop_component()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component lifecycle interface - stop component</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:update_config/1" data-no-tooltip="" translate="no">update_config(new_config)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component configuration interface - update configuration</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:update_state/1" data-no-tooltip="" translate="no">update_state(new_state)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component state interface - update state</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:validate_dependencies/0" data-no-tooltip="" translate="no">validate_dependencies()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Component dependency interface - validate dependencies</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#__using__/1" data-no-tooltip="" translate="no">__using__(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Macro to implement standard component interface behaviors</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_interface_metadata/1" data-no-tooltip="" translate="no">get_interface_metadata(module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get component interface metadata</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_component_interface/1" data-no-tooltip="" translate="no">validate_component_interface(module)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validate that a module implements the component interface</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Callbacks</span>
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:component_init/1">
+
+  <div class="detail-header">
+    <a href="#c:component_init/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">component_init(config)</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> component_init(config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+  {:ok, state :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component initialization interface (use component-specific init functions to avoid GenServer conflicts)</p>
+  </section>
+</section>
+<section class="detail" id="c:get_config/0">
+
+  <div class="detail-header">
+    <a href="#c:get_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_config()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_config() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Component configuration interface - get configuration</p>
+  </section>
+</section>
+<section class="detail" id="c:get_dependencies/0">
+
+  <div class="detail-header">
+    <a href="#c:get_dependencies/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_dependencies()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_dependencies() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]</pre>
+
+      </div>
+
+<p>Component dependency interface - get dependencies</p>
+  </section>
+</section>
+<section class="detail" id="c:get_metrics/0">
+
+  <div class="detail-header">
+    <a href="#c:get_metrics/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_metrics()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_metrics() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Component monitoring interface - get metrics</p>
+  </section>
+</section>
+<section class="detail" id="c:get_provided_capabilities/0">
+
+  <div class="detail-header">
+    <a href="#c:get_provided_capabilities/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_provided_capabilities()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_provided_capabilities() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()]</pre>
+
+      </div>
+
+<p>Component capability interface - get provided capabilities</p>
+  </section>
+</section>
+<section class="detail" id="c:get_required_capabilities/0">
+
+  <div class="detail-header">
+    <a href="#c:get_required_capabilities/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_required_capabilities()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_required_capabilities() :: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()]</pre>
+
+      </div>
+
+<p>Component capability interface - get required capabilities</p>
+  </section>
+</section>
+<section class="detail" id="c:get_state/0">
+
+  <div class="detail-header">
+    <a href="#c:get_state/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_state()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_state() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+
+      </div>
+
+<p>Component state interface - get current state</p>
+  </section>
+</section>
+<section class="detail" id="c:handle_message/2">
+
+  <div class="detail-header">
+    <a href="#c:handle_message/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">handle_message(message, state)</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> handle_message(message :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), state :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) ::
+  {:ok, new_state :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}
+  | {:ok, new_state :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), reply :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}
+  | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component communication interface - handle message</p>
+  </section>
+</section>
+<section class="detail" id="c:health_check/0">
+
+  <div class="detail-header">
+    <a href="#c:health_check/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">health_check()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> health_check() :: :healthy | :unhealthy | :degraded</pre>
+
+      </div>
+
+<p>Component monitoring interface - health check</p>
+  </section>
+</section>
+<section class="detail" id="c:send_message/2">
+
+  <div class="detail-header">
+    <a href="#c:send_message/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">send_message(target, message)</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> send_message(target :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), message :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) ::
+  :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component communication interface - send message</p>
+  </section>
+</section>
+<section class="detail" id="c:start_component/1">
+
+  <div class="detail-header">
+    <a href="#c:start_component/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_component(config)</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> start_component(config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component lifecycle interface - start component</p>
+  </section>
+</section>
+<section class="detail" id="c:stop_component/0">
+
+  <div class="detail-header">
+    <a href="#c:stop_component/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">stop_component()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> stop_component() :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component lifecycle interface - stop component</p>
+  </section>
+</section>
+<section class="detail" id="c:update_config/1">
+
+  <div class="detail-header">
+    <a href="#c:update_config/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_config(new_config)</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> update_config(new_config :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component configuration interface - update configuration</p>
+  </section>
+</section>
+<section class="detail" id="c:update_state/1">
+
+  <div class="detail-header">
+    <a href="#c:update_state/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_state(new_state)</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> update_state(new_state :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) :: :ok | {:error, reason :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Component state interface - update state</p>
+  </section>
+</section>
+<section class="detail" id="c:validate_dependencies/0">
+
+  <div class="detail-header">
+    <a href="#c:validate_dependencies/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_dependencies()</h1>
+
+        <span class="note">(optional)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> validate_dependencies() :: :ok | {:error, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]}</pre>
+
+      </div>
+
+<p>Component dependency interface - validate dependencies</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="__using__/1">
+
+    <span id="__using__/0"></span>
+
+  <div class="detail-header">
+    <a href="#__using__/1" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">__using__(opts \\ [])</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Macro to implement standard component interface behaviors</p>
+  </section>
+</section>
+<section class="detail" id="get_interface_metadata/1">
+
+  <div class="detail-header">
+    <a href="#get_interface_metadata/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_interface_metadata(module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Get component interface metadata</p>
+  </section>
+</section>
+<section class="detail" id="validate_component_interface/1">
+
+  <div class="detail-header">
+    <a href="#validate_component_interface/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_component_interface(module)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Validate that a module implements the component interface</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/packetflow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/packetflow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="packetflow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>
