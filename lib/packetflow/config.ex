@@ -157,7 +157,7 @@ defmodule PacketFlow.Config do
 
   defp load_application_config do
     # Load configuration from application config
-    base_config = Application.get_env(:packetflow, []) || []
+    base_config = Application.get_all_env(:packetflow) || []
 
     # Add default component configurations
     default_config = %{
