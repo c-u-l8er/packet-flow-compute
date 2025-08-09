@@ -53,7 +53,9 @@ defmodule PacketflowChatDemoWeb.EnterpriseChatLive do
         selected_model: active_session.model || tenant.default_model,
         available_models: get_available_models(tenant),
         is_streaming: false,
-        settings_open: false
+        settings_open: false,
+        streaming_message: nil,
+        streaming_content: ""
       )}
     end
   end
@@ -82,13 +84,65 @@ defmodule PacketflowChatDemoWeb.EnterpriseChatLive do
     socket = assign(socket,
       messages: updated_messages,
       message_input: "",
-      is_streaming: true
+      is_streaming: true,
+      streaming_message: nil,
+      streaming_content: ""
     )
 
-    # Start AI response generation
-    send(self(), {:generate_ai_response, user_message, model})
+    # Start AI response generation using PacketFlow streaming
+    case PacketflowChatDemo.ChatReactor.stream_message(
+      "enterprise_user_#{user.id}",
+      message,
+      "enterprise_session_#{session.id}"
+    ) do
+      {:ok, response} ->
+        # Subscribe to the stream
+        stream_id = response.stream_id
+        Phoenix.PubSub.subscribe(PacketflowChatDemo.PubSub, "chat_stream:#{stream_id}")
 
-    {:noreply, socket}
+        # Create placeholder streaming message
+        streaming_message = %{
+          id: generate_message_id(),
+          content: "",
+          role: :assistant,
+          session_id: session.id,
+          user_id: nil,
+          inserted_at: DateTime.utc_now(),
+          updated_at: DateTime.utc_now(),
+          model_used: nil,
+          token_count: nil,
+          metadata: %{},
+          is_streaming: true
+        }
+
+        updated_messages_with_stream = updated_messages ++ [streaming_message]
+
+        socket = assign(socket,
+          messages: updated_messages_with_stream,
+          streaming_message: streaming_message,
+          streaming_content: ""
+        )
+
+        {:noreply, socket}
+
+      {:error, error} ->
+        # Create error message
+        {:ok, error_message} = Chat.create_message(%{
+          content: "Error: #{error.message || "Unknown error"}",
+          role: :assistant,
+          session_id: session.id,
+          model_used: model
+        })
+
+        updated_messages_with_error = updated_messages ++ [error_message]
+
+        socket = assign(socket,
+          messages: updated_messages_with_error,
+          is_streaming: false
+        )
+
+        {:noreply, socket}
+    end
   end
 
   def handle_event("send_message", _, socket) do
@@ -157,14 +211,17 @@ defmodule PacketflowChatDemoWeb.EnterpriseChatLive do
       if socket.assigns.active_session.id == session_id do
         case updated_sessions do
           [first_session | _] ->
+            # Load the session with messages preloaded for consistency
+            session_with_messages = Chat.get_session_with_messages(first_session.id)
+
             Phoenix.PubSub.unsubscribe(PacketflowChatDemo.PubSub, "chat:#{session_id}")
             Phoenix.PubSub.subscribe(PacketflowChatDemo.PubSub, "chat:#{first_session.id}")
 
             {:noreply, assign(socket,
               sessions: updated_sessions,
-              active_session: first_session,
-              active_tab: first_session.id,
-              messages: first_session.messages || []
+              active_session: session_with_messages,
+              active_tab: session_with_messages.id,
+              messages: session_with_messages.messages || []
             )}
 
           [] ->
@@ -189,68 +246,102 @@ defmodule PacketflowChatDemoWeb.EnterpriseChatLive do
     {:noreply, assign(socket, is_streaming: false)}
   end
 
-  def handle_info({:generate_ai_response, user_message, model}, socket) do
-    # Generate AI response with proper error handling
-    parent = self()
-
-    Task.start_link(fn ->
-      try do
-        # Simulate thinking time
-        Process.sleep(1000 + :rand.uniform(2000))
-
-        ai_response = generate_ai_response(user_message.content, model, socket.assigns.tenant)
-
-        send(parent, {:ai_response_ready, ai_response, user_message.session_id})
-      rescue
-        error ->
-          IO.inspect(error, label: "AI Response Generation Error")
-          send(parent, {:ai_response_error, "Sorry, I encountered an error while generating a response.", user_message.session_id})
-      end
-    end)
-
+  def handle_info({:stream_started, _stream_id}, socket) do
     {:noreply, socket}
   end
 
-  def handle_info({:ai_response_ready, response, session_id}, socket) do
-    if socket.assigns.active_session.id == session_id do
-      # Create AI message
-      {:ok, ai_message} = Chat.create_message(%{
-        content: response,
-        role: :assistant,
-        session_id: session_id,
-        model_used: socket.assigns.selected_model
-      })
+  def handle_info({:stream_chunk, _stream_id, content}, socket) do
+    if socket.assigns.streaming_message do
+      updated_content = socket.assigns.streaming_content <> content
 
-      updated_messages = socket.assigns.messages ++ [ai_message]
+      # Update the streaming message content
+      updated_messages =
+        socket.assigns.messages
+        |> Enum.map(fn msg ->
+          if Map.get(msg, :is_streaming) && Map.get(msg, :id) == socket.assigns.streaming_message.id do
+            %{msg | content: updated_content}
+          else
+            msg
+          end
+        end)
 
-      {:noreply, assign(socket,
+      socket = assign(socket,
         messages: updated_messages,
-        is_streaming: false
-      )}
+        streaming_content: updated_content
+      )
+
+      {:noreply, socket}
     else
       {:noreply, socket}
     end
   end
 
-  def handle_info({:ai_response_error, error_message, session_id}, socket) do
-    if socket.assigns.active_session.id == session_id do
-      # Create error message
-      {:ok, error_msg} = Chat.create_message(%{
-        content: error_message,
+  def handle_info({:stream_ended, _stream_id}, socket) do
+    if socket.assigns.streaming_message do
+      # Create final AI message in database
+      {:ok, ai_message} = Chat.create_message(%{
+        content: socket.assigns.streaming_content,
         role: :assistant,
-        session_id: session_id,
+        session_id: socket.assigns.active_session.id,
         model_used: socket.assigns.selected_model
       })
 
-      updated_messages = socket.assigns.messages ++ [error_msg]
+      # Mark the streaming message as complete and replace with DB message
+      updated_messages =
+        socket.assigns.messages
+        |> Enum.map(fn msg ->
+          if Map.get(msg, :is_streaming) && Map.get(msg, :id) == socket.assigns.streaming_message.id do
+            ai_message
+          else
+            msg
+          end
+        end)
 
-      {:noreply, assign(socket,
+      socket = assign(socket,
         messages: updated_messages,
+        streaming_message: nil,
+        streaming_content: "",
         is_streaming: false
-      )}
-    else
+      )
+
       {:noreply, socket}
+    else
+      {:noreply, assign(socket, is_streaming: false)}
     end
+  end
+
+  def handle_info({:stream_error, _stream_id, reason}, socket) do
+    # Create error message
+    {:ok, error_message} = Chat.create_message(%{
+      content: "Streaming error: #{inspect(reason)}",
+      role: :assistant,
+      session_id: socket.assigns.active_session.id,
+      model_used: socket.assigns.selected_model
+    })
+
+    # Replace streaming message with error message
+    updated_messages =
+      if socket.assigns.streaming_message do
+        socket.assigns.messages
+        |> Enum.map(fn msg ->
+          if Map.get(msg, :is_streaming) && Map.get(msg, :id) == socket.assigns.streaming_message.id do
+            error_message
+          else
+            msg
+          end
+        end)
+      else
+        socket.assigns.messages ++ [error_message]
+      end
+
+    socket = assign(socket,
+      messages: updated_messages,
+      streaming_message: nil,
+      streaming_content: "",
+      is_streaming: false
+    )
+
+    {:noreply, socket}
   end
 
   def handle_info(:create_default_session, socket) do
@@ -290,17 +381,8 @@ defmodule PacketflowChatDemoWeb.EnterpriseChatLive do
     if Enum.empty?(available), do: base_models, else: available
   end
 
-  defp generate_ai_response(user_message, model, tenant) do
-    # This is a placeholder - replace with actual API integration
-    responses = [
-      "I understand your question about '#{String.slice(user_message, 0, 20)}...'. Let me help you with that.",
-      "That's an interesting point. Based on what you've shared, I think...",
-      "I can help you with that. Here's what I recommend...",
-      "Good question! Let me break this down for you...",
-      "I see what you're looking for. Here's my analysis..."
-    ]
-
-    Enum.random(responses) <> "\n\n*[Response generated using #{@models[model] || model}]*"
+  defp generate_message_id do
+    :crypto.strong_rand_bytes(16) |> Base.encode16(case: :lower)
   end
 
   defp format_timestamp(timestamp) do
@@ -314,6 +396,6 @@ defmodule PacketflowChatDemoWeb.EnterpriseChatLive do
   defp format_message_content(content) do
     content
     |> String.replace("\n", "<br>")
-    |> Phoenix.HTML.Safe.to_iodata()
+    |> Phoenix.HTML.raw()
   end
 end

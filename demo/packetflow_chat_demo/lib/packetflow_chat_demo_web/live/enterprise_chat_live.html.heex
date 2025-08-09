@@ -139,23 +139,26 @@
             )
           ]}>
             <div class="prose prose-sm max-w-none">
-              <%= raw(format_message_content(message.content)) %>
+              <%= format_message_content(message.content) %>
+              <%= if Map.get(message, :is_streaming) do %>
+                <span class="inline-block w-2 h-4 bg-current opacity-75 animate-pulse ml-1">|</span>
+              <% end %>
             </div>
             <div class={[
               "text-xs mt-2 opacity-70",
               if(message.role == :user, do: "text-blue-100", else: "text-gray-500")
             ]}>
               <%= format_timestamp(message.inserted_at) %>
-              <%= if message.model_used do %>
-                · <%= @available_models[message.model_used] || message.model_used %>
+              <%= if Map.get(message, :model_used) do %>
+                · <%= @available_models[Map.get(message, :model_used)] || Map.get(message, :model_used) %>
               <% end %>
             </div>
           </div>
         </div>
       <% end %>
 
-      <!-- Streaming indicator -->
-      <%= if @is_streaming do %>
+      <!-- Streaming indicator (only show if streaming but no streaming message yet) -->
+      <%= if @is_streaming and is_nil(@streaming_message) do %>
         <div class="flex justify-start">
           <div class="bg-white border border-gray-200 rounded-lg px-4 py-3">
             <div class="flex items-center space-x-2">
