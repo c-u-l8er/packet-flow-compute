@@ -8,13 +8,13 @@ defmodule PacketflowChatDemoWeb.TenantController do
 
   def index(conn, _params) do
     user_tenants = Accounts.get_user_tenants(conn.assigns.current_user.id)
-    
+
     # Get analytics for each tenant
     tenants_with_analytics = Enum.map(user_tenants, fn tenant ->
       analytics = Analytics.get_overview_stats(tenant.id, Date.utc_today() |> Date.add(-7))
       Map.put(tenant, :analytics, analytics)
     end)
-    
+
     render(conn, :index, tenants: tenants_with_analytics)
   end
 

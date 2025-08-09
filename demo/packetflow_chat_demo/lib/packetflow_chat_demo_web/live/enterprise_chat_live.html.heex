@@ -127,7 +127,7 @@
   </div>
 
   <!-- Main Chat Area -->
-  <div class="flex-1 flex flex-col">
+  <div class="flex flex-col" style={"width: #{@chat_panel_width}%"}>
     <!-- Chat Header -->
     <div class="bg-white border-b border-gray-200 px-6 py-4">
       <div class="flex items-center justify-between">
@@ -197,7 +197,13 @@
             "max-w-3xl rounded-lg px-4 py-3",
             if(message.role == :user, 
               do: "bg-blue-600 text-white", 
-              else: "bg-white border border-gray-200 text-gray-900"
+              else: [
+                "bg-white border text-gray-900",
+                if(Map.get(message.metadata || %{}, :is_cms_response), 
+                  do: "border-blue-200 cms-message", 
+                  else: "border-gray-200"
+                )
+              ]
             )
           ]}>
             <div class="prose prose-sm max-w-none">
@@ -207,12 +213,19 @@
               <% end %>
             </div>
             <div class={[
-              "text-xs mt-2 opacity-70",
+              "text-xs mt-2 opacity-70 flex items-center justify-between",
               if(message.role == :user, do: "text-blue-100", else: "text-gray-500")
             ]}>
-              <%= format_timestamp(message.inserted_at) %>
-              <%= if Map.get(message, :model_used) do %>
-                · <%= @available_models[Map.get(message, :model_used)] || Map.get(message, :model_used) %>
+              <span>
+                <%= format_timestamp(message.inserted_at) %>
+                <%= if Map.get(message, :model_used) do %>
+                  · <%= @available_models[Map.get(message, :model_used)] || Map.get(message, :model_used) %>
+                <% end %>
+              </span>
+              <%= if Map.get(message.metadata || %{}, :is_cms_response) do %>
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
+                  CMS
+                </span>
               <% end %>
             </div>
           </div>
@@ -278,78 +291,355 @@
     </div>
   </div>
 
-  <!-- Settings Panel -->
-  <%= if @settings_open do %>
-    <div class="w-80 bg-white border-l border-gray-200 p-6 overflow-y-auto">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="text-lg font-semibold text-gray-900">Settings</h3>
-        <button phx-click="toggle_settings" class="p-2 hover:bg-gray-100 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
+  <!-- Resize Handle (always visible since CMS is always visible) -->
+  <div class="w-4 bg-gray-300 hover:bg-blue-400 cursor-col-resize transition-colors relative group select-none flex items-center justify-center" 
+       phx-hook="PanelResizer"
+       id="panel-resizer"
+       title="Drag to resize panels"
+       style="min-height: 100vh;">
+    <!-- Visible grip dots -->
+    <div class="flex flex-col space-y-1 opacity-50 group-hover:opacity-100">
+      <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+      <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+      <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+      <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+      <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+    </div>
+  </div>
+
+  <!-- CMS Panel (always visible) -->
+    <div class="bg-white border-l border-gray-200 flex flex-col" style={"width: #{@cms_panel_width}%"}>
+      <!-- CMS Panel Header with Tabs -->
+      <div class="p-4 border-b border-gray-200">
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-gray-900">CMS Builder</h3>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="flex space-x-1 bg-gray-100 rounded-lg p-1">
+          <button 
+            phx-click="switch_cms_tab" 
+            phx-value-tab="preview"
+            class={[
+              "flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors",
+              if(@cms_tab == :preview, do: "bg-white text-blue-600 shadow-sm", else: "text-gray-600 hover:text-gray-900")
+            ]}
+          >
+            Preview
+          </button>
+          <button 
+            phx-click="switch_cms_tab" 
+            phx-value-tab="components"
+            class={[
+              "flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors",
+              if(@cms_tab == :components, do: "bg-white text-blue-600 shadow-sm", else: "text-gray-600 hover:text-gray-900")
+            ]}
+          >
+            Components
+          </button>
+        </div>
       </div>
 
-      <div class="space-y-6">
-        <div>
-          <h4 class="text-sm font-medium text-gray-900 mb-3">Available Models</h4>
-          <div class="space-y-2">
-            <%= for {model_key, model_name} <- @available_models do %>
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="text-sm text-gray-900"><%= model_name %></span>
-                <span class={[
-                  "text-xs px-2 py-1 rounded-full",
-                  if(model_key == @selected_model, do: "bg-green-100 text-green-800", else: "bg-gray-200 text-gray-600")
-                ]}>
-                  <%= if model_key == @selected_model, do: "Active", else: "Available" %>
-                </span>
+      <!-- Tab Content -->
+      <div class="flex-1 overflow-y-auto">
+        <%= if @cms_tab == :preview do %>
+          <!-- Live Preview Tab -->
+          <div class="p-4">
+            <%= if length(@generated_components) > 0 do %>
+              <div class="space-y-6">
+                <%= for component <- @generated_components do %>
+                  <div 
+                    class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors cursor-pointer"
+                    phx-click="select_component"
+                    phx-value-component_id={component.id}
+                    title="Click to select this component"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <h4 class="text-sm font-medium text-gray-900"><%= component.name %></h4>
+                      <div class="flex items-center space-x-2">
+                        <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          <%= String.upcase(to_string(component.type)) %>
+                        </span>
+                        <button 
+                          phx-click="delete_component"
+                          phx-value-component_id={component.id}
+                          class="p-1 hover:bg-red-100 rounded transition-colors"
+                          title="Delete component"
+                          onclick="event.stopPropagation()"
+                        >
+                          <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="cms-component-preview">
+                      <%= Phoenix.HTML.raw(component.html) %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <!-- Empty State -->
+              <div class="text-center py-12">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No components yet</h3>
+                <p class="mt-1 text-sm text-gray-500">Start by asking me to create a component in the chat!</p>
+                <div class="mt-6">
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <p class="text-sm text-blue-800 font-medium mb-2">Try saying:</p>
+                    <ul class="text-sm text-blue-700 space-y-1">
+                      <li>• "Create a data table"</li>
+                      <li>• "Make a contact form"</li>
+                      <li>• "Build a button"</li>
+                      <li>• "Generate a card component"</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             <% end %>
           </div>
+        
+        <% end %>
+
+        <%= if @cms_tab == :components do %>
+          <!-- Component Tree Tab -->
+          <div class="p-4">
+            <%= if length(@generated_components) > 0 do %>
+              <div class="space-y-2">
+                <%= for component <- @generated_components do %>
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <%= case component.type do %>
+                          <% :table -> %>
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a1 1 0 011-1h3M8 3v2m13-2v16a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1h16a1 1 0 011 1z"></path>
+                            </svg>
+                          <% :form -> %>
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                          <% :button -> %>
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                            </svg>
+                          <% :card -> %>
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                          <% _ -> %>
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                        <% end %>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900"><%= component.name %></p>
+                        <p class="text-xs text-gray-500">
+                          Created <%= Calendar.strftime(component.created_at, "%m/%d at %I:%M %p") %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <button 
+                        phx-click="select_component"
+                        phx-value-component_id={component.id}
+                        class="p-1 hover:bg-blue-100 rounded transition-colors"
+                        title="Select component"
+                      >
+                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                      </button>
+                      <button 
+                        phx-click="delete_component"
+                        phx-value-component_id={component.id}
+                        class="p-1 hover:bg-red-100 rounded transition-colors"
+                        title="Delete component"
+                      >
+                        <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <!-- Empty State -->
+              <div class="text-center py-12">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No components</h3>
+                <p class="mt-1 text-sm text-gray-500">Components you create will appear here</p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <!-- Separate Settings Panel (closable overlay) -->
+  <%= if @settings_open do %>
+    <div class="fixed inset-0 z-50 flex items-start justify-end pt-16 pr-4">
+      <!-- Backdrop -->
+      <div class="fixed inset-0 bg-black bg-opacity-25" phx-click="toggle_settings"></div>
+      
+      <!-- Settings Panel -->
+      <div class="relative w-96 bg-white rounded-lg shadow-xl border border-gray-200 max-h-[80vh] overflow-hidden flex flex-col">
+        <!-- Settings Header -->
+        <div class="p-4 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">Settings</h3>
+            <button phx-click="toggle_settings" class="p-2 hover:bg-gray-100 rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <div>
-          <h4 class="text-sm font-medium text-gray-900 mb-3">Tenant Settings</h4>
-          <div class="space-y-2 text-sm text-gray-600">
-            <p>Default Model: <%= @available_models[@tenant.default_model] || @tenant.default_model %></p>
-            <p>Max Tokens: <%= @tenant.max_tokens %></p>
-            <p>Temperature: <%= @tenant.temperature %></p>
+        <!-- Settings Content -->
+        <div class="flex-1 overflow-y-auto p-4">
+          <div class="space-y-6">
+            <div>
+              <h4 class="text-sm font-medium text-gray-900 mb-3">Available Models</h4>
+              <div class="space-y-2">
+                <%= for {model_key, model_name} <- @available_models do %>
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-sm text-gray-900"><%= model_name %></span>
+                    <span class={[
+                      "text-xs px-2 py-1 rounded-full",
+                      if(model_key == @selected_model, do: "bg-green-100 text-green-800", else: "bg-gray-200 text-gray-600")
+                    ]}>
+                      <%= if model_key == @selected_model, do: "Active", else: "Available" %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-sm font-medium text-gray-900 mb-3">CMS Settings</h4>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700">CMS Mode</span>
+                  <span class="text-sm text-green-600 font-medium">Always On</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700">Components Created</span>
+                  <span class="text-sm text-blue-600 font-medium"><%= length(@generated_components) %></span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700">Chat Panel Width</span>
+                  <span class="text-sm text-gray-600 font-medium"><%= trunc(@chat_panel_width) %>%</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700">CMS Panel Width</span>
+                  <span class="text-sm text-gray-600 font-medium"><%= trunc(@cms_panel_width) %>%</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-sm font-medium text-gray-900 mb-3">Tenant Settings</h4>
+              <div class="space-y-2 text-sm text-gray-600">
+                <p>Default Model: <%= @available_models[@tenant.default_model] || @tenant.default_model %></p>
+                <p>Max Tokens: <%= @tenant.max_tokens %></p>
+                <p>Temperature: <%= @tenant.temperature %></p>
+              </div>
+              
+              <a href={~p"/#{@tenant.slug}/settings"} 
+                 class="mt-3 inline-block bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition-colors">
+                Manage Settings
+              </a>
+            </div>
           </div>
-          
-          <a href={~p"/#{@tenant.slug}/settings"} 
-             class="mt-3 inline-block bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition-colors">
-            Manage Settings
-          </a>
         </div>
       </div>
     </div>
   <% end %>
 </div>
 
-<script>
-  // Auto-scroll to bottom when new messages arrive
-  const messagesContainer = document.getElementById('messages-container');
-  if (messagesContainer) {
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+<style>
+  /* CMS Component Styles */
+  .cms-component-preview {
+    /* Ensure components render properly in preview */
+    font-family: inherit;
   }
 
-  // Phoenix LiveView Hooks
-  window.Hooks = window.Hooks || {};
+  .cms-component-preview table {
+    font-size: 0.875rem;
+  }
+
+  .cms-component-preview button {
+    cursor: pointer;
+  }
+
+  .cms-component-preview input,
+  .cms-component-preview textarea {
+    font-size: 0.875rem;
+  }
+
+  /* Highlight CMS messages differently */
+  .cms-message {
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(to right, #eff6ff, #ffffff);
+  }
+
+  /* Component selection highlight */
+  .component-selected {
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+
+  /* Smooth transitions for all CMS elements */
+  .cms-component-preview * {
+    transition: all 0.2s ease;
+  }
+
+  /* Panel resizing styles */
+  .select-none {
+    user-select: none;
+  }
   
-  window.Hooks.AutoFocus = {
-    mounted() {
-      // Small delay to ensure the element is fully rendered
-      setTimeout(() => {
-        this.el.focus();
-        this.el.select();
-      }, 10);
-    },
-    updated() {
-      // Also focus when updated
-      setTimeout(() => {
-        this.el.focus();
-        this.el.select();
-      }, 10);
-    }
-  };
-</script>
+  .cursor-col-resize {
+    cursor: col-resize !important;
+  }
+  
+  /* Resize handle styles */
+  #panel-resizer {
+    position: relative;
+    z-index: 10;
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  #panel-resizer:hover {
+    background-color: #60a5fa !important;
+  }
+  
+  #panel-resizer:active {
+    background-color: #3b82f6 !important;
+  }
+  
+  /* Ensure the dots are visible */
+  #panel-resizer .opacity-50 {
+    transition: opacity 0.2s ease;
+  }
+  
+  #panel-resizer:hover .opacity-50 {
+    opacity: 1 !important;
+  }
+  
+  /* Smooth width transitions when not resizing */
+  body:not(.cursor-col-resize) [style*="width:"] {
+    transition: width 0.15s ease-out;
+  }
+</style>
+
+
