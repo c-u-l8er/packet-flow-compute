@@ -8,6 +8,9 @@ defmodule PacketflowChatDemo.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start the database repository
+      PacketflowChatDemo.Repo,
+
       # Start PubSub for streaming support
       {Phoenix.PubSub, name: PacketflowChatDemo.PubSub},
 

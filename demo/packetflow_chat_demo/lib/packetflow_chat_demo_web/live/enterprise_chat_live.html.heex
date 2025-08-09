@@ -1,0 +1,270 @@
+<div class="h-screen flex bg-gray-50">
+  <!-- Sidebar -->
+  <div class="w-80 bg-white border-r border-gray-200 flex flex-col">
+    <!-- Sidebar Header -->
+    <div class="p-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-lg font-semibold text-gray-900"><%= @tenant.name %></h1>
+          <p class="text-sm text-gray-500">Enterprise Chat</p>
+        </div>
+        <a 
+          href={~p"/tenants"} 
+          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          title="Back to Tenants"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- New Chat Button -->
+    <div class="p-4">
+      <button 
+        phx-click="new_session"
+        class="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 flex items-center space-x-2 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        <span>New Chat</span>
+      </button>
+    </div>
+
+    <!-- Chat Sessions -->
+    <div class="flex-1 overflow-y-auto p-2">
+      <%= for session <- @sessions do %>
+        <div class={[
+          "group relative mb-2 p-3 rounded-lg cursor-pointer transition-colors",
+          if(session.id == @active_tab, do: "bg-blue-50 border border-blue-200", else: "hover:bg-gray-50")
+        ]}
+        phx-click="switch_session"
+        phx-value-session_id={session.id}>
+          
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-medium text-gray-900 truncate">
+              <%= session.title || "New Chat" %>
+            </h3>
+            <button 
+              phx-click="delete_session"
+              phx-value-session_id={session.id}
+              class="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 rounded transition-all"
+            >
+              <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">
+            <%= if session.model, do: @available_models[session.model] || session.model, else: "No model" %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- User Info -->
+    <div class="p-4 border-t border-gray-200">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+          <span class="text-sm font-medium text-white">
+            <%= String.first(@current_user.first_name || @current_user.username) %>
+          </span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            <%= @current_user.first_name || @current_user.username %>
+          </p>
+          <p class="text-xs text-gray-500 truncate">
+            <%= @current_user.email %>
+          </p>
+        </div>
+        <button 
+          phx-click="toggle_settings"
+          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Chat Area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Chat Header -->
+    <div class="bg-white border-b border-gray-200 px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900">
+            <%= @active_session.title || "New Chat" %>
+          </h2>
+          <p class="text-sm text-gray-500">
+            Model: <%= @available_models[@selected_model] || @selected_model %>
+          </p>
+        </div>
+        
+        <!-- Model Selector -->
+        <div class="flex items-center space-x-4">
+          <select 
+            phx-change="select_model" 
+            name="model"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <%= for {model_key, model_name} <- @available_models do %>
+              <option value={model_key} selected={model_key == @selected_model}>
+                <%= model_name %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-6 min-h-0" id="messages-container" phx-hook="ScrollToBottom">
+      <%= for message <- @messages do %>
+        <div class={[
+          "flex",
+          if(message.role == :user, do: "justify-end", else: "justify-start")
+        ]}>
+          <div class={[
+            "max-w-3xl rounded-lg px-4 py-3",
+            if(message.role == :user, 
+              do: "bg-blue-600 text-white", 
+              else: "bg-white border border-gray-200 text-gray-900"
+            )
+          ]}>
+            <div class="prose prose-sm max-w-none">
+              <%= raw(format_message_content(message.content)) %>
+            </div>
+            <div class={[
+              "text-xs mt-2 opacity-70",
+              if(message.role == :user, do: "text-blue-100", else: "text-gray-500")
+            ]}>
+              <%= format_timestamp(message.inserted_at) %>
+              <%= if message.model_used do %>
+                · <%= @available_models[message.model_used] || message.model_used %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Streaming indicator -->
+      <%= if @is_streaming do %>
+        <div class="flex justify-start">
+          <div class="bg-white border border-gray-200 rounded-lg px-4 py-3">
+            <div class="flex items-center space-x-2">
+              <div class="flex space-x-1">
+                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+              </div>
+              <span class="text-sm text-gray-500">AI is thinking...</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Message Input -->
+    <div class="bg-white border-t border-gray-200 p-6">
+      <form phx-submit="send_message" class="flex space-x-4">
+        <div class="flex-1">
+          <textarea
+            name="message"
+            phx-change="update_message"
+            value={@message_input}
+            placeholder="Type your message..."
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="flex space-x-3">
+          <%= if @is_streaming do %>
+            <button
+              type="button"
+              phx-click="cancel_streaming"
+              class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              <span>Cancel</span>
+            </button>
+          <% else %>
+            <button
+              type="submit"
+              disabled={@message_input == ""}
+              class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+              </svg>
+              <span>Send</span>
+            </button>
+          <% end %>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Settings Panel -->
+  <%= if @settings_open do %>
+    <div class="w-80 bg-white border-l border-gray-200 p-6 overflow-y-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-semibold text-gray-900">Settings</h3>
+        <button phx-click="toggle_settings" class="p-2 hover:bg-gray-100 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <h4 class="text-sm font-medium text-gray-900 mb-3">Available Models</h4>
+          <div class="space-y-2">
+            <%= for {model_key, model_name} <- @available_models do %>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="text-sm text-gray-900"><%= model_name %></span>
+                <span class={[
+                  "text-xs px-2 py-1 rounded-full",
+                  if(model_key == @selected_model, do: "bg-green-100 text-green-800", else: "bg-gray-200 text-gray-600")
+                ]}>
+                  <%= if model_key == @selected_model, do: "Active", else: "Available" %>
+                </span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-medium text-gray-900 mb-3">Tenant Settings</h4>
+          <div class="space-y-2 text-sm text-gray-600">
+            <p>Default Model: <%= @available_models[@tenant.default_model] || @tenant.default_model %></p>
+            <p>Max Tokens: <%= @tenant.max_tokens %></p>
+            <p>Temperature: <%= @tenant.temperature %></p>
+          </div>
+          
+          <a href={~p"/#{@tenant.slug}/settings"} 
+             class="mt-3 inline-block bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition-colors">
+            Manage Settings
+          </a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  // Auto-scroll to bottom when new messages arrive
+  const messagesContainer = document.getElementById('messages-container');
+  if (messagesContainer) {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+</script>

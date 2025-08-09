@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <div class="mx-auto w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+      </div>
+      <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
+        Sign in to your account
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Or
+        <a href="/register" class="font-medium text-blue-600 hover:text-blue-500">
+          create a new account
+        </a>
+      </p>
+    </div>
+
+    <.form for={to_form(@changeset)} action="/login" method="post" class="mt-8 space-y-6">
+      <div class="space-y-4">
+        <div>
+          <label for="user_email" class="block text-sm font-medium text-gray-700">
+            Email address
+          </label>
+          <input
+            id="user_email"
+            name="user[email]"
+            type="email"
+            value={Phoenix.HTML.Form.input_value(to_form(@changeset), :email)}
+            autocomplete="email"
+            required
+            class={"mt-1 block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm #{if @changeset.errors[:email], do: "border-red-300", else: "border-gray-300"}"}
+            placeholder="Enter your email"
+          />
+          <%= case @changeset.errors[:email] do %>
+            <% nil -> %>
+            <% [] -> %>
+            <% errors when is_list(errors) -> %>
+              <%= for {msg, _opts} <- errors do %>
+                <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+              <% end %>
+            <% error -> %>
+              <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+          <% end %>
+        </div>
+        
+        <div>
+          <label for="user_password" class="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <input
+            id="user_password"
+            name="user[password]"
+            type="password"
+            autocomplete="current-password"
+            required
+            class={"mt-1 block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm #{if @changeset.errors[:password], do: "border-red-300", else: "border-gray-300"}"}
+            placeholder="Enter your password"
+          />
+          <%= case @changeset.errors[:password] do %>
+            <% nil -> %>
+            <% [] -> %>
+            <% errors when is_list(errors) -> %>
+              <%= for {msg, _opts} <- errors do %>
+                <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+              <% end %>
+            <% error -> %>
+              <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Sign in
+        </button>
+      </div>
+    </.form>
+
+    <div class="text-center">
+      <a href="/" class="text-sm text-gray-600 hover:text-gray-900">
+        ← Back to home
+      </a>
+    </div>
+  </div>
+</div>

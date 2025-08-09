@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <h1 class="text-2xl font-bold text-gray-900">Your Organizations</h1>
+        <p class="mt-2 text-sm text-gray-700">
+          Select an organization to start chatting, or create a new one.
+        </p>
+      </div>
+      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <a
+          href="/tenants/new"
+          class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
+        >
+          Create Organization
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <%= for tenant <- @tenants do %>
+        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow">
+          <div class="p-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <%= if tenant.logo_url do %>
+                  <img class="h-12 w-12 rounded-lg object-cover" src={tenant.logo_url} alt={tenant.name} />
+                <% else %>
+                  <div class="h-12 w-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <span class="text-lg font-medium text-white">
+                      <%= String.first(tenant.name) %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+              <div class="ml-4 flex-1">
+                <h3 class="text-lg font-medium text-gray-900">
+                  <%= tenant.name %>
+                </h3>
+                <p class="text-sm text-gray-500">
+                  <%= tenant.description || "No description" %>
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 flex justify-between items-center">
+              <div class="flex items-center text-sm text-gray-500">
+                <svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <%= tenant.default_model %>
+              </div>
+              <a
+                href={"/tenants/#{tenant.id}"}
+                class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors"
+              >
+                Enter Chat
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= if Enum.empty?(@tenants) do %>
+        <div class="col-span-full">
+          <div class="text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No organizations</h3>
+            <p class="mt-1 text-sm text-gray-500">
+              Get started by creating your first organization.
+            </p>
+            <div class="mt-6">
+              <a
+                href="/tenants/new"
+                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Create Organization
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-8 flex justify-between items-center">
+      <div class="text-sm text-gray-500">
+        Welcome back, <%= @current_user.first_name || @current_user.username %>!
+      </div>
+      <a
+        href="/logout"
+        data-method="delete"
+        class="text-sm text-gray-600 hover:text-gray-900"
+      >
+        Sign out
+      </a>
+    </div>
+  </div>
+</div>

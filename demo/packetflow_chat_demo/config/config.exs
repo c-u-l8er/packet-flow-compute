@@ -5,10 +5,25 @@ import Config
 # Configure your application
 config :packetflow_chat_demo,
   namespace: PacketflowChatDemo,
-  ecto_repos: [],
+  ecto_repos: [PacketflowChatDemo.Repo],
   generators: [timestamp_type: :utc_datetime],
   # OpenAI API configuration - will be overridden by environment variables
   openai_api_key: nil
+
+# Configure the database (will be overridden by environment-specific configs)
+config :packetflow_chat_demo, PacketflowChatDemo.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "packetflow_chat_demo_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+# Configure Guardian for authentication
+config :packetflow_chat_demo, PacketflowChatDemo.Guardian,
+  issuer: "packetflow_chat_demo",
+  secret_key: "your-secret-key-here-replace-in-production"
 
 # Configure your endpoint
 config :packetflow_chat_demo, PacketflowChatDemoWeb.Endpoint,

@@ -32,16 +32,25 @@ defmodule PacketflowChatDemo.MixProject do
       {:phoenix_live_view, "~> 0.20"},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phoenix_html, "~> 4.0"},
+      {:phoenix_ecto, "~> 4.0"},
       {:phoenix_live_dashboard, "~> 0.8", only: :dev},
 
       # Web framework dependencies
       {:plug, "~> 1.14"},
+      {:plug_cowboy, "~> 2.6"},
       {:cowboy, "~> 2.10"},
       {:jason, "~> 1.4"},
 
       # HTTP client for API calls
       {:httpoison, "~> 2.0"},
       {:hackney, "~> 1.18"},
+
+      # Database and authentication
+      {:ecto_sql, "~> 3.10"},
+      {:postgrex, "~> 0.17"},
+      {:bcrypt_elixir, "~> 3.0"},
+      {:guardian, "~> 2.3"},
+      {:guardian_phoenix, "~> 2.0"},
 
       # Server-Sent Events for streaming
       {:event_bus, "~> 1.7"},

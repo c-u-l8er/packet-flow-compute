@@ -1,0 +1,165 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <div class="mx-auto w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+        </svg>
+      </div>
+      <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
+        Create your account
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Or
+        <a href="/login" class="font-medium text-blue-600 hover:text-blue-500">
+          sign in to existing account
+        </a>
+      </p>
+    </div>
+
+    <.form for={to_form(@changeset)} action="/register" method="post" class="mt-8 space-y-6">
+      <div class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="user_first_name" class="block text-sm font-medium text-gray-700">
+              First name
+            </label>
+            <input
+              id="user_first_name"
+              name="user[first_name]"
+              type="text"
+              value={Phoenix.HTML.Form.input_value(to_form(@changeset), :first_name)}
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="John"
+            />
+            <%= case @changeset.errors[:first_name] do %>
+              <% nil -> %>
+              <% [] -> %>
+              <% errors when is_list(errors) -> %>
+                <%= for {msg, _opts} <- errors do %>
+                  <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+                <% end %>
+              <% error -> %>
+                <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+            <% end %>
+          </div>
+          <div>
+            <label for="user_last_name" class="block text-sm font-medium text-gray-700">
+              Last name
+            </label>
+            <input
+              id="user_last_name"
+              name="user[last_name]"
+              type="text"
+              value={Phoenix.HTML.Form.input_value(to_form(@changeset), :last_name)}
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Doe"
+            />
+            <%= case @changeset.errors[:last_name] do %>
+              <% nil -> %>
+              <% [] -> %>
+              <% errors when is_list(errors) -> %>
+                <%= for {msg, _opts} <- errors do %>
+                  <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+                <% end %>
+              <% error -> %>
+                <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+            <% end %>
+          </div>
+        </div>
+
+        <div>
+          <label for="user_username" class="block text-sm font-medium text-gray-700">
+            Username
+          </label>
+          <input
+            id="user_username"
+            name="user[username]"
+            type="text"
+            value={Phoenix.HTML.Form.input_value(to_form(@changeset), :username)}
+            required
+            class={"mt-1 block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm #{if @changeset.errors[:username], do: "border-red-300", else: "border-gray-300"}"}
+            placeholder="johndoe"
+          />
+          <p class="mt-1 text-xs text-gray-500">Only letters, numbers, and underscores allowed</p>
+          <%= case @changeset.errors[:username] do %>
+            <% nil -> %>
+            <% [] -> %>
+            <% errors when is_list(errors) -> %>
+              <%= for {msg, _opts} <- errors do %>
+                <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+              <% end %>
+            <% error -> %>
+              <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+          <% end %>
+        </div>
+        
+        <div>
+          <label for="user_email" class="block text-sm font-medium text-gray-700">
+            Email address
+          </label>
+          <input
+            id="user_email"
+            name="user[email]"
+            type="email"
+            value={Phoenix.HTML.Form.input_value(to_form(@changeset), :email)}
+            autocomplete="email"
+            required
+            class={"mt-1 block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm #{if @changeset.errors[:email], do: "border-red-300", else: "border-gray-300"}"}
+            placeholder="john@example.com"
+          />
+          <%= case @changeset.errors[:email] do %>
+            <% nil -> %>
+            <% [] -> %>
+            <% errors when is_list(errors) -> %>
+              <%= for {msg, _opts} <- errors do %>
+                <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+              <% end %>
+            <% error -> %>
+              <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+          <% end %>
+        </div>
+        
+        <div>
+          <label for="user_password" class="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <input
+            id="user_password"
+            name="user[password]"
+            type="password"
+            autocomplete="new-password"
+            required
+            class={"mt-1 block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm #{if @changeset.errors[:password], do: "border-red-300", else: "border-gray-300"}"}
+            placeholder="Minimum 6 characters"
+          />
+          <%= case @changeset.errors[:password] do %>
+            <% nil -> %>
+            <% [] -> %>
+            <% errors when is_list(errors) -> %>
+              <%= for {msg, _opts} <- errors do %>
+                <p class="mt-1 text-sm text-red-600"><%= msg %></p>
+              <% end %>
+            <% error -> %>
+              <p class="mt-1 text-sm text-red-600"><%= elem(error, 0) %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Create Account
+        </button>
+      </div>
+    </.form>
+
+    <div class="text-center">
+      <a href="/" class="text-sm text-gray-600 hover:text-gray-900">
+        ← Back to home
+      </a>
+    </div>
+  </div>
+</div>

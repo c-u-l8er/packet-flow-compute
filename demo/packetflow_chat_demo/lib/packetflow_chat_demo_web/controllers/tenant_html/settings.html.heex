@@ -1,0 +1,241 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900"><%= @tenant.name %> Settings</h1>
+          <p class="text-gray-600">Manage your organization settings and API configurations</p>
+        </div>
+        <a
+          href={"/#{@tenant.slug}/chat"}
+          class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+        >
+          ← Back to Chat
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <!-- Settings Form -->
+      <div class="lg:col-span-2">
+        <div class="bg-white shadow rounded-lg">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-lg font-medium text-gray-900">Organization Settings</h2>
+          </div>
+          
+          <.form for={@changeset} action={"/#{@tenant.slug}/settings"} method="put" class="px-6 py-6 space-y-6">
+            <!-- API Keys Section -->
+            <div>
+              <h3 class="text-base font-medium text-gray-900 mb-4">API Keys</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="tenant_openai_api_key" class="block text-sm font-medium text-gray-700">
+                    OpenAI API Key
+                  </label>
+                  <input
+                    id="tenant_openai_api_key"
+                    name="tenant[openai_api_key]"
+                    type="password"
+                    value={@tenant.openai_api_key}
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="sk-..."
+                  />
+                  <p class="mt-1 text-sm text-gray-500">Required for GPT models</p>
+                </div>
+
+                <div>
+                  <label for="tenant_anthropic_api_key" class="block text-sm font-medium text-gray-700">
+                    Anthropic API Key
+                  </label>
+                  <input
+                    id="tenant_anthropic_api_key"
+                    name="tenant[anthropic_api_key]"
+                    type="password"
+                    value={@tenant.anthropic_api_key}
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="sk-ant-..."
+                  />
+                  <p class="mt-1 text-sm text-gray-500">Required for Claude models</p>
+                </div>
+
+                <div>
+                  <label for="tenant_google_api_key" class="block text-sm font-medium text-gray-700">
+                    Google AI API Key
+                  </label>
+                  <input
+                    id="tenant_google_api_key"
+                    name="tenant[google_api_key]"
+                    type="password"
+                    value={@tenant.google_api_key}
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="AIza..."
+                  />
+                  <p class="mt-1 text-sm text-gray-500">Required for Gemini models</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Azure OpenAI Section -->
+            <div>
+              <h3 class="text-base font-medium text-gray-900 mb-4">Azure OpenAI (Optional)</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="tenant_azure_openai_endpoint" class="block text-sm font-medium text-gray-700">
+                    Azure OpenAI Endpoint
+                  </label>
+                  <input
+                    id="tenant_azure_openai_endpoint"
+                    name="tenant[azure_openai_endpoint]"
+                    type="url"
+                    value={@tenant.azure_openai_endpoint}
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="https://your-resource.openai.azure.com/"
+                  />
+                </div>
+
+                <div>
+                  <label for="tenant_azure_openai_api_key" class="block text-sm font-medium text-gray-700">
+                    Azure OpenAI API Key
+                  </label>
+                  <input
+                    id="tenant_azure_openai_api_key"
+                    name="tenant[azure_openai_api_key]"
+                    type="password"
+                    value={@tenant.azure_openai_api_key}
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Settings -->
+            <div>
+              <h3 class="text-base font-medium text-gray-900 mb-4">Default Chat Settings</h3>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label for="tenant_default_model" class="block text-sm font-medium text-gray-700">
+                    Default Model
+                  </label>
+                  <select
+                    id="tenant_default_model"
+                    name="tenant[default_model]"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                    <option value="gpt-3.5-turbo" selected={@tenant.default_model == "gpt-3.5-turbo"}>GPT-3.5 Turbo</option>
+                    <option value="gpt-4" selected={@tenant.default_model == "gpt-4"}>GPT-4</option>
+                    <option value="gpt-4-turbo" selected={@tenant.default_model == "gpt-4-turbo"}>GPT-4 Turbo</option>
+                    <option value="claude-3-sonnet" selected={@tenant.default_model == "claude-3-sonnet"}>Claude 3 Sonnet</option>
+                    <option value="claude-3-opus" selected={@tenant.default_model == "claude-3-opus"}>Claude 3 Opus</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="tenant_max_tokens" class="block text-sm font-medium text-gray-700">
+                    Max Tokens
+                  </label>
+                  <input
+                    id="tenant_max_tokens"
+                    name="tenant[max_tokens]"
+                    type="number"
+                    value={@tenant.max_tokens}
+                    min="100"
+                    max="8000"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label for="tenant_temperature" class="block text-sm font-medium text-gray-700">
+                    Temperature
+                  </label>
+                  <input
+                    id="tenant_temperature"
+                    name="tenant[temperature]"
+                    type="number"
+                    step="0.1"
+                    value={@tenant.temperature}
+                    min="0"
+                    max="2"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+
+                <div class="flex items-center pt-6">
+                  <input
+                    id="tenant_allow_model_selection"
+                    name="tenant[allow_model_selection]"
+                    type="checkbox"
+                    checked={@tenant.allow_model_selection}
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label for="tenant_allow_model_selection" class="ml-2 block text-sm text-gray-900">
+                    Allow users to select models
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                type="submit"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Save Settings
+              </button>
+            </div>
+          </.form>
+        </div>
+      </div>
+
+      <!-- Team Members -->
+      <div class="lg:col-span-1">
+        <div class="bg-white shadow rounded-lg">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-lg font-medium text-gray-900">Team Members</h2>
+          </div>
+          
+          <div class="px-6 py-4">
+            <div class="space-y-4">
+              <%= for member <- @members do %>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span class="text-sm font-medium text-gray-700">
+                        <%= String.first(member.user.first_name || member.user.username) %>
+                      </span>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">
+                        <%= member.user.first_name || member.user.username %>
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        <%= member.user.email %>
+                      </p>
+                    </div>
+                  </div>
+                  <span class={[
+                    "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+                    case member.role do
+                      :owner -> "bg-purple-100 text-purple-800"
+                      :admin -> "bg-blue-100 text-blue-800"
+                      :member -> "bg-gray-100 text-gray-800"
+                    end
+                  ]}>
+                    <%= String.capitalize(to_string(member.role)) %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+              <p class="text-sm text-gray-500">
+                Want to invite team members? Contact your administrator to add users to this organization.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
