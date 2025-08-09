@@ -1,18 +1,44 @@
 <div class="min-h-screen bg-gray-50 py-8">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Header -->
+    <!-- Header with Navigation -->
     <div class="mb-8">
       <div class="flex items-center justify-between">
-        <div>
+        <div class="sm:flex-auto">
+          <nav class="flex space-x-8 mb-4">
+            <a href={~p"/#{@tenant.slug}/analytics"} 
+               class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+              Chat Analytics
+            </a>
+            <a href={~p"/#{@tenant.slug}/usage"} 
+               class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              AI Usage & Costs
+            </a>
+            <a href={~p"/#{@tenant.slug}/settings"} 
+               class="inline-flex items-center px-1 pt-1 border-b-2 border-orange-500 text-sm font-medium text-orange-600">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              Settings
+            </a>
+          </nav>
           <h1 class="text-2xl font-bold text-gray-900"><%= @tenant.name %> Settings</h1>
           <p class="text-gray-600">Manage your organization settings and API configurations</p>
         </div>
-        <a
-          href={"/#{@tenant.slug}/chat"}
-          class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-        >
-          ← Back to Chat
-        </a>
+        <div class="flex space-x-3">
+          <a
+            href={"/#{@tenant.slug}/chat"}
+            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          >
+            ← Back to Chat
+          </a>
+        </div>
       </div>
     </div>
 
@@ -25,86 +51,34 @@
           </div>
           
           <.form for={@changeset} action={"/#{@tenant.slug}/settings"} method="put" class="px-6 py-6 space-y-6">
-            <!-- API Keys Section -->
-            <div>
-              <h3 class="text-base font-medium text-gray-900 mb-4">API Keys</h3>
-              <div class="space-y-4">
-                <div>
-                  <label for="tenant_openai_api_key" class="block text-sm font-medium text-gray-700">
-                    OpenAI API Key
-                  </label>
-                  <input
-                    id="tenant_openai_api_key"
-                    name="tenant[openai_api_key]"
-                    type="password"
-                    value={@tenant.openai_api_key}
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="sk-..."
-                  />
-                  <p class="mt-1 text-sm text-gray-500">Required for GPT models</p>
+            <!-- Analytics & Usage Impact Notice -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+              <div class="flex items-start">
+                <div class="flex-shrink-0">
+                  <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
                 </div>
-
-                <div>
-                  <label for="tenant_anthropic_api_key" class="block text-sm font-medium text-gray-700">
-                    Anthropic API Key
-                  </label>
-                  <input
-                    id="tenant_anthropic_api_key"
-                    name="tenant[anthropic_api_key]"
-                    type="password"
-                    value={@tenant.anthropic_api_key}
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="sk-ant-..."
-                  />
-                  <p class="mt-1 text-sm text-gray-500">Required for Claude models</p>
-                </div>
-
-                <div>
-                  <label for="tenant_google_api_key" class="block text-sm font-medium text-gray-700">
-                    Google AI API Key
-                  </label>
-                  <input
-                    id="tenant_google_api_key"
-                    name="tenant[google_api_key]"
-                    type="password"
-                    value={@tenant.google_api_key}
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="AIza..."
-                  />
-                  <p class="mt-1 text-sm text-gray-500">Required for Gemini models</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Azure OpenAI Section -->
-            <div>
-              <h3 class="text-base font-medium text-gray-900 mb-4">Azure OpenAI (Optional)</h3>
-              <div class="space-y-4">
-                <div>
-                  <label for="tenant_azure_openai_endpoint" class="block text-sm font-medium text-gray-700">
-                    Azure OpenAI Endpoint
-                  </label>
-                  <input
-                    id="tenant_azure_openai_endpoint"
-                    name="tenant[azure_openai_endpoint]"
-                    type="url"
-                    value={@tenant.azure_openai_endpoint}
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="https://your-resource.openai.azure.com/"
-                  />
-                </div>
-
-                <div>
-                  <label for="tenant_azure_openai_api_key" class="block text-sm font-medium text-gray-700">
-                    Azure OpenAI API Key
-                  </label>
-                  <input
-                    id="tenant_azure_openai_api_key"
-                    name="tenant[azure_openai_api_key]"
-                    type="password"
-                    value={@tenant.azure_openai_api_key}
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
+                <div class="ml-4 flex-1">
+                  <h3 class="text-lg font-medium text-blue-900">Settings Impact on Usage</h3>
+                  <div class="mt-2 text-sm text-blue-700">
+                    <p class="mb-2">Your settings directly affect AI usage costs and performance:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                      <li><strong>Default Model:</strong> Different models have varying costs per token</li>
+                      <li><strong>Max Tokens:</strong> Higher limits increase potential costs per request</li>
+                      <li><strong>Temperature:</strong> Affects response variability and generation time</li>
+                    </ul>
+                  </div>
+                  <div class="mt-4 flex space-x-3">
+                    <a href={~p"/#{@tenant.slug}/usage"} 
+                       class="inline-flex items-center px-3 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50">
+                      View Usage Impact →
+                    </a>
+                    <a href={~p"/#{@tenant.slug}/analytics"} 
+                       class="inline-flex items-center px-3 py-2 border border-indigo-300 text-sm font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50">
+                      View Analytics →
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -122,11 +96,10 @@
                     name="tenant[default_model]"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
-                    <option value="gpt-3.5-turbo" selected={@tenant.default_model == "gpt-3.5-turbo"}>GPT-3.5 Turbo</option>
-                    <option value="gpt-4" selected={@tenant.default_model == "gpt-4"}>GPT-4</option>
-                    <option value="gpt-4-turbo" selected={@tenant.default_model == "gpt-4-turbo"}>GPT-4 Turbo</option>
-                    <option value="claude-3-sonnet" selected={@tenant.default_model == "claude-3-sonnet"}>Claude 3 Sonnet</option>
-                    <option value="claude-3-opus" selected={@tenant.default_model == "claude-3-opus"}>Claude 3 Opus</option>
+                    <option value="gpt-5" selected={@tenant.default_model == "gpt-5"}>GPT-5</option>
+                    <option value="gpt-5-mini" selected={@tenant.default_model == "gpt-5-mini"}>GPT-5 Mini</option>
+                    <option value="gpt-5-nano" selected={@tenant.default_model == "gpt-5-nano"}>GPT-5 Nano</option>
+                    <option value="gpt-5-chat-latest" selected={@tenant.default_model == "gpt-5-chat-latest"}>GPT-5 Chat Latest</option>
                   </select>
                 </div>
 

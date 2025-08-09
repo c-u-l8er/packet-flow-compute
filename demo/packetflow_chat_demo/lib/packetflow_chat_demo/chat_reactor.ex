@@ -18,8 +18,8 @@ defmodule PacketflowChatDemo.ChatReactor do
     GenServer.call(__MODULE__, {:send_message, user_id, message, session_id})
   end
 
-  def stream_message(user_id, message, session_id \\ generate_session_id()) do
-    GenServer.call(__MODULE__, {:stream_message, user_id, message, session_id})
+  def stream_message(user_id, message, session_id \\ generate_session_id(), opts \\ []) do
+    GenServer.call(__MODULE__, {:stream_message, user_id, message, session_id, opts})
   end
 
   def get_history(user_id, session_id) do
@@ -69,7 +69,7 @@ defmodule PacketflowChatDemo.ChatReactor do
       user_id: user_id,
       session_id: session_id,
       capabilities: [PacketflowChatDemo.ChatSystem.ChatCap.send_message],
-      model_config: %{model: "gpt-3.5-turbo", temperature: 0.7}
+      model_config: %{model: "gpt-5", temperature: 0.7}
     })
 
     intent = PacketflowChatDemo.ChatSystem.SendMessageIntent.new(user_id, message, session_id)
@@ -101,12 +101,22 @@ defmodule PacketflowChatDemo.ChatReactor do
   end
 
   def handle_call({:stream_message, user_id, message, session_id}, _from, state) do
+    handle_call({:stream_message, user_id, message, session_id, []}, _from, state)
+  end
+
+  def handle_call({:stream_message, user_id, message, session_id, opts}, _from, state) do
+    # Extract model configuration from opts
+    model = Keyword.get(opts, :model, "gpt-5")
+    temperature = Keyword.get(opts, :temperature, 0.7)
+
+    Logger.info("Using model: #{model} with temperature: #{temperature} for user: #{user_id}, session: #{session_id}")
+
     # Create intent with context
     _context = PacketflowChatDemo.ChatSystem.ChatContext.new(%{
       user_id: user_id,
       session_id: session_id,
       capabilities: [PacketflowChatDemo.ChatSystem.ChatCap.stream_response],
-      model_config: %{model: "gpt-3.5-turbo", temperature: 0.7, stream: true}
+      model_config: %{model: model, temperature: temperature, stream: true}
     })
 
     intent = PacketflowChatDemo.ChatSystem.StreamMessageIntent.new(user_id, message, session_id)

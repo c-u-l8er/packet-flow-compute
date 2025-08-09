@@ -7,7 +7,7 @@ defmodule PacketflowChatDemo.OpenAIService do
   require Logger
 
   @api_base_url "https://api.openai.com/v1"
-  @default_model "gpt-3.5-turbo"
+  @default_model "gpt-5"
   @default_max_tokens 1000
   @default_temperature 0.7
 

@@ -11,15 +11,10 @@ defmodule PacketflowChatDemo.Accounts.Tenant do
     field :logo_url, :string
     field :is_active, :boolean, default: true
 
-    # LLM API Configuration
-    field :openai_api_key, :string
-    field :anthropic_api_key, :string
-    field :google_api_key, :string
-    field :azure_openai_endpoint, :string
-    field :azure_openai_api_key, :string
+    # LLM API Configuration moved to application level
 
     # Chat Settings
-    field :default_model, :string, default: "gpt-3.5-turbo"
+    field :default_model, :string, default: "gpt-5"
     field :max_tokens, :integer, default: 1000
     field :temperature, :float, default: 0.7
     field :allow_model_selection, :boolean, default: true
@@ -35,8 +30,6 @@ defmodule PacketflowChatDemo.Accounts.Tenant do
     tenant
     |> cast(attrs, [
       :name, :slug, :description, :logo_url, :is_active,
-      :openai_api_key, :anthropic_api_key, :google_api_key,
-      :azure_openai_endpoint, :azure_openai_api_key,
       :default_model, :max_tokens, :temperature, :allow_model_selection
     ])
     |> validate_required([:name, :slug])
@@ -52,8 +45,6 @@ defmodule PacketflowChatDemo.Accounts.Tenant do
   def settings_changeset(tenant, attrs) do
     tenant
     |> cast(attrs, [
-      :openai_api_key, :anthropic_api_key, :google_api_key,
-      :azure_openai_endpoint, :azure_openai_api_key,
       :default_model, :max_tokens, :temperature, :allow_model_selection
     ])
     |> validate_number(:max_tokens, greater_than: 0, less_than_or_equal_to: 8000)

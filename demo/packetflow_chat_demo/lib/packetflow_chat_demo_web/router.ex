@@ -66,7 +66,7 @@ defmodule PacketflowChatDemoWeb.Router do
     pipe_through [:browser, :require_auth]
 
     # Tenant management
-    resources "/tenants", TenantController, except: [:edit, :update, :delete] do
+    resources "/tenants", TenantController do
       get "/settings", TenantController, :settings, as: :tenant_settings
       put "/settings", TenantController, :update_settings, as: :tenant_settings
     end
@@ -83,6 +83,9 @@ defmodule PacketflowChatDemoWeb.Router do
     end
     get "/settings", TenantController, :settings
     put "/settings", TenantController, :update_settings
+    get "/analytics", TenantController, :analytics
+    get "/usage", UsageController, :dashboard
+    get "/usage/export", UsageController, :export_csv
   end
 
   # Other scopes may use custom stacks.

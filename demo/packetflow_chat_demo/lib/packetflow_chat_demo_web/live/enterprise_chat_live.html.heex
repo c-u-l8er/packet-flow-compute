@@ -40,22 +40,55 @@
           "group relative mb-2 p-3 rounded-lg cursor-pointer transition-colors",
           if(session.id == @active_tab, do: "bg-blue-50 border border-blue-200", else: "hover:bg-gray-50")
         ]}
-        phx-click="switch_session"
-        phx-value-session_id={session.id}>
+        phx-click={if @editing_session_id != session.id, do: "switch_session", else: nil}
+        phx-value-session_id={if @editing_session_id != session.id, do: session.id, else: nil}>
           
           <div class="flex items-center justify-between">
-            <h3 class="text-sm font-medium text-gray-900 truncate">
-              <%= session.title || "New Chat" %>
-            </h3>
-            <button 
-              phx-click="delete_session"
-              phx-value-session_id={session.id}
-              class="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 rounded transition-all"
-            >
-              <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-              </svg>
-            </button>
+            <%= if @editing_session_id == session.id do %>
+              <form phx-submit="save_session_title" phx-value-session_id={session.id} class="flex-1 mr-2" phx-click-away="cancel_edit_session">
+                <input
+                  id={"edit-session-#{session.id}"}
+                  type="text"
+                  name="title"
+                  value={session.title || "New Chat"}
+                  class="w-full text-sm font-medium text-gray-900 bg-transparent border border-blue-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  phx-hook="AutoFocus"
+                  maxlength="200"
+                  onclick="event.stopPropagation()"
+                />
+              </form>
+            <% else %>
+              <h3 class="text-sm font-medium text-gray-900 truncate flex-1" 
+                  phx-click="edit_session_title" 
+                  phx-value-session_id={session.id}
+                  title="Click to edit">
+                <%= session.title || "New Chat" %>
+              </h3>
+            <% end %>
+            <div class="flex items-center space-x-1">
+              <%= if @editing_session_id != session.id do %>
+                <button 
+                  phx-click="edit_session_title"
+                  phx-value-session_id={session.id}
+                  class="opacity-0 group-hover:opacity-100 p-1 hover:bg-blue-100 rounded transition-all"
+                  title="Edit title"
+                >
+                  <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                </button>
+              <% end %>
+              <button 
+                phx-click="delete_session"
+                phx-value-session_id={session.id}
+                class="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 rounded transition-all"
+                title="Delete session"
+              >
+                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+              </button>
+            </div>
           </div>
           <p class="text-xs text-gray-500 mt-1">
             <%= if session.model, do: @available_models[session.model] || session.model, else: "No model" %>
@@ -99,9 +132,36 @@
     <div class="bg-white border-b border-gray-200 px-6 py-4">
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-lg font-semibold text-gray-900">
-            <%= @active_session.title || "New Chat" %>
-          </h2>
+          <%= if @editing_header_title do %>
+            <form phx-submit="save_header_title" class="flex items-center space-x-2" phx-click-away="cancel_edit_header">
+              <input
+                id="edit-header-title"
+                type="text"
+                name="title"
+                value={@active_session.title || "New Chat"}
+                class="text-lg font-semibold text-gray-900 bg-transparent border border-blue-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                phx-hook="AutoFocus"
+                maxlength="200"
+              />
+            </form>
+          <% else %>
+            <div class="flex items-center space-x-2">
+              <h2 class="text-lg font-semibold text-gray-900 cursor-pointer hover:text-blue-600" 
+                  phx-click="edit_header_title"
+                  title="Click to edit">
+                <%= @active_session.title || "New Chat" %>
+              </h2>
+              <button 
+                phx-click="edit_header_title"
+                class="p-1 hover:bg-blue-100 rounded transition-all"
+                title="Edit title"
+              >
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+              </button>
+            </div>
+          <% end %>
           <p class="text-sm text-gray-500">
             Model: <%= @available_models[@selected_model] || @selected_model %>
           </p>
@@ -109,17 +169,19 @@
         
         <!-- Model Selector -->
         <div class="flex items-center space-x-4">
-          <select 
-            phx-change="select_model" 
-            name="model"
-            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <%= for {model_key, model_name} <- @available_models do %>
-              <option value={model_key} selected={model_key == @selected_model}>
-                <%= model_name %>
-              </option>
-            <% end %>
-          </select>
+          <form phx-change="select_model">
+            <select 
+              name="model"
+              value={@selected_model}
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <%= for {model_key, model_name} <- @available_models do %>
+                <option value={model_key}>
+                  <%= model_name %>
+                </option>
+              <% end %>
+            </select>
+          </form>
         </div>
       </div>
     </div>
@@ -270,4 +332,24 @@
   if (messagesContainer) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
+
+  // Phoenix LiveView Hooks
+  window.Hooks = window.Hooks || {};
+  
+  window.Hooks.AutoFocus = {
+    mounted() {
+      // Small delay to ensure the element is fully rendered
+      setTimeout(() => {
+        this.el.focus();
+        this.el.select();
+      }, 10);
+    },
+    updated() {
+      // Also focus when updated
+      setTimeout(() => {
+        this.el.focus();
+        this.el.select();
+      }, 10);
+    }
+  };
 </script>
